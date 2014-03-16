@@ -22,6 +22,7 @@
 #import "MBFileDataHandler.h"
 #import "MBDocumentOperation.h"
 #import "MBSystemDataHandler.h"
+#import "MBDataHandler.h"
 
 static MBDataManagerService *_instance = nil;
 
@@ -66,7 +67,8 @@ static MBDataManagerService *_instance = nil;
 }
 
 - (MBDocumentOperation*) loaderForDocumentName:(NSString*) documentName arguments:(MBDocument*) arguments {
-	return [[[MBDocumentOperation alloc] initWithDataHandler: [self handlerForDocument:documentName] documentName:documentName arguments:arguments] autorelease];
+	MBDataHandlerBase *handler = [self handlerForDocument:documentName];
+	return [handler createDocumentOperation:[self handlerForDocument:documentName] documentName:documentName arguments:arguments];
 }
 
 - (MBDocument *) createDocument:(NSString *)documentName {

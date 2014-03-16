@@ -44,4 +44,10 @@
 	WLog(@"No storeDocument implementation for %@", [[document definition]name]);	
 }
 
+- (MBDocumentOperation*) createDocumentOperation:(id<MBDataHandler>) dataHandler documentName:(NSString*) documentName arguments:(MBDocument*) arguments {
+	return [[[MBDocumentOperation alloc] initWithDataHandler:dataHandler documentName:documentName arguments:arguments] autorelease];
+
+}
+
+
 @end
