@@ -50,6 +50,9 @@
 - (void) storeDocument:(MBDocument *)document;
 
 
-- (MBDocumentOperation*) createDocumentOperation:(id<MBDataHandler>) dataHandler documentName:(NSString*) documentName arguments:(MBDocument*) arguments;
+- (MBDocumentOperation*) createDocumentLoadOperation:(id<MBDataHandler>) dataHandler documentName:(NSString*) documentName arguments:(MBDocument*) arguments;
+
+- (MBDocumentOperation*) createDocumentStoreOperation:(id<MBDataHandler>) dataHandler document:(MBDocument*) document;
+
 
 @end

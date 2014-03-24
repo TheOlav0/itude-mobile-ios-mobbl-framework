@@ -68,7 +68,7 @@ static MBDataManagerService *_instance = nil;
 
 - (MBDocumentOperation*) loaderForDocumentName:(NSString*) documentName arguments:(MBDocument*) arguments {
 	MBDataHandlerBase *handler = [self handlerForDocument:documentName];
-	return [handler createDocumentOperation:[self handlerForDocument:documentName] documentName:documentName arguments:arguments];
+	return [handler createDocumentLoadOperation:[self handlerForDocument:documentName] documentName:documentName arguments:arguments];
 }
 
 - (MBDocument *) createDocument:(NSString *)documentName {
@@ -128,8 +128,9 @@ static MBDataManagerService *_instance = nil;
 }
 
 - (void) storeDocument:(MBDocument *)document forDelegate:(id) delegate resultSelector:(SEL) resultSelector errorSelector:(SEL) errorSelector {
-	MBDocumentOperation *storer = [[[MBDocumentOperation alloc] initWithDataHandler: [self handlerForDocument:[document name]] document:document] autorelease];
-    
+	id<MBDataHandler> handler = [self handlerForDocument:[document name]];
+
+	MBDocumentOperation *storer = [handler createDocumentStoreOperation:handler document:document];
 	[storer setDelegate: delegate resultCallback: resultSelector errorCallback: errorSelector];
 	[_operationQueue addOperation:storer];
 }

@@ -17,6 +17,7 @@
 #import "MBMacros.h"
 #import "MBDataHandlerBase.h"
 #import "MBMetadataService.h"
+#import "MBDocumentOperation.h"
 
 @implementation MBDataHandlerBase
 
@@ -44,8 +45,13 @@
 	WLog(@"No storeDocument implementation for %@", [[document definition]name]);	
 }
 
-- (MBDocumentOperation*) createDocumentOperation:(id<MBDataHandler>) dataHandler documentName:(NSString*) documentName arguments:(MBDocument*) arguments {
+- (MBDocumentOperation*) createDocumentLoadOperation:(id<MBDataHandler>) dataHandler documentName:(NSString*) documentName arguments:(MBDocument*) arguments {
 	return [[[MBDocumentOperation alloc] initWithDataHandler:dataHandler documentName:documentName arguments:arguments] autorelease];
+
+}
+
+- (MBDocumentOperation*) createDocumentStoreOperation:(id<MBDataHandler>) dataHandler document:(MBDocument*) document {
+	return [[[MBDocumentOperation alloc] initWithDataHandler:dataHandler document:document] autorelease];
 
 }
 
