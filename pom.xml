@@ -69,7 +69,7 @@
 	    	<plugin>
 	        	<groupId>com.sap.prd.mobile.ios.mios</groupId>
 		        <artifactId>xcode-maven-plugin</artifactId>
-		        <version>1.13.0</version>
+		        <version>1.13.1-SNAPSHOT</version>
 	    	    <extensions>true</extensions>
 	 	    </plugin>
 	 	</plugins>
@@ -86,6 +86,13 @@
 			<url>http://mobbl.org/maven-repository/releases</url>
 		</repository>
 	</repositories>
+	<pluginRepositories>
+        <pluginRepository>
+	        <id>itudemobile-github-repository</id>
+			<name>ItudeMobile Github repository</name>
+			<url>http://mobbl.org/maven-repository/snapshots</url>
+		 </pluginRepository>
+    </pluginRepositories>
 	  
 </project>
 
