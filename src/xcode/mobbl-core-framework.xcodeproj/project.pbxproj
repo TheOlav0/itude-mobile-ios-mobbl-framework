@@ -428,11 +428,26 @@
 		1FECE0EE1885E42F00C881C5 /* MBValueChangeListenerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FECDF4C1885E42E00C881C5 /* MBValueChangeListenerProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1FECE0EF1885E42F00C881C5 /* MBTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FECDF4E1885E42E00C881C5 /* MBTableViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1FECE0F01885E42F00C881C5 /* MBTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDF4F1885E42E00C881C5 /* MBTableViewController.m */; };
+		266075601959B05E008131A6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2660755F1959B05E008131A6 /* XCTest.framework */; };
+		266075611959B05E008131A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA021885C1B300C881C5 /* Foundation.framework */; };
+		266075621959B05E008131A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA101885C25800C881C5 /* UIKit.framework */; };
+		266075681959B05E008131A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266075661959B05E008131A6 /* InfoPlist.strings */; };
+		2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 266075691959B05E008131A6 /* mobbl_core_framework_tests.m */; };
 		C76351DC188EAC10006808DE /* MBJsonDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DD188EAC10006808DE /* MBJsonDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */; };
 		C76351DE188EAC10006808DE /* MBXmlDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DF188EAC10006808DE /* MBXmlDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351DB188EAC10006808DE /* MBXmlDocumentParser.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2660756C1959B05E008131A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1FECD9F31885C1B300C881C5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1FECD9FE1885C1B300C881C5;
+			remoteInfo = "mobbl-core-framework";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00CD911618A5350300ACA235 /* MBFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBFileManager.h; sourceTree = "<group>"; };
@@ -859,6 +874,12 @@
 		1FECDF4C1885E42E00C881C5 /* MBValueChangeListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBValueChangeListenerProtocol.h; sourceTree = "<group>"; };
 		1FECDF4E1885E42E00C881C5 /* MBTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBTableViewController.h; sourceTree = "<group>"; };
 		1FECDF4F1885E42E00C881C5 /* MBTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBTableViewController.m; sourceTree = "<group>"; };
+		2660755E1959B05E008131A6 /* mobbl-core-framework-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobbl-core-framework-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2660755F1959B05E008131A6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		266075651959B05E008131A6 /* mobbl-core-framework-tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mobbl-core-framework-tests-Info.plist"; sourceTree = "<group>"; };
+		266075671959B05E008131A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		266075691959B05E008131A6 /* mobbl_core_framework_tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobbl_core_framework_tests.m; sourceTree = "<group>"; };
+		2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobbl-core-framework-tests-Prefix.pch"; sourceTree = "<group>"; };
 		C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBJsonDocumentParser.h; sourceTree = "<group>"; };
 		C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParser.m; sourceTree = "<group>"; };
 		C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXmlDocumentParser.h; sourceTree = "<group>"; };
@@ -880,6 +901,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2660755B1959B05E008131A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				266075601959B05E008131A6 /* XCTest.framework in Frameworks */,
+				266075621959B05E008131A6 /* UIKit.framework in Frameworks */,
+				266075611959B05E008131A6 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -887,6 +918,7 @@
 			isa = PBXGroup;
 			children = (
 				1FECDA041885C1B300C881C5 /* mobbl-core-framework */,
+				266075631959B05E008131A6 /* mobbl-core-framework-tests */,
 				1FECDA011885C1B300C881C5 /* Frameworks */,
 				1FECDA001885C1B300C881C5 /* Products */,
 			);
@@ -896,6 +928,7 @@
 			isa = PBXGroup;
 			children = (
 				1FECD9FF1885C1B300C881C5 /* mobbl-core-framework.framework */,
+				2660755E1959B05E008131A6 /* mobbl-core-framework-tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -910,6 +943,7 @@
 				1FECDA121885C25E00C881C5 /* QuartzCore.framework */,
 				1FECDA101885C25800C881C5 /* UIKit.framework */,
 				1FECDA021885C1B300C881C5 /* Foundation.framework */,
+				2660755F1959B05E008131A6 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1649,6 +1683,25 @@
 			path = Tables;
 			sourceTree = "<group>";
 		};
+		266075631959B05E008131A6 /* mobbl-core-framework-tests */ = {
+			isa = PBXGroup;
+			children = (
+				266075691959B05E008131A6 /* mobbl_core_framework_tests.m */,
+				266075641959B05E008131A6 /* Supporting Files */,
+			);
+			path = "mobbl-core-framework-tests";
+			sourceTree = "<group>";
+		};
+		266075641959B05E008131A6 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				266075651959B05E008131A6 /* mobbl-core-framework-tests-Info.plist */,
+				266075661959B05E008131A6 /* InfoPlist.strings */,
+				2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		C76351D7188EAC10006808DE /* Parser */ = {
 			isa = PBXGroup;
 			children = (
@@ -1912,6 +1965,24 @@
 			productReference = 1FECD9FF1885C1B300C881C5 /* mobbl-core-framework.framework */;
 			productType = "com.apple.product-type.framework.static";
 		};
+		2660755D1959B05E008131A6 /* mobbl-core-framework-tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 266075701959B05E008131A6 /* Build configuration list for PBXNativeTarget "mobbl-core-framework-tests" */;
+			buildPhases = (
+				2660755A1959B05E008131A6 /* Sources */,
+				2660755B1959B05E008131A6 /* Frameworks */,
+				2660755C1959B05E008131A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2660756D1959B05E008131A6 /* PBXTargetDependency */,
+			);
+			name = "mobbl-core-framework-tests";
+			productName = "mobbl-core-framework-tests";
+			productReference = 2660755E1959B05E008131A6 /* mobbl-core-framework-tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1920,6 +1991,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Itude Mobile B.V., The Netherlands";
+				TargetAttributes = {
+					2660755D1959B05E008131A6 = {
+						TestTargetID = 1FECD9FE1885C1B300C881C5;
+					};
+				};
 			};
 			buildConfigurationList = 1FECD9F61885C1B300C881C5 /* Build configuration list for PBXProject "mobbl-core-framework" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1934,6 +2010,7 @@
 			projectRoot = "";
 			targets = (
 				1FECD9FE1885C1B300C881C5 /* mobbl-core-framework */,
+				2660755D1959B05E008131A6 /* mobbl-core-framework-tests */,
 			);
 		};
 /* End PBXProject section */
@@ -1962,6 +2039,14 @@
 				1FECDFE21885E42F00C881C5 /* dialogs_mobbl.xml in Resources */,
 				1FECDFF01885E42F00C881C5 /* MBDatePicker.xib in Resources */,
 				1FECDFEB1885E42F00C881C5 /* backButtonIconArrowWhite@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2660755C1959B05E008131A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				266075681959B05E008131A6 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2199,13 +2284,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2660755A1959B05E008131A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2660756D1959B05E008131A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1FECD9FE1885C1B300C881C5 /* mobbl-core-framework */;
+			targetProxy = 2660756C1959B05E008131A6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		1FECDA071885C1B300C881C5 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				1FECDA081885C1B300C881C5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		266075661959B05E008131A6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				266075671959B05E008131A6 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -2336,6 +2445,47 @@
 			};
 			name = Release;
 		};
+		2660756E1959B05E008131A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "mobbl-core-framework-tests/mobbl-core-framework-tests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "mobbl-core-framework-tests/mobbl-core-framework-tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		2660756F1959B05E008131A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "mobbl-core-framework-tests/mobbl-core-framework-tests-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = "mobbl-core-framework-tests/mobbl-core-framework-tests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2356,6 +2506,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		266075701959B05E008131A6 /* Build configuration list for PBXNativeTarget "mobbl-core-framework-tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2660756E1959B05E008131A6 /* Debug */,
+				2660756F1959B05E008131A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
