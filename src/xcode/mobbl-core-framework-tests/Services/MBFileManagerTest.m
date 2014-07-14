@@ -9,11 +9,13 @@
 #import <XCTest/XCTest.h>
 #import "MBResourceService.h"
 
-NSString * const ReadTestFileName = @"MBFileManagerReadTest.xml";
-NSString * const ReadTestFileContents = @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
-                                        @"<root>\n"
-                                        @"    <child>value</child>\n"
-                                        @"</root>";
+NSString * const ReadingTestFileName    =   @"MBFileManagerReadTest.xml";
+NSString * const WritingTestFileName    =   @"MBFileManagerWriteTest.xml";
+
+NSString * const TestContentsString     =   @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                                            @"<root>\n"
+                                            @"    <child>value</child>\n"
+                                            @"</root>";
 
 @interface MBFileManagerTest : XCTestCase
 
@@ -21,10 +23,21 @@ NSString * const ReadTestFileContents = @"<?xml version=\"1.0\" encoding=\"UTF-8
 
 @implementation MBFileManagerTest
 
+- (MBFileManager *)fileManager {
+    MBResourceService *resourceService = [MBResourceService sharedInstance];
+    MBFileManager *fileManager = resourceService.fileManager;
+
+    return fileManager;
+}
+
+- (NSData *)testData {
+    return [TestContentsString dataUsingEncoding:NSStringEncodingConversionAllowLossy];
+}
+
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    
 }
 
 - (void)tearDown
@@ -34,18 +47,25 @@ NSString * const ReadTestFileContents = @"<?xml version=\"1.0\" encoding=\"UTF-8
 }
 
 - (void) testDataWithContentsOfMainBundle {
-    MBResourceService *resourceService = [MBResourceService sharedInstance];
-    MBFileManager *fileManager = resourceService.fileManager;
+    NSData *dataReadFromFile = [[self fileManager] dataWithContentsOfMainBundle:ReadingTestFileName];
     
-    NSData *dataReadFromFile = [fileManager dataWithContentsOfMainBundle:ReadTestFileName];
-    
-    NSData *expectedData = [ReadTestFileContents dataUsingEncoding:NSStringEncodingConversionAllowLossy];
+    NSData *expectedData = [self testData];
 
     XCTAssertEqualObjects(dataReadFromFile, expectedData);
 }
 
 - (void) testWriteContents {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    [[self fileManager] writeContents:TestContentsString toFileName:WritingTestFileName];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = paths[0];
+    
+    NSString *absoluteFilePath = [documentDirectory stringByAppendingPathComponent:WritingTestFileName];
+    
+    NSData *dataReadFromFile = [NSData dataWithContentsOfFile:absoluteFilePath];
+    NSData *expectedData = [self testData];
+    
+    XCTAssertEqualObjects(dataReadFromFile, expectedData);
 }
 
 @end

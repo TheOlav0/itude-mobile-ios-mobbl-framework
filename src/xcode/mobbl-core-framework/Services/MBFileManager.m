@@ -46,7 +46,8 @@
 	if(fileExists) return absPath;
 	else {
 		// check for .xml file in bundle
-		NSString *absPathInBundle = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent: fileName];
+        NSBundle *appBundle = [NSBundle bundleForClass:[self class]];
+		NSString *absPathInBundle = [[appBundle bundlePath] stringByAppendingPathComponent: fileName];
 		fileExists = [[NSFileManager defaultManager] fileExistsAtPath:absPathInBundle];
 		if (fileExists) {
 			return absPathInBundle;
