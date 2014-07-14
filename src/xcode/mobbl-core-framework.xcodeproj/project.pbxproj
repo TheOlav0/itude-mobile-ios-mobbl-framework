@@ -433,6 +433,8 @@
 		266075621959B05E008131A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA101885C25800C881C5 /* UIKit.framework */; };
 		266075681959B05E008131A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266075661959B05E008131A6 /* InfoPlist.strings */; };
 		2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 266075691959B05E008131A6 /* mobbl_core_framework_tests.m */; };
+		266481A31973CAA8003B1CD2 /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 266481A11973CAA8003B1CD2 /* MBFileManagerTest.m */; };
+		266481A71973CEAD003B1CD2 /* MBFileManagerReadTest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */; };
 		C76351DC188EAC10006808DE /* MBJsonDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DD188EAC10006808DE /* MBJsonDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */; };
 		C76351DE188EAC10006808DE /* MBXmlDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -880,6 +882,8 @@
 		266075671959B05E008131A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		266075691959B05E008131A6 /* mobbl_core_framework_tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobbl_core_framework_tests.m; sourceTree = "<group>"; };
 		2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobbl-core-framework-tests-Prefix.pch"; sourceTree = "<group>"; };
+		266481A11973CAA8003B1CD2 /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBFileManagerTest.m; path = Services/MBFileManagerTest.m; sourceTree = "<group>"; };
+		266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBFileManagerReadTest.xml; path = Resources/MBFileManagerTest/MBFileManagerReadTest.xml; sourceTree = "<group>"; };
 		C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBJsonDocumentParser.h; sourceTree = "<group>"; };
 		C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParser.m; sourceTree = "<group>"; };
 		C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXmlDocumentParser.h; sourceTree = "<group>"; };
@@ -1686,6 +1690,8 @@
 		266075631959B05E008131A6 /* mobbl-core-framework-tests */ = {
 			isa = PBXGroup;
 			children = (
+				266481A41973CE30003B1CD2 /* Resources */,
+				266481A01973CA95003B1CD2 /* Services */,
 				266075691959B05E008131A6 /* mobbl_core_framework_tests.m */,
 				266075641959B05E008131A6 /* Supporting Files */,
 			);
@@ -1700,6 +1706,30 @@
 				2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		266481A01973CA95003B1CD2 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				266481A11973CAA8003B1CD2 /* MBFileManagerTest.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		266481A41973CE30003B1CD2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				266481A51973CE84003B1CD2 /* MBFileManagerTest */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		266481A51973CE84003B1CD2 /* MBFileManagerTest */ = {
+			isa = PBXGroup;
+			children = (
+				266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */,
+			);
+			name = MBFileManagerTest;
 			sourceTree = "<group>";
 		};
 		C76351D7188EAC10006808DE /* Parser */ = {
@@ -2046,6 +2076,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				266481A71973CEAD003B1CD2 /* MBFileManagerReadTest.xml in Resources */,
 				266075681959B05E008131A6 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2288,6 +2319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				266481A31973CAA8003B1CD2 /* MBFileManagerTest.m in Sources */,
 				2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2514,6 +2546,7 @@
 				2660756F1959B05E008131A6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
