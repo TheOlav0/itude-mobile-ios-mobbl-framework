@@ -34,23 +34,11 @@ NSString * const TestContentsString     =   @"<?xml version=\"1.0\" encoding=\"U
     return [TestContentsString dataUsingEncoding:NSStringEncodingConversionAllowLossy];
 }
 
-- (void)setUp
-{
-    [super setUp];
-    
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
 - (void) testDataWithContentsOfMainBundle {
     NSData *dataReadFromFile = [[self fileManager] dataWithContentsOfMainBundle:ReadingTestFileName];
     
     NSData *expectedData = [self testData];
-
+    
     XCTAssertEqualObjects(dataReadFromFile, expectedData);
 }
 
