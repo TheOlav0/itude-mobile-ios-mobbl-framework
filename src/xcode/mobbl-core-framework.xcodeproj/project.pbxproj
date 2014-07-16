@@ -433,7 +433,6 @@
 		266075621959B05E008131A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA101885C25800C881C5 /* UIKit.framework */; };
 		266075681959B05E008131A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266075661959B05E008131A6 /* InfoPlist.strings */; };
 		2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 266075691959B05E008131A6 /* mobbl_core_framework_tests.m */; };
-		266481A31973CAA8003B1CD2 /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 266481A11973CAA8003B1CD2 /* MBFileManagerTest.m */; };
 		266481A71973CEAD003B1CD2 /* MBFileManagerReadTest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */; };
 		266481A81973D42E003B1CD2 /* MBFireInitialOutcomes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDD8B1885E42E00C881C5 /* MBFireInitialOutcomes.m */; };
 		266481A91973D42E003B1CD2 /* MBConditionalDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDD8E1885E42E00C881C5 /* MBConditionalDefinition.m */; };
@@ -618,6 +617,7 @@
 		2664825C1973D446003B1CD2 /* MBPanelDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB41885E42E00C881C5 /* MBPanelDefinition.m */; };
 		2664825D1973D446003B1CD2 /* MBVariableDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB61885E42E00C881C5 /* MBVariableDefinition.m */; };
 		2664825E1973E006003B1CD2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA1A1885C27A00C881C5 /* libsqlite3.0.dylib */; };
+		26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B09626197564EA0014D93A /* MBFileManagerTest.m */; };
 		C76351DC188EAC10006808DE /* MBJsonDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DD188EAC10006808DE /* MBJsonDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */; };
 		C76351DE188EAC10006808DE /* MBXmlDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -1065,8 +1065,8 @@
 		266075671959B05E008131A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		266075691959B05E008131A6 /* mobbl_core_framework_tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobbl_core_framework_tests.m; sourceTree = "<group>"; };
 		2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobbl-core-framework-tests-Prefix.pch"; sourceTree = "<group>"; };
-		266481A11973CAA8003B1CD2 /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBFileManagerTest.m; path = Services/MBFileManagerTest.m; sourceTree = "<group>"; };
 		266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBFileManagerReadTest.xml; path = Resources/MBFileManagerTest/MBFileManagerReadTest.xml; sourceTree = "<group>"; };
+		26B09626197564EA0014D93A /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileManagerTest.m; sourceTree = "<group>"; };
 		C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBJsonDocumentParser.h; sourceTree = "<group>"; };
 		C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParser.m; sourceTree = "<group>"; };
 		C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXmlDocumentParser.h; sourceTree = "<group>"; };
@@ -1875,8 +1875,8 @@
 			isa = PBXGroup;
 			children = (
 				266481A41973CE30003B1CD2 /* Resources */,
-				266481A01973CA95003B1CD2 /* Services */,
 				266075691959B05E008131A6 /* mobbl_core_framework_tests.m */,
+				26B09624197564EA0014D93A /* Tests */,
 				266075641959B05E008131A6 /* Supporting Files */,
 			);
 			path = "mobbl-core-framework-tests";
@@ -1890,14 +1890,6 @@
 				2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		266481A01973CA95003B1CD2 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				266481A11973CAA8003B1CD2 /* MBFileManagerTest.m */,
-			);
-			name = Services;
 			sourceTree = "<group>";
 		};
 		266481A41973CE30003B1CD2 /* Resources */ = {
@@ -1914,6 +1906,22 @@
 				266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */,
 			);
 			name = MBFileManagerTest;
+			sourceTree = "<group>";
+		};
+		26B09624197564EA0014D93A /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				26B09625197564EA0014D93A /* Services */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		26B09625197564EA0014D93A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				26B09626197564EA0014D93A /* MBFileManagerTest.m */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C76351D7188EAC10006808DE /* Parser */ = {
@@ -2607,6 +2615,7 @@
 				266481FC1973D42E003B1CD2 /* NSData+Base64.m in Sources */,
 				266481FD1973D42E003B1CD2 /* Reachability.m in Sources */,
 				266481FE1973D42E003B1CD2 /* StringUtilities.m in Sources */,
+				26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */,
 				266481FF1973D42E003B1CD2 /* StringUtilitiesHelper.m in Sources */,
 				266482001973D42E003B1CD2 /* UIButton+ResizableBackgroundImage.m in Sources */,
 				266482011973D42E003B1CD2 /* UITextField+ResizableBackgroundImage.m in Sources */,
@@ -2685,7 +2694,6 @@
 				2664824A1973D42E003B1CD2 /* MBPanel.m in Sources */,
 				2664824B1973D42E003B1CD2 /* MBTableViewController.m in Sources */,
 				2664824C1973D42E003B1CD2 /* mobbl_core_framework.m in Sources */,
-				266481A31973CAA8003B1CD2 /* MBFileManagerTest.m in Sources */,
 				2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
