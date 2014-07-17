@@ -11,4 +11,6 @@
 
 @interface MBHTTPConnectionImpl : NSObject <MBHTTPConnection>
 
+- initWithRequest:(NSURLRequest *)request delegate:(id<MBHTTPConnectionDelegate>)delegate;
+
 @end

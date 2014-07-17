@@ -26,34 +26,70 @@
 #import "MBDocumentFactory.h"
 #import "MBResourceService.h"
 
+#import "MBHTTPConnection.h"
+#import "MBHTTPConnectionImpl.h"
+
+typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate);
 
 
+@interface MBWebserviceDataHandler()
 
-@interface MBWebserviceDataHandler(hidden)
+@property (nonatomic, readonly) MBHTTPConnectionBuilder connectionBuilder;
+
 -(NSString*) convertDataToString:(NSData*) data;
+-(MBHTTPConnectionBuilder)defaultConnectionBuilder;
+-(MBWebservicesConfiguration *)defaultConfiguration;
+
 @end
 
 @implementation MBWebserviceDataHandler
 
 - (id) init {
-	self = [super init];
-	if (self != nil) {
-        MBWebservicesConfigurationParser *parser = [[MBWebservicesConfigurationParser alloc] init];
-		NSString *documentName = [[MBMetadataService sharedInstance] endpointsName];
-		NSData *data = [[MBResourceService sharedInstance].fileManager dataWithContentsOfMainBundle: documentName];
-		_webServiceConfiguration = [[parser parseData:data ofDocument: documentName] retain];
-        [parser release];
-	}
-	return self;
+	return [self initWithConfiguration:[self defaultConfiguration] connectionBuilder:[self defaultConnectionBuilder]];
+}
+
+- (id) initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder {
+    return [self initWithConfiguration:[self defaultConfiguration] connectionBuilder:connectionBuilder];
 }
 
 - (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration
 {
+    return [self initWithConfiguration:configuration connectionBuilder:[self defaultConnectionBuilder]];
+}
+
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder {
     self = [super init];
     if (self) {
+        if (!configuration || connectionBuilder) {
+            [self release];
+            return nil;
+        }
+        
+        _connectionBuilder = [connectionBuilder copy];
         _webServiceConfiguration = [configuration retain];
+        
     }
-    return  self;
+    return self;
+}
+
+- (MBWebservicesConfiguration *)defaultConfiguration {
+    MBWebservicesConfigurationParser *parser = [[MBWebservicesConfigurationParser alloc] init];
+    NSString *documentName = [[MBMetadataService sharedInstance] endpointsName];
+    NSData *data = [[MBResourceService sharedInstance].fileManager dataWithContentsOfMainBundle: documentName];
+    
+    MBWebservicesConfiguration *webServiceConfiguration = [[parser parseData:data ofDocument: documentName] retain];
+    
+    [parser release];
+    
+    return webServiceConfiguration;
+}
+
+- (MBHTTPConnectionBuilder)defaultConnectionBuilder {
+    MBHTTPConnectionBuilder connectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate) {
+        return [[MBHTTPConnectionImpl alloc] initWithRequest:request delegate:delegate];
+    };
+    
+    return [[connectionBuilder copy] autorelease];
 }
 
 - (MBEndPointDefinition *) getEndPointForDocument:(NSString*)name {
@@ -178,7 +214,7 @@
 -(NSData *) dataFromRequest:(NSURLRequest *)request withDocumentName:(NSString*) documentName andEndpoint:(MBEndPointDefinition*)endPoint{
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
-    MBRequestDelegate *delegate = [MBRequestDelegate new];
+    MBHTTPConnectionDelegateImpl *delegate = [MBHTTPConnectionDelegateImpl new];
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:endPoint.timeout target:(delegate) selector:@selector(cancel) userInfo:nil repeats:NO];
     @try {
         delegate.err = nil;
@@ -186,7 +222,9 @@
         delegate.finished = NO;
         delegate.data = [[NSMutableData new] retain];
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
-        if ((delegate.connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate])){
+
+        id<MBHTTPConnection> connection = self.connectionBuilder(request, delegate);
+        if ((delegate.connection = connection)){
             while (!delegate.finished) {
                 [self checkForConnectionErrorsInDelegate:delegate withDocumentName:documentName andEndPoint:endPoint];
                 // Wait for async http request to finish, but make sure delegate methods are called, since this is executed in an NSOperation
@@ -214,7 +252,7 @@
     }
 }
 
--(void)checkForConnectionErrorsInDelegate:(MBRequestDelegate *)delegate withDocumentName:(NSString*)documentName andEndPoint:(MBEndPointDefinition *)endPoint{
+-(void)checkForConnectionErrorsInDelegate:(MBHTTPConnectionDelegateImpl *)delegate withDocumentName:(NSString*)documentName andEndPoint:(MBEndPointDefinition *)endPoint{
     NSString *endPointUri = endPoint.endPointUri;
     NSURL *url = nil;
     NSString *hostName = nil;
@@ -313,6 +351,7 @@
 
 - (void) dealloc {
 	[_webServiceConfiguration release];
+    [_connectionBuilder release];
 	[super dealloc];
 }
 
@@ -323,59 +362,53 @@
 // uncomment to allow self signed SSL certificates
 // #define ALLOW_SELFSIGNED_SSL_CERTS 1
 
-@implementation MBRequestDelegate
-
-@synthesize connection = _connection;
-@synthesize err = _err;
-@synthesize response = _response;
-@synthesize data = _data;
-@synthesize finished = _finished;
+@implementation MBHTTPConnectionDelegateImpl
 
 -(void) dealloc{
-	self.data = nil;
-	self.err = nil;
-	self.response = nil;
-	self.connection = nil;
+	[_data release];
+    [_err release];
+	[_response release];
+	[_connection release];
 	[super dealloc];
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+- (void)connection:(id<MBHTTPConnection>)connection didFailWithError:(NSError *)error {
 	_finished = YES;
 	self.err = error;
 	
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+- (void)connection:(id<MBHTTPConnection>)connection didReceiveData:(NSData *)data {
 	[self.data appendData:data];
 }
 
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+- (void)connection:(id<MBHTTPConnection>)connection didReceiveResponse:(NSURLResponse *)response {
 	[self.data setLength:0];
 	self.response = response;
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-	_finished = YES;
+- (void)connectionDidFinishLoading:(id<MBHTTPConnection>)connection {
+	self.finished = YES;
 }
 
 - (void) cancel{
     [self.connection cancel];
-    _finished = YES;
+    self.finished = YES;
 }
 
-- (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse{
+- (NSCachedURLResponse *)connection:(id<MBHTTPConnection>)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse{
 	// never cache the response of the urlConnection here.
 	return nil;
 }
 
 #ifdef ALLOW_SELFSIGNED_SSL_CERTS
 
-- (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
+- (BOOL)connection:(id<MBHTTPConnection>)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
 	return [protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
+- (void)connection:(id<MBHTTPConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
 	[challenge.sender useCredential:[NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust] forAuthenticationChallenge:challenge];
 	[challenge.sender continueWithoutCredentialForAuthenticationChallenge:challenge];
 }

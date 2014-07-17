@@ -13,12 +13,13 @@
 
 @protocol MBHTTPConnectionDelegate <NSObject>
 
-
-@property BOOL finished;
-@property (nonatomic, retain) id<MBHTTPConnection> connection;
-@property (nonatomic, retain) NSError *err;
-@property (nonatomic, retain) NSURLResponse *response;
-@property (nonatomic, retain) NSMutableData *data;
-
+@optional
+- (void)connection:(id<MBHTTPConnection>)connection didFailWithError:(NSError *)error;
+- (void)connection:(id<MBHTTPConnection>)connection didReceiveData:(NSData *)data;
+- (void)connection:(id<MBHTTPConnection>)connection didReceiveResponse:(NSURLResponse *)response;
+- (void)connectionDidFinishLoading:(id<MBHTTPConnection>)connection;
+- (NSCachedURLResponse *)connection:(id<MBHTTPConnection>)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse;
+- (BOOL)connection:(id<MBHTTPConnection>)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace;
+- (void)connection:(id<MBHTTPConnection>)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge;
 
 @end

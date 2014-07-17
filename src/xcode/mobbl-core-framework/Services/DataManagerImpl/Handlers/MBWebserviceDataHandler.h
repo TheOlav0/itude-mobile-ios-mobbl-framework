@@ -17,6 +17,8 @@
 #import "MBDataHandlerBase.h"
 #import "MBWebservicesConfigurationParser.h"
 
+#import "MBHTTPConnectionDelegate.h"
+
 /** retrieves and sends MBDocument instances to and from a webservice.
  
  * The MBWebserviceDataHandler is the top level in the DataHandlers for HTTP network communication.
@@ -99,19 +101,10 @@
 @end
 
 // Delegate used for callbacks in asynchronous http request. //
-@interface MBRequestDelegate : NSObject // <NSURLConnectionDelegate> from iOS 5 on
-{
-	
-	BOOL _finished;
-	NSMutableData *_data;
-	NSURLConnection *_connection;
-	NSError *_err;
-	NSURLResponse *_response;
-	
-}
+@interface MBHTTPConnectionDelegateImpl : NSObject <MBHTTPConnectionDelegate>
 
 @property BOOL finished;
-@property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, retain) id<MBHTTPConnection> connection;
 @property (nonatomic, retain) NSError *err;
 @property (nonatomic, retain) NSURLResponse *response;
 @property (nonatomic, retain) NSMutableData *data;

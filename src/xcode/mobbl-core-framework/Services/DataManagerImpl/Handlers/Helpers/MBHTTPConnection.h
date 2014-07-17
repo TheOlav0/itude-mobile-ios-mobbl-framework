@@ -11,9 +11,11 @@
 
 @protocol MBHTTPConnection <NSObject>
 
-@property (nonatomic, retain) NSURLRequest *request;
-@property (nonatomic, retain) id<MBHTTPConnectionDelegate> delegate;
+@property (nonatomic, readonly) id<MBHTTPConnectionDelegate> delegate;
 
-- (void)start;
+- (NSURLRequest *)originalRequest;
+- (NSURLRequest *)currentRequest;
+
+- (void)cancel;
 
 @end
