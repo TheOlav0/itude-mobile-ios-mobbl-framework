@@ -29,9 +29,6 @@
 #import "MBHTTPConnection.h"
 #import "MBHTTPConnectionImpl.h"
 
-typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate);
-
-
 @interface MBWebserviceDataHandler()
 
 @property (nonatomic, readonly) MBHTTPConnectionBuilder connectionBuilder;

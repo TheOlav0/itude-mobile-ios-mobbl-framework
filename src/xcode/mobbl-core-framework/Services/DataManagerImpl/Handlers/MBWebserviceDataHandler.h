@@ -19,6 +19,8 @@
 
 #import "MBHTTPConnectionDelegate.h"
 
+typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate);
+
 /** retrieves and sends MBDocument instances to and from a webservice.
  
  * The MBWebserviceDataHandler is the top level in the DataHandlers for HTTP network communication.
@@ -37,8 +39,15 @@
 // Initialize with configuration read from config files
 - (id) init;
 
-// Initialize with custom configuration
+// Initialize with custom configuration and default connection builder
 - (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration;
+
+// Initialize with custom connection builder and configuration read from config files
+- (id) initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder;
+
+// Designated initializer (custom config and connection builder)
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder;
+
 
 - (MBDocument *) loadDocument:(NSString *)documentName;
 - (MBDocument *) loadDocument:(NSString *)documentName withArguments:(MBDocument *)args;

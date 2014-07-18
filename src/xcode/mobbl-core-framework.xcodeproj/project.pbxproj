@@ -617,10 +617,14 @@
 		2664825C1973D446003B1CD2 /* MBPanelDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB41885E42E00C881C5 /* MBPanelDefinition.m */; };
 		2664825D1973D446003B1CD2 /* MBVariableDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB61885E42E00C881C5 /* MBVariableDefinition.m */; };
 		2664825E1973E006003B1CD2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA1A1885C27A00C881C5 /* libsqlite3.0.dylib */; };
+		26AC087D1977F17F000384EF /* MBWebServiceDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */; };
+		26AC08801979231C000384EF /* MBMockWebServiceDataHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */; };
+		26AC08811979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */; };
+		26AC08821979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */; };
 		26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B09626197564EA0014D93A /* MBFileManagerTest.m */; };
-		26B0963E197687680014D93A /* MBHTTPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963A197687680014D93A /* MBHTTPConnection.h */; };
-		26B0963F197687680014D93A /* MBHTTPConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */; };
-		26B09640197687680014D93A /* MBHTTPConnectionImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963C197687680014D93A /* MBHTTPConnectionImpl.h */; };
+		26B0963E197687680014D93A /* MBHTTPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963A197687680014D93A /* MBHTTPConnection.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		26B0963F197687680014D93A /* MBHTTPConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		26B09640197687680014D93A /* MBHTTPConnectionImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963C197687680014D93A /* MBHTTPConnectionImpl.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		26B09641197687680014D93A /* MBHTTPConnectionImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B0963D197687680014D93A /* MBHTTPConnectionImpl.m */; };
 		26B09642197687680014D93A /* MBHTTPConnectionImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B0963D197687680014D93A /* MBHTTPConnectionImpl.m */; };
 		C76351DC188EAC10006808DE /* MBJsonDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -1071,6 +1075,9 @@
 		266075691959B05E008131A6 /* mobbl_core_framework_tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobbl_core_framework_tests.m; sourceTree = "<group>"; };
 		2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobbl-core-framework-tests-Prefix.pch"; sourceTree = "<group>"; };
 		266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBFileManagerReadTest.xml; path = Resources/MBFileManagerTest/MBFileManagerReadTest.xml; sourceTree = "<group>"; };
+		26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBWebServiceDataHandlerTest.m; path = DataHandlers/MBWebServiceDataHandlerTest.m; sourceTree = "<group>"; };
+		26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBMockWebServiceDataHandler.h; path = DataHandlers/Mocks/MBMockWebServiceDataHandler.h; sourceTree = "<group>"; };
+		26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBMockWebServiceDataHandler.m; path = DataHandlers/Mocks/MBMockWebServiceDataHandler.m; sourceTree = "<group>"; };
 		26B09626197564EA0014D93A /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileManagerTest.m; sourceTree = "<group>"; };
 		26B0963A197687680014D93A /* MBHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnection.h; sourceTree = "<group>"; };
 		26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnectionDelegate.h; sourceTree = "<group>"; };
@@ -1918,6 +1925,24 @@
 			name = MBFileManagerTest;
 			sourceTree = "<group>";
 		};
+		26AC087B1977F11F000384EF /* DataHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				26AC08831979231F000384EF /* Mocks */,
+				26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */,
+			);
+			name = DataHandlers;
+			sourceTree = "<group>";
+		};
+		26AC08831979231F000384EF /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */,
+				26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
 		26B09624197564EA0014D93A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1929,6 +1954,7 @@
 		26B09625197564EA0014D93A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				26AC087B1977F11F000384EF /* DataHandlers */,
 				26B09626197564EA0014D93A /* MBFileManagerTest.m */,
 			);
 			path = Services;
@@ -2045,7 +2071,6 @@
 				1FECE0171885E42F00C881C5 /* MBTypes.h in Headers */,
 				1FECDFC41885E42F00C881C5 /* GTMObjC2Runtime.h in Headers */,
 				1FECDF831885E42F00C881C5 /* MBEndPointDefinition.h in Headers */,
-				26B0963E197687680014D93A /* MBHTTPConnection.h in Headers */,
 				1FECE0A51885E42F00C881C5 /* MBSectionPanelViewBuilder.h in Headers */,
 				1FECDFF21885E42F00C881C5 /* MBDocumentOperation.h in Headers */,
 				1FECE08B1885E42F00C881C5 /* MBForEachViewBuilder.h in Headers */,
@@ -2076,7 +2101,6 @@
 				1FECE0EE1885E42F00C881C5 /* MBValueChangeListenerProtocol.h in Headers */,
 				1FECE02C1885E42F00C881C5 /* MBConstants.h in Headers */,
 				1FECE0241885E42F00C881C5 /* SBJsonWriter.h in Headers */,
-				26B0963F197687680014D93A /* MBHTTPConnectionDelegate.h in Headers */,
 				1FECDF9D1885E42F00C881C5 /* MBOutcomeManager.h in Headers */,
 				1FECDF811885E42F00C881C5 /* MBResourceDefinition.h in Headers */,
 				1FECE0021885E42F00C881C5 /* MBDataHandler.h in Headers */,
@@ -2150,10 +2174,10 @@
 				1FECE0A31885E42F00C881C5 /* MBPlainPanelBuilder.h in Headers */,
 				1FECE0621885E42F00C881C5 /* MBDialogDecoratorTypes.h in Headers */,
 				1FECDFFE1885E42F00C881C5 /* MBSystemDataHandler.h in Headers */,
+				26AC08801979231C000384EF /* MBMockWebServiceDataHandler.h in Headers */,
 				1FECE0D71885E42F00C881C5 /* MBComponent.h in Headers */,
 				1FECDF7F1885E42F00C881C5 /* MBResourceConfigurationParser.h in Headers */,
 				1FECE0971885E42F00C881C5 /* MBPageViewBuilder.h in Headers */,
-				26B09640197687680014D93A /* MBHTTPConnectionImpl.h in Headers */,
 				1FECDF631885E42E00C881C5 /* MBDocumentDefinition.h in Headers */,
 				1FECE03C1885E42F00C881C5 /* MBUtil.h in Headers */,
 				1FECE0CB1885E42F00C881C5 /* MBSpinner.h in Headers */,
@@ -2179,9 +2203,12 @@
 				1FECDFD81885E42F00C881C5 /* MBElementContainer.h in Headers */,
 				1FECE04B1885E42F00C881C5 /* UIView+HierarchyLogging.h in Headers */,
 				1FECE0A91885E42F00C881C5 /* MBNewRowViewBuilder.h in Headers */,
+				26B0963F197687680014D93A /* MBHTTPConnectionDelegate.h in Headers */,
+				26B09640197687680014D93A /* MBHTTPConnectionImpl.h in Headers */,
 				1FECDF671885E42E00C881C5 /* MBDomainValidatorDefinition.h in Headers */,
 				1FECE0631885E42F00C881C5 /* MBModalCurrentContextDialogDecorator.h in Headers */,
 				1FECDFFA1885E42F00C881C5 /* MBRESTServiceDataHandler.h in Headers */,
+				26B0963E197687680014D93A /* MBHTTPConnection.h in Headers */,
 				00CD911818A5350300ACA235 /* MBFileManager.h in Headers */,
 				1FECE0611885E42F00C881C5 /* MBDialogDecorator.h in Headers */,
 			);
@@ -2378,6 +2405,7 @@
 				1FECE0511885E42F00C881C5 /* ViewUtilities.m in Sources */,
 				1FECDFCB1885E42F00C881C5 /* MGSplitViewController.m in Sources */,
 				1FECDFD01885E42F00C881C5 /* MBDocumentDiff.m in Sources */,
+				26AC08811979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */,
 				1FECE09E1885E42F00C881C5 /* MBMatrixBuilder.m in Sources */,
 				1FECE04A1885E42F00C881C5 /* UITextField+ResizableBackgroundImage.m in Sources */,
 				1FECE0681885E42F00C881C5 /* MBModalFormSheetDialogDecorator.m in Sources */,
@@ -2579,6 +2607,7 @@
 				266481BF1973D42E003B1CD2 /* MBActivityIndicator.m in Sources */,
 				266481C01973D42E003B1CD2 /* MBBasicViewController.m in Sources */,
 				266481C11973D42E003B1CD2 /* MBFormSubmission.m in Sources */,
+				26AC08821979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */,
 				266481C21973D42E003B1CD2 /* MBSplitViewController.m in Sources */,
 				266481C31973D42E003B1CD2 /* UINavigationController+MBRebuilder.m in Sources */,
 				266481C41973D42E003B1CD2 /* UINavigationController+Rotation.m in Sources */,
@@ -2614,6 +2643,7 @@
 				266481E21973D42E003B1CD2 /* MBDataHandlerBase.m in Sources */,
 				266481E31973D42E003B1CD2 /* MBDataManagerService.m in Sources */,
 				266481E41973D42E003B1CD2 /* MBLocalizationService.m in Sources */,
+				26AC087D1977F17F000384EF /* MBWebServiceDataHandlerTest.m in Sources */,
 				266481E51973D42E003B1CD2 /* MBMetadataService.m in Sources */,
 				266481E61973D42E003B1CD2 /* MBResourceService.m in Sources */,
 				266481E71973D42E003B1CD2 /* MBScriptService.m in Sources */,
