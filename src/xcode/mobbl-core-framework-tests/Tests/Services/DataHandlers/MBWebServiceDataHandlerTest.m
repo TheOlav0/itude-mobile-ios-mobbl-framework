@@ -7,8 +7,28 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "MBMetadataService.h"
+
+#import "MBMockHTTPConnection.h"
+
+#import "MBMockWebServiceDataHandler.h"
+
+static NSString * const TestDocumentName = @"WebCallResult";
+static NSString * const TestDocumentResultElementName = @"Result";
+static NSString * const TestDocumentResultValue = @"1";
 
 @interface MBWebServiceDataHandlerTest : XCTestCase
+
+@property (nonatomic, retain) MBMockWebServiceDataHandler *webServiceDataHandler;
+
+- (MBHTTPConnectionBuilder)connectionBuilderWithBehavior:(NSArray *)connectionBehavior;
+- (MBMockWebServiceDataHandler *)mockWebServiceDataHandlerWithBehavior:(NSArray *)behavior;
+- (NSData *)testData;
+- (MBMockHTTPConnectionEvent *)httpResponseEventWithHeaderFields:(NSDictionary *)httpHeaders httpVersion:(NSString *)httpVersion httpStatusCode:(NSUInteger)httpStatusCode;
+- (MBMockHTTPConnectionEvent *)httpFailureEventWithErrorMessage:(NSString *)message;
+- (MBMockHTTPConnectionEvent *)httpDataEventWithData:(NSData *)data;
+
+- (void)testLoadFreshDocumentDataFinish;
 
 @end
 
@@ -16,80 +36,114 @@
 
 - (void)setUp
 {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown
-{
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
-/*
- 
- - (MBDocument *) loadDocument:(NSString *)documentName;
- - (MBDocument *) loadDocument:(NSString *)documentName withArguments:(MBDocument *)args;
- - (void) storeDocument:(MBDocument *)document;
- 
- - (MBEndPointDefinition *) getEndPointForDocument:(NSString*)name;
- 
- /** override this method to influence the URL used by the client.
- @param url The URL specified by the EndPointDefinition linked to the Document
- @param args A Document containing arguments for the call to the Webservice
- * /
--(NSString *)url:(NSString *)url WithArguments:(MBDocument*)args;
- */
-
-- (void)testUrlWithArguments {
+    MBMetadataService *metadataService = [MBMetadataService sharedInstance];
     
+    [metadataService setConfigName:@"MBWebServiceDataHandler_config.xml"];
+    [metadataService setEndpointsName:@"MBWebServiceDataHandler_endpoints.xml"];
 }
 
-/** override this method to influence the HTTP headers sent to the webservice.
- @param doc A Document containing arguments for the call to the Webservice
- * /
--(void) setHTTPHeaders:(NSMutableURLRequest *)request withArguments:(MBDocument*) args;
-/** override this method to influence the HTTP request body sent to the webservice.
- @param request The request object for the call to the Webservice
- @param doc A Document containing arguments for the call to the Webservice
- * /
--(void) setHTTPRequestBody:(NSMutableURLRequest *)request withArguments:(MBDocument*) args;
+- (MBMockHTTPConnectionEvent *)httpDataEventWithData:(NSData *)data {
+    MBMockHTTPConnectionEvent *event = [[MBMockHTTPConnectionEvent alloc] initWithType:MBMockHTTPConnectionEventTypeData
+                                                                              userInfo:@{ MBMockHTTPConnectionEventDataKey: data }];
+    
+    return [event autorelease];
+}
 
-/** Template method that retrieves the data from the webservice.
- @param request The request object for the call to the Webservice
- @param documentName The name of the Document being requested from the webservice
- @param endpoint The EndPointDefinition linked to the Document
- * /
--(NSData *) dataFromRequest:(NSURLRequest *)request withDocumentName:(NSString*) documentName andEndpoint:(MBEndPointDefinition*)endPoint;
+- (MBMockHTTPConnectionEvent *)httpResponseEventWithHeaderFields:(NSDictionary *)httpHeaders httpVersion:(NSString *)httpVersion httpStatusCode:(NSUInteger)httpStatusCode {
+    MBMockHTTPConnectionEvent *event = [[MBMockHTTPConnectionEvent alloc] initWithType:MBMockHTTPConnectionEventTypeFinish
+                                                                              userInfo: @{
+                                                                                          MBMockHTTPConnectionEventResponseHeaderFieldsKey: httpHeaders,
+                                                                                          MBMockHTTPConnectionEventResponseHTTPVersionKey: httpVersion,
+                                                                                          MBMockHTTPConnectionEventResponseStatusCodeKey: @(httpStatusCode)
+                                                                                          }];
+    
+    return [event autorelease];
+}
 
-/** Template method that checks the response against ResultListeners specified in the endpoint definitions and fires the ones that match.
- @param endpoint The EndPointDefinition linked to the Document
- @param args A Document containing arguments for the call to the Webservice
- @param dataString the result of the webservice call in string format.
- * /
--(BOOL) checkResultListenerMatchesInEndpoint:(MBEndPointDefinition *)endpoint withArguments:(MBDocument*)args withResponse:(NSString*)dataString;
+- (MBMockHTTPConnectionEvent *)httpFailureEventWithErrorMessage:(NSString *)message {
+    MBMockHTTPConnectionEvent *event = [[MBMockHTTPConnectionEvent alloc] initWithType:MBMockHTTPConnectionEventTypeFailure
+                                                                              userInfo:@{ MBMockHTTPConnectionEventFailureMessageKey: message }];
+    
+    return [event autorelease];
+}
 
-/** Template method that parses the response and builds a Document. Override to implement or specify a custom parser
- @param endpoint The EndPointDefinition linked to the Document
- @param data The webservice response
- @param documentName The name of the Document being requested from the webservice
- * /
--(MBDocument *) documentWithData:(NSData *)data andDocumentName:(NSString *)documentName;
+- (MBHTTPConnectionBuilder)connectionBuilderWithBehavior:(NSArray *)connectionBehavior {
+    [connectionBehavior retain];
+    const MBHTTPConnectionBuilder connectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate)
+    {
+        id<MBHTTPConnection> httpConnection = [[MBMockHTTPConnection alloc] initWithRequest:request delegate:delegate connectionBehavior:connectionBehavior];
+        [connectionBehavior release];
+        
+        return httpConnection;
+    };
+    
+    return [[connectionBuilder copy] autorelease];
+}
 
-/** override this method to influence the format of the data sent to the webservice.
- @param doc A Document containing arguments for the call to the Webservice
- * /
--(MBDocument *) reformatRequestArgumentsForServer:(MBDocument * )doc;
+- (MBMockWebServiceDataHandler *)mockWebServiceDataHandlerWithBehavior:(NSArray *)behavior {
+    const MBHTTPConnectionBuilder mockConnectionBuilder = [self connectionBuilderWithBehavior:behavior];
+    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder];
+    
+    return mockWebServiceDataHandler;
+}
 
-/** convenience method to add housekeeping information to the request arguments
- @param element An Element in the Document containing the request arguments
- * /
--(void) addAttributesToRequestArguments:(MBDocument *)doc;
+- (NSData *)testData {
+    NSString *testDataString = [[NSString alloc] initWithFormat:
+                                @"<%@>\n"
+                                @"  <%@>%@</%@>\n"
+                                @"</%@>",
+                                TestDocumentName,
+                                TestDocumentResultElementName,
+                                TestDocumentResultValue,
+                                TestDocumentResultElementName,
+                                TestDocumentName
+                                ];
+    NSData *testData = [testDataString dataUsingEncoding:NSUTF8StringEncoding];
+    [testDataString release];
+    
+    return testData;
+}
 
-/** convenience method to add a checksum to the request arguments
- @param element An Element in the Document containing the request arguments
- * /
--(void) addChecksumToRequestArguments:(MBElement *)element;
-*/
+- (void)testLoadFreshDocumentDataFinish {
+    NSData * const httpData = [self testData];
+    NSDictionary * const httpHeaders = @{ @"Content-Length": @"42" };
+    NSArray * const mockConnectionBehavior = @[
+                                               [self httpDataEventWithData:httpData],
+                                               [self httpResponseEventWithHeaderFields:httpHeaders httpVersion:@"HTTP/1.1" httpStatusCode:200]
+                                               ];
+    
+    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [self mockWebServiceDataHandlerWithBehavior:mockConnectionBehavior];
+    XCTAssertNotNil(mockWebServiceDataHandler);
+    
+    MBDocument * const document = [mockWebServiceDataHandler loadFreshDocument:TestDocumentName];
+    XCTAssertNotNil(document);
+
+    NSDictionary * const elementDictionary = [document elements];
+    
+    NSArray * const uniqueElementNames = [elementDictionary allKeys];
+    
+    XCTAssert([uniqueElementNames count] == 1);
+    XCTAssertEqualObjects(uniqueElementNames[0], TestDocumentResultElementName);
+    MBElement *resultElement = [document valueForPath:TestDocumentResultElementName][0];
+    NSString *resultElementValue = [resultElement valueForAttribute:@"text()"];
+    XCTAssertEqual([resultElementValue integerValue], [TestDocumentResultValue integerValue]);
+    
+    [mockWebServiceDataHandler release];
+    [mockConnectionBehavior release];
+}
+
+//- (void)testLoadFreshDocument {
+//
+//}
+
+
+//- (void)testLoadDocumentWithArguments {
+//    
+//}
+//
+//
+//- (void)testLoadFreshDocumentWithArguments {
+//    
+//}
 
 @end

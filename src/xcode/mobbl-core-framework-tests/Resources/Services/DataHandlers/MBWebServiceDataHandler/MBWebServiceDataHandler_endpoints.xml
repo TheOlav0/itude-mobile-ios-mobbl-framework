@@ -1,0 +1,8 @@
+<EndPoints>
+    
+    <ResultListeners>
+    </ResultListeners>
+    
+    <EndPoint documentOut="WebCallResult" timeout="0" endPoint="http://example.com/resource" cacheable="true" ttl="0" />
+    
+</EndPoints>

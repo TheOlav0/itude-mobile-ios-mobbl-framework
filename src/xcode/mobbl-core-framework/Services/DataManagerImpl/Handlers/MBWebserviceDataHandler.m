@@ -57,7 +57,7 @@
 - (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder {
     self = [super init];
     if (self) {
-        if (!configuration || connectionBuilder) {
+        if (!configuration || !connectionBuilder) {
             [self release];
             return nil;
         }
@@ -98,8 +98,6 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"NetworkActivity" object: nil];
 	return result;
 }
-
-
 
 -(MBDocument *) loadDocument:(NSString *)documentName withArguments:(MBDocument *)doc{
 	BOOL cacheable = FALSE;

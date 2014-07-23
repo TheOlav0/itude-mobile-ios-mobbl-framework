@@ -48,7 +48,6 @@ typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, i
 // Designated initializer (custom config and connection builder)
 - (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder;
 
-
 - (MBDocument *) loadDocument:(NSString *)documentName;
 - (MBDocument *) loadDocument:(NSString *)documentName withArguments:(MBDocument *)args;
 - (void) storeDocument:(MBDocument *)document;

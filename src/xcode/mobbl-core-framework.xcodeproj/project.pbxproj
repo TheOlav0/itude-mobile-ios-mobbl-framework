@@ -428,12 +428,12 @@
 		1FECE0EE1885E42F00C881C5 /* MBValueChangeListenerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FECDF4C1885E42E00C881C5 /* MBValueChangeListenerProtocol.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1FECE0EF1885E42F00C881C5 /* MBTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 1FECDF4E1885E42E00C881C5 /* MBTableViewController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		1FECE0F01885E42F00C881C5 /* MBTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDF4F1885E42E00C881C5 /* MBTableViewController.m */; };
+		2611176C197E6BFB00C08108 /* resources.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2611176B197E6BFB00C08108 /* resources.xml */; };
 		266075601959B05E008131A6 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2660755F1959B05E008131A6 /* XCTest.framework */; };
 		266075611959B05E008131A6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA021885C1B300C881C5 /* Foundation.framework */; };
 		266075621959B05E008131A6 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA101885C25800C881C5 /* UIKit.framework */; };
 		266075681959B05E008131A6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 266075661959B05E008131A6 /* InfoPlist.strings */; };
 		2660756A1959B05E008131A6 /* mobbl_core_framework_tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 266075691959B05E008131A6 /* mobbl_core_framework_tests.m */; };
-		266481A71973CEAD003B1CD2 /* MBFileManagerReadTest.xml in Resources */ = {isa = PBXBuildFile; fileRef = 266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */; };
 		266481A81973D42E003B1CD2 /* MBFireInitialOutcomes.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDD8B1885E42E00C881C5 /* MBFireInitialOutcomes.m */; };
 		266481A91973D42E003B1CD2 /* MBConditionalDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDD8E1885E42E00C881C5 /* MBConditionalDefinition.m */; };
 		266481AA1973D42E003B1CD2 /* MBConfigurationParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDD901885E42E00C881C5 /* MBConfigurationParser.m */; };
@@ -618,9 +618,11 @@
 		2664825D1973D446003B1CD2 /* MBVariableDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB61885E42E00C881C5 /* MBVariableDefinition.m */; };
 		2664825E1973E006003B1CD2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA1A1885C27A00C881C5 /* libsqlite3.0.dylib */; };
 		26AC087D1977F17F000384EF /* MBWebServiceDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */; };
-		26AC08801979231C000384EF /* MBMockWebServiceDataHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */; };
-		26AC08811979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */; };
 		26AC08821979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */; };
+		26AC0890197953EE000384EF /* MBFileManagerTest_read.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26AC088F197953EE000384EF /* MBFileManagerTest_read.xml */; };
+		26AC0897197D0D1C000384EF /* MBWebServiceDataHandler_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26AC0896197D0D1C000384EF /* MBWebServiceDataHandler_config.xml */; };
+		26AC089A197D3419000384EF /* MBMockHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC0899197D3419000384EF /* MBMockHTTPConnection.m */; };
+		26AC089C197D76C7000384EF /* MBWebServiceDataHandler_endpoints.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26AC089B197D76C7000384EF /* MBWebServiceDataHandler_endpoints.xml */; };
 		26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B09626197564EA0014D93A /* MBFileManagerTest.m */; };
 		26B0963E197687680014D93A /* MBHTTPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963A197687680014D93A /* MBHTTPConnection.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		26B0963F197687680014D93A /* MBHTTPConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -1068,16 +1070,21 @@
 		1FECDF4C1885E42E00C881C5 /* MBValueChangeListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBValueChangeListenerProtocol.h; sourceTree = "<group>"; };
 		1FECDF4E1885E42E00C881C5 /* MBTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBTableViewController.h; sourceTree = "<group>"; };
 		1FECDF4F1885E42E00C881C5 /* MBTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBTableViewController.m; sourceTree = "<group>"; };
+		2611176B197E6BFB00C08108 /* resources.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = resources.xml; path = Resources/Default/resources.xml; sourceTree = "<group>"; };
 		2660755E1959B05E008131A6 /* mobbl-core-framework-tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "mobbl-core-framework-tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2660755F1959B05E008131A6 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		266075651959B05E008131A6 /* mobbl-core-framework-tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "mobbl-core-framework-tests-Info.plist"; sourceTree = "<group>"; };
 		266075671959B05E008131A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		266075691959B05E008131A6 /* mobbl_core_framework_tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobbl_core_framework_tests.m; sourceTree = "<group>"; };
 		2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobbl-core-framework-tests-Prefix.pch"; sourceTree = "<group>"; };
-		266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBFileManagerReadTest.xml; path = Resources/MBFileManagerTest/MBFileManagerReadTest.xml; sourceTree = "<group>"; };
 		26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBWebServiceDataHandlerTest.m; path = DataHandlers/MBWebServiceDataHandlerTest.m; sourceTree = "<group>"; };
 		26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBMockWebServiceDataHandler.h; path = DataHandlers/Mocks/MBMockWebServiceDataHandler.h; sourceTree = "<group>"; };
 		26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBMockWebServiceDataHandler.m; path = DataHandlers/Mocks/MBMockWebServiceDataHandler.m; sourceTree = "<group>"; };
+		26AC088F197953EE000384EF /* MBFileManagerTest_read.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MBFileManagerTest_read.xml; sourceTree = "<group>"; };
+		26AC0896197D0D1C000384EF /* MBWebServiceDataHandler_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBWebServiceDataHandler_config.xml; path = MBWebServiceDataHandler/MBWebServiceDataHandler_config.xml; sourceTree = "<group>"; };
+		26AC0898197D3419000384EF /* MBMockHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBMockHTTPConnection.h; path = DataHandlers/Mocks/MBMockHTTPConnection.h; sourceTree = "<group>"; };
+		26AC0899197D3419000384EF /* MBMockHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBMockHTTPConnection.m; path = DataHandlers/Mocks/MBMockHTTPConnection.m; sourceTree = "<group>"; };
+		26AC089B197D76C7000384EF /* MBWebServiceDataHandler_endpoints.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBWebServiceDataHandler_endpoints.xml; path = MBWebServiceDataHandler/MBWebServiceDataHandler_endpoints.xml; sourceTree = "<group>"; };
 		26B09626197564EA0014D93A /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileManagerTest.m; sourceTree = "<group>"; };
 		26B0963A197687680014D93A /* MBHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnection.h; sourceTree = "<group>"; };
 		26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnectionDelegate.h; sourceTree = "<group>"; };
@@ -1888,6 +1895,14 @@
 			path = Tables;
 			sourceTree = "<group>";
 		};
+		2611176A197E6BE200C08108 /* Default */ = {
+			isa = PBXGroup;
+			children = (
+				2611176B197E6BFB00C08108 /* resources.xml */,
+			);
+			name = Default;
+			sourceTree = "<group>";
+		};
 		266075631959B05E008131A6 /* mobbl-core-framework-tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1912,17 +1927,10 @@
 		266481A41973CE30003B1CD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				266481A51973CE84003B1CD2 /* MBFileManagerTest */,
+				2611176A197E6BE200C08108 /* Default */,
+				26AC088C197953EE000384EF /* Services */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		266481A51973CE84003B1CD2 /* MBFileManagerTest */ = {
-			isa = PBXGroup;
-			children = (
-				266481A61973CEAD003B1CD2 /* MBFileManagerReadTest.xml */,
-			);
-			name = MBFileManagerTest;
 			sourceTree = "<group>";
 		};
 		26AC087B1977F11F000384EF /* DataHandlers */ = {
@@ -1939,8 +1947,45 @@
 			children = (
 				26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */,
 				26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */,
+				26AC0898197D3419000384EF /* MBMockHTTPConnection.h */,
+				26AC0899197D3419000384EF /* MBMockHTTPConnection.m */,
 			);
 			name = Mocks;
+			sourceTree = "<group>";
+		};
+		26AC088C197953EE000384EF /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				26AC088D197953EE000384EF /* DataHandlers */,
+				26AC088E197953EE000384EF /* MBFileManagerTest */,
+			);
+			name = Services;
+			path = Resources/Services;
+			sourceTree = "<group>";
+		};
+		26AC088D197953EE000384EF /* DataHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				26AC0891197953F9000384EF /* MBWebServiceDataHandler */,
+			);
+			path = DataHandlers;
+			sourceTree = "<group>";
+		};
+		26AC088E197953EE000384EF /* MBFileManagerTest */ = {
+			isa = PBXGroup;
+			children = (
+				26AC088F197953EE000384EF /* MBFileManagerTest_read.xml */,
+			);
+			path = MBFileManagerTest;
+			sourceTree = "<group>";
+		};
+		26AC0891197953F9000384EF /* MBWebServiceDataHandler */ = {
+			isa = PBXGroup;
+			children = (
+				26AC0896197D0D1C000384EF /* MBWebServiceDataHandler_config.xml */,
+				26AC089B197D76C7000384EF /* MBWebServiceDataHandler_endpoints.xml */,
+			);
+			name = MBWebServiceDataHandler;
 			sourceTree = "<group>";
 		};
 		26B09624197564EA0014D93A /* Tests */ = {
@@ -2174,7 +2219,6 @@
 				1FECE0A31885E42F00C881C5 /* MBPlainPanelBuilder.h in Headers */,
 				1FECE0621885E42F00C881C5 /* MBDialogDecoratorTypes.h in Headers */,
 				1FECDFFE1885E42F00C881C5 /* MBSystemDataHandler.h in Headers */,
-				26AC08801979231C000384EF /* MBMockWebServiceDataHandler.h in Headers */,
 				1FECE0D71885E42F00C881C5 /* MBComponent.h in Headers */,
 				1FECDF7F1885E42F00C881C5 /* MBResourceConfigurationParser.h in Headers */,
 				1FECE0971885E42F00C881C5 /* MBPageViewBuilder.h in Headers */,
@@ -2319,8 +2363,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				266481A71973CEAD003B1CD2 /* MBFileManagerReadTest.xml in Resources */,
 				266075681959B05E008131A6 /* InfoPlist.strings in Resources */,
+				2611176C197E6BFB00C08108 /* resources.xml in Resources */,
+				26AC089C197D76C7000384EF /* MBWebServiceDataHandler_endpoints.xml in Resources */,
+				26AC0890197953EE000384EF /* MBFileManagerTest_read.xml in Resources */,
+				26AC0897197D0D1C000384EF /* MBWebServiceDataHandler_config.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2405,7 +2452,6 @@
 				1FECE0511885E42F00C881C5 /* ViewUtilities.m in Sources */,
 				1FECDFCB1885E42F00C881C5 /* MGSplitViewController.m in Sources */,
 				1FECDFD01885E42F00C881C5 /* MBDocumentDiff.m in Sources */,
-				26AC08811979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */,
 				1FECE09E1885E42F00C881C5 /* MBMatrixBuilder.m in Sources */,
 				1FECE04A1885E42F00C881C5 /* UITextField+ResizableBackgroundImage.m in Sources */,
 				1FECE0681885E42F00C881C5 /* MBModalFormSheetDialogDecorator.m in Sources */,
@@ -2622,6 +2668,7 @@
 				266481CD1973D42E003B1CD2 /* FMResultSet.m in Sources */,
 				266481CE1973D42E003B1CD2 /* GTMObjC2Runtime.m in Sources */,
 				266481CF1973D42E003B1CD2 /* MGSplitCornersView.m in Sources */,
+				26AC089A197D3419000384EF /* MBMockHTTPConnection.m in Sources */,
 				266481D01973D42E003B1CD2 /* MGSplitDividerView.m in Sources */,
 				266481D11973D42E003B1CD2 /* MGSplitViewController.m in Sources */,
 				266481D21973D42E003B1CD2 /* MBJsonDocumentParser.m in Sources */,

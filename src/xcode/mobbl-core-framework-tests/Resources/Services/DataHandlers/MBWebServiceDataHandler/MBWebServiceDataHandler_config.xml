@@ -1,0 +1,44 @@
+<Configuration
+    xmlns="http://itude.com/schemas/MB/2.0">
+    <Model>
+        <Domains>
+        </Domains>
+        <Documents>
+            <Document name="WebCallParameters" dataManager="MBMemoryDataHandler">
+                <Element name="UrlParam" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="HTTPHeader" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="HTTPBody" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="Reformatting" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+            </Document>
+            <Document name="WebCallResult" dataManager="MBMockWebServiceDataHandler">
+                <Element name="Result" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="ResultX" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+            </Document>
+        </Documents>
+    </Model>
+    <Controller>
+        <Actions>
+        </Actions>
+        <Wiring>
+        </Wiring>
+    </Controller>
+    <View>
+        <Dialogs>
+        </Dialogs>
+        <!-- Pages go here -->
+        <Alerts>
+        </Alerts>
+    </View>
+</Configuration>

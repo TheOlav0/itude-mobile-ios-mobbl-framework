@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Itude Mobile B.V., The Netherlands. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "MBWebserviceDataHandler.h"
 
 @interface MBMockWebServiceDataHandler : MBWebserviceDataHandler
