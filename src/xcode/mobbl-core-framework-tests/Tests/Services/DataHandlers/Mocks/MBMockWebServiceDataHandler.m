@@ -8,41 +8,45 @@
 
 #import "MBMockWebServiceDataHandler.h"
 
-static NSString * const URLParamPath = @"UrlParam[0]/@text()";
-static NSString * const HeaderFieldName = @"X-Unit-Test";
-static NSString * const HeaderFieldNamePath = @"HTTPHeader[0]/@text()";
-static NSString * const BodyPath = @"HTTPBody[0]/@text()";
-static NSString * const ReformattingPath = @"Reformatting[0]/@text()";
-static NSString * const ReformattingValue = @"Reformatting arguments test";
-//static NSString * const AttributePath = @"@unit-test";
-//static NSString * const AttributeValue = @"Add attribute test";
-//static NSString * const ChecksumPath = @"@checksum";
-//static NSString * const ChecksumValue = @"unit-test-checksum-value";
+NSString * const MBMockWebServiceArgumentsURLParamPath = @"UrlParam[0]/@text()";
+NSString * const MBMockWebServiceArgumentsHeaderFieldNamePath = @"HTTPHeaderFieldName[0]/@text()";
+NSString * const MBMockWebServiceArgumentsHeaderFieldValuePath = @"HTTPHeaderFieldValue[0]/@text()";
+NSString * const MBMockWebServiceArgumentsBodyPath = @"HTTPBody[0]/@text()";
+NSString * const MBMockWebServiceArgumentsReformattingEditPathPath = @"ReformattingEditPath[0]/@text()";
+NSString * const MBMockWebServiceArgumentsReformattingReplacementValuePath = @"ReformattingReplacementValue[0]/@text()";
+
+NSString * const MBMockWebServiceURLParamName = @"urlParam";
+
+//NSString * const AttributePath = @"@unit-test";
+//NSString * const AttributeValue = @"Add attribute test";
+//NSString * const ChecksumPath = @"@checksum";
+//NSString * const ChecksumValue = @"unit-test-checksum-value";
 
 @implementation MBMockWebServiceDataHandler
 
 - (NSString *)url:(NSString *)url WithArguments:(MBDocument *)args {
     NSString *processedUrl = [super url:url WithArguments:args];
     
-    NSString *urlParam = [args valueForPath:URLParamPath];
+    NSString *urlParam = [args valueForPath:MBMockWebServiceArgumentsURLParamPath];
     
-    processedUrl = [processedUrl stringByAppendingFormat:@"?urlParam=%@", urlParam];
+    processedUrl = [processedUrl stringByAppendingFormat:@"?%@=%@", MBMockWebServiceURLParamName, urlParam];
     
     return processedUrl;
 }
 
 - (void)setHTTPHeaders:(NSMutableURLRequest *)request withArguments:(MBDocument *)args {
     [super setHTTPHeaders:request withArguments:args];
-    
-    NSString *headerValue = [args valueForPath:HeaderFieldNamePath];
-    
-    [request setValue:headerValue forHTTPHeaderField:HeaderFieldName];
+
+    NSString * const headerFieldName = [args valueForPath:MBMockWebServiceArgumentsHeaderFieldNamePath];
+    NSString * const headerFieldValue = [args valueForPath:MBMockWebServiceArgumentsHeaderFieldValuePath];
+
+    [request setValue:headerFieldValue forHTTPHeaderField:headerFieldName];
 }
 
 - (void)setHTTPRequestBody:(NSMutableURLRequest *)request withArguments:(MBDocument *)args {
     [super setHTTPRequestBody:request withArguments:args];
     
-    NSString *bodyString = [args valueForPath:BodyPath];
+    NSString *bodyString = [args valueForPath:MBMockWebServiceArgumentsBodyPath];
     NSData *bodyData = [bodyString dataUsingEncoding:NSUTF8StringEncoding];
     
     [request setHTTPBody:bodyData];
@@ -50,7 +54,10 @@ static NSString * const ReformattingValue = @"Reformatting arguments test";
 
 - (MBDocument *)reformatRequestArgumentsForServer:(MBDocument *)doc {
     MBDocument *reformattedDocument = [doc copy];
-    [reformattedDocument setValue:ReformattingValue forPath:ReformattingPath];
+    NSString *editPath = [doc valueForPath:MBMockWebServiceArgumentsReformattingEditPathPath];
+    NSString *replacementValue = [doc valueForPath:MBMockWebServiceArgumentsReformattingReplacementValuePath];
+    
+    [reformattedDocument setValue:replacementValue forPath:editPath];
     
     return reformattedDocument;
 }

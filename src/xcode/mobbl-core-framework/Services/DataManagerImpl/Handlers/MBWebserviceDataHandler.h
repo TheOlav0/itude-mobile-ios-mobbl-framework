@@ -16,6 +16,7 @@
 
 #import "MBDataHandlerBase.h"
 #import "MBWebservicesConfigurationParser.h"
+#import "MBCaching.h"
 
 #import "MBHTTPConnectionDelegate.h"
 
@@ -39,14 +40,10 @@ typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, i
 // Initialize with configuration read from config files
 - (id) init;
 
-// Initialize with custom configuration and default connection builder
-- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration;
-
-// Initialize with custom connection builder and configuration read from config files
-- (id) initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder;
-
 // Designated initializer (custom config and connection builder)
-- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder;
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration;
+- (id) initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage;
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage;
 
 - (MBDocument *) loadDocument:(NSString *)documentName;
 - (MBDocument *) loadDocument:(NSString *)documentName withArguments:(MBDocument *)args;

@@ -8,6 +8,15 @@
 
 #import "MBWebserviceDataHandler.h"
 
+extern NSString * const MBMockWebServiceArgumentsURLParamPath;
+extern NSString * const MBMockWebServiceArgumentsHeaderFieldNamePath;
+extern NSString * const MBMockWebServiceArgumentsHeaderFieldValuePath;
+extern NSString * const MBMockWebServiceArgumentsBodyPath;
+extern NSString * const MBMockWebServiceArgumentsReformattingEditPathPath;
+extern NSString * const MBMockWebServiceArgumentsReformattingReplacementValuePath;
+
+extern NSString * const MBMockWebServiceURLParamName;
+
 @interface MBMockWebServiceDataHandler : MBWebserviceDataHandler
 
 @end

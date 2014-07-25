@@ -17,6 +17,7 @@
 #import "MBWebserviceDataHandler.h"
 #import "MBMetadataService.h"
 #import "DataUtilites.h"
+#import "MBCaching.h"
 #import "MBCacheManager.h"
 #import "MBMacros.h"
 #import "MBLocalizationService.h"
@@ -32,39 +33,41 @@
 @interface MBWebserviceDataHandler()
 
 @property (nonatomic, readonly) MBHTTPConnectionBuilder connectionBuilder;
+@property (nonatomic, readonly) id<MBDocumentCaching> documentCacheStorage;
 
 -(NSString*) convertDataToString:(NSData*) data;
 -(MBHTTPConnectionBuilder)defaultConnectionBuilder;
 -(MBWebservicesConfiguration *)defaultConfiguration;
+-(id<MBDocumentCaching>)defaultDocumentCacheStorage;
 
 @end
 
 @implementation MBWebserviceDataHandler
 
 - (id) init {
-	return [self initWithConfiguration:[self defaultConfiguration] connectionBuilder:[self defaultConnectionBuilder]];
+	return [self initWithConfiguration:[self defaultConfiguration] connectionBuilder:[self defaultConnectionBuilder] documentCacheStorage:[self defaultDocumentCacheStorage]];
 }
 
-- (id) initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder {
-    return [self initWithConfiguration:[self defaultConfiguration] connectionBuilder:connectionBuilder];
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration {
+    return [self initWithConfiguration:configuration connectionBuilder:[self defaultConnectionBuilder] documentCacheStorage:[self defaultDocumentCacheStorage]];
 }
 
-- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration
-{
-    return [self initWithConfiguration:configuration connectionBuilder:[self defaultConnectionBuilder]];
+- (id)initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage {
+    return [self initWithConfiguration:[self defaultConfiguration] connectionBuilder:connectionBuilder documentCacheStorage:documentCacheStorage];
 }
 
-- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder {
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage {
     self = [super init];
     if (self) {
-        if (!configuration || !connectionBuilder) {
+        BOOL anyNilArguments = (!configuration || !connectionBuilder);
+        if (anyNilArguments) {
             [self release];
             return nil;
         }
         
         _connectionBuilder = [connectionBuilder copy];
         _webServiceConfiguration = [configuration retain];
-        
+        _documentCacheStorage = [documentCacheStorage retain];
     }
     return self;
 }
@@ -87,6 +90,10 @@
     };
     
     return [[connectionBuilder copy] autorelease];
+}
+
+- (id<MBDocumentCaching>)defaultDocumentCacheStorage {
+    return [MBCacheManager sharedInstance];
 }
 
 - (MBEndPointDefinition *) getEndPointForDocument:(NSString*)name {
@@ -112,7 +119,7 @@
         else{
             uniqueId = documentName;
         }
-		MBDocument *result = [MBCacheManager documentForKey:uniqueId];
+		MBDocument *result = [self.documentCacheStorage documentForKey:uniqueId];
 		if(result != nil) return result;
 	}
 	return [self loadFreshDocument:documentName withArguments:doc];
@@ -140,11 +147,11 @@
         MBEndPointDefinition *endPoint = [self getEndPointForDocument:documentName];
         cacheable = [endPoint cacheable];
         if(cacheable) {
-            [MBCacheManager setDocument:result forKey:uniqueId timeToLive:endPoint.ttl];
+            [self.documentCacheStorage setDocument:result forKey:uniqueId timeToLive:endPoint.ttl];
         }
     }
     @catch (NSException *exception) {
-        [MBCacheManager expireDocumentForKey:uniqueId];
+        [self.documentCacheStorage expireDocumentForKey:uniqueId];
         @throw exception;
     }
     @finally {
@@ -347,6 +354,7 @@
 - (void) dealloc {
 	[_webServiceConfiguration release];
     [_connectionBuilder release];
+    [_documentCacheStorage release];
 	[super dealloc];
 }
 

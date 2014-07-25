@@ -8,21 +8,27 @@
                 <Element name="UrlParam" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
-                <Element name="HTTPHeader" minOccurs="1">
+                <Element name="HTTPHeaderFieldName" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="HTTPHeaderFieldValue" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
                 <Element name="HTTPBody" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
-                <Element name="Reformatting" minOccurs="1">
+                <Element name="WillBeReformatted" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="ReformattingEditPath" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+                <Element name="ReformattingReplacementValue" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
             </Document>
             <Document name="WebCallResult" dataManager="MBMockWebServiceDataHandler">
                 <Element name="Result" minOccurs="1">
-                    <Attribute name="text()" type="string" />
-                </Element>
-                <Element name="ResultX" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
             </Document>
