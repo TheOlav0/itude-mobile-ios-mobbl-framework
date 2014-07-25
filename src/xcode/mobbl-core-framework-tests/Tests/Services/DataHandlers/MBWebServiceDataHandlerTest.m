@@ -42,13 +42,14 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 - (NSData *)testData;
 - (MBDocument *)testDocument;
 
+- (NSDictionary *)defaultHTTPHeaders;
+
 - (MBMockHTTPConnectionEvent *)httpResponseEventWithHeaderFields:(NSDictionary *)httpHeaders httpVersion:(NSString *)httpVersion httpStatusCode:(NSUInteger)httpStatusCode;
 - (MBMockHTTPConnectionEvent *)httpFailureEventWithErrorMessage:(NSString *)message;
 - (MBMockHTTPConnectionEvent *)httpDataEventWithData:(NSData *)data;
 
 - (void)testCorrectHTTPRequestLoadFreshNoArguments;
 - (void)testCorrectHTTPRequestLoadFreshWithArguments;
-
 
 - (void)testCorrectResultLoadFreshNoArguments;
 - (void)testCorrectResultLoadFreshWithArguments;
@@ -163,6 +164,12 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     return testArguments;
 }
 
+- (NSDictionary *)defaultHTTPHeaders {
+    return @{
+             @"Accept": @"application/xml",
+             @"Content-Type": @"text/xml",
+             };
+}
 
 - (void)testCorrectHTTPRequestLoadFreshNoArguments {
     NSData * const httpData = [self testData];
@@ -189,10 +196,7 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     NSDictionary * const effectiveHTTPHeaders = [urlRequest allHTTPHeaderFields];
     NSString * const httpMethod = [urlRequest HTTPMethod];
     
-    NSDictionary * const expectedHTTPHeaders = @{
-                                                 @"Accept": @"application/xml",
-                                                 @"Content-Type": @"text/xml",
-                                                 };
+    NSDictionary * const expectedHTTPHeaders = [self defaultHTTPHeaders];
     
     XCTAssertEqualObjects(@"POST", httpMethod);
     XCTAssertEqualObjects(effectiveHTTPHeaders, expectedHTTPHeaders);
@@ -226,13 +230,8 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     NSString * const requestURLString = [[urlRequest URL] absoluteString];
     
     
-    NSDictionary * const expectedHTTPHeaders = @{
-                                                 @"Accept": @"application/xml",
-                                                 @"Content-Type": @"text/xml",
-                                                 TestArgumentsHeaderFieldName: TestArgumentsHeaderFieldValue
-                                                 };
-    
-    
+    NSMutableDictionary * const expectedHTTPHeaders = [[self defaultHTTPHeaders] mutableCopy];
+    expectedHTTPHeaders[TestArgumentsHeaderFieldName] = TestArgumentsHeaderFieldValue;
     
     NSString * const expectedURLString = [[NSString alloc] initWithFormat:@"%@?%@=%@", TestEndpointBaseURLString, MBMockWebServiceURLParamName, TestArgumentsURLParamValue];
     
@@ -240,8 +239,8 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     XCTAssertEqualObjects(@"POST", httpMethod);
     XCTAssertEqualObjects(effectiveHTTPHeaders, expectedHTTPHeaders);
     
+    [expectedHTTPHeaders release];
     [expectedURLString release];
-
 }
 
 
