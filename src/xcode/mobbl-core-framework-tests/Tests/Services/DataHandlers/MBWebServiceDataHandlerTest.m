@@ -173,10 +173,9 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 
 - (void)testCorrectHTTPRequestLoadFreshNoArguments {
     NSData * const httpData = [self testData];
-    NSDictionary * const httpHeaders = @{ @"Content-Length": @"42" };
     NSArray * const mockConnectionBehavior = @[
                                                [self httpDataEventWithData:httpData],
-                                               [self httpResponseEventWithHeaderFields:httpHeaders httpVersion:@"HTTP/1.1" httpStatusCode:200]
+                                               [self httpResponseEventWithHeaderFields:@{} httpVersion:@"HTTP/1.1" httpStatusCode:200]
                                                ];
     __block NSURLRequest * urlRequest = nil;
     const MBHTTPConnectionBuilder mockConnectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate>delegate) {
@@ -204,10 +203,9 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 
 - (void)testCorrectHTTPRequestLoadFreshWithArguments {
     NSData * const httpData = [self testData];
-    NSDictionary * const httpHeaders = @{ @"Content-Length": @"42" };
     NSArray * const mockConnectionBehavior = @[
                                                [self httpDataEventWithData:httpData],
-                                               [self httpResponseEventWithHeaderFields:httpHeaders httpVersion:@"HTTP/1.1" httpStatusCode:200]
+                                               [self httpResponseEventWithHeaderFields:@{} httpVersion:@"HTTP/1.1" httpStatusCode:200]
                                                ];
     __block NSURLRequest * urlRequest = nil;
     const MBHTTPConnectionBuilder mockConnectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate>delegate) {
@@ -244,37 +242,26 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 }
 
 
-- (void)testLoadFreshDocumentNoArgumentsDataFinish {
+- (void)testCorrectResultLoadFreshNoArguments {
     NSData * const httpData = [self testData];
-    NSDictionary * const httpHeaders = @{ @"Content-Length": @"42" };
     NSArray * const mockConnectionBehavior = @[
                                                [self httpDataEventWithData:httpData],
-                                               [self httpResponseEventWithHeaderFields:httpHeaders httpVersion:@"HTTP/1.1" httpStatusCode:200]
+                                               [self httpResponseEventWithHeaderFields:@{} httpVersion:@"HTTP/1.1" httpStatusCode:200]
                                                ];
     
     const MBHTTPConnectionBuilder mockConnectionBuilder = [self connectionBuilderWithBehavior:mockConnectionBehavior];
     
-    const id<MBDocumentCaching> mockCacheStorage = [[MBMockDocumentCacheManager alloc] initWithCacheItems:@{}];
-    
-    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder documentCacheStorage:mockCacheStorage];
+    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder documentCacheStorage:nil];
     XCTAssertNotNil(mockWebServiceDataHandler);
     
     [mockConnectionBuilder release];
-    [mockCacheStorage release];
     
-    MBDocument * const document = [mockWebServiceDataHandler loadFreshDocument:TestDocumentName];
-    XCTAssertNotNil(document);
+    MBDocument * const retrievedDocument = [mockWebServiceDataHandler loadFreshDocument:TestDocumentName];
+    XCTAssertNotNil(retrievedDocument);
     
-    NSDictionary * const elementDictionary = [document elements];
+    MBDocument * const expectedDocument = [self testDocument];
     
-    NSArray * const uniqueElementNames = [elementDictionary allKeys];
-    
-    XCTAssert([uniqueElementNames count] == 1);
-    XCTAssertEqualObjects(TestDocumentResultElementName, uniqueElementNames[0]);
-    
-    MBElement *resultElement = [document valueForPath:TestDocumentResultElementName][0];
-    NSString *resultElementValue = [resultElement valueForAttribute:@"text()"];
-    XCTAssertEqual([TestDocumentResultValue integerValue], [resultElementValue integerValue]);
+    XCTAssertEqualObjects(expectedDocument, retrievedDocument);
 }
 
 - (void)testLoadCachedDocumentNoArgumentsCacheHit {
