@@ -13,14 +13,9 @@ NSString * const MBMockWebServiceArgumentsHeaderFieldNamePath = @"HTTPHeaderFiel
 NSString * const MBMockWebServiceArgumentsHeaderFieldValuePath = @"HTTPHeaderFieldValue[0]/@text()";
 NSString * const MBMockWebServiceArgumentsBodyPath = @"HTTPBody[0]/@text()";
 NSString * const MBMockWebServiceArgumentsReformattingEditPathPath = @"ReformattingEditPath[0]/@text()";
-NSString * const MBMockWebServiceArgumentsReformattingReplacementValuePath = @"ReformattingReplacementValue[0]/@text()";
+NSString * const MBMockWebServiceArgumentsReformattingFormatPath = @"ReformattingFormat[0]/@text()";
 
 NSString * const MBMockWebServiceURLParamName = @"urlParam";
-
-//NSString * const AttributePath = @"@unit-test";
-//NSString * const AttributeValue = @"Add attribute test";
-//NSString * const ChecksumPath = @"@checksum";
-//NSString * const ChecksumValue = @"unit-test-checksum-value";
 
 @implementation MBMockWebServiceDataHandler
 
@@ -53,21 +48,21 @@ NSString * const MBMockWebServiceURLParamName = @"urlParam";
 }
 
 - (MBDocument *)reformatRequestArgumentsForServer:(MBDocument *)doc {
-    MBDocument *reformattedDocument = [doc copy];
-    NSString *editPath = [doc valueForPath:MBMockWebServiceArgumentsReformattingEditPathPath];
-    NSString *replacementValue = [doc valueForPath:MBMockWebServiceArgumentsReformattingReplacementValuePath];
+    MBDocument * const reformattedDocument = [doc copy];
     
-    [reformattedDocument setValue:replacementValue forPath:editPath];
+    if (reformattedDocument) {
+        NSString * const editPath = [doc valueForPath:MBMockWebServiceArgumentsReformattingEditPathPath];
+        NSString * const formattingFormat = [doc valueForPath:MBMockWebServiceArgumentsReformattingFormatPath];
+        
+        NSString * const originalValue = [doc valueForPath:editPath];
+        NSString * const newValue = [[NSString alloc] initWithFormat:formattingFormat, originalValue];
+        
+        [reformattedDocument setValue:newValue forPath:editPath];
+        
+        [newValue release];
+    }
     
     return reformattedDocument;
 }
-
-//- (void)addAttributesToRequestArguments:(MBDocument *)doc {
-//    [doc setValue:AttributeValue forPath:AttributePath];
-//}
-
-//- (void)addChecksumToRequestArguments:(MBElement *)element {
-//    [element setValue:ChecksumValue forAttribute:ChecksumPath];
-//}
 
 @end

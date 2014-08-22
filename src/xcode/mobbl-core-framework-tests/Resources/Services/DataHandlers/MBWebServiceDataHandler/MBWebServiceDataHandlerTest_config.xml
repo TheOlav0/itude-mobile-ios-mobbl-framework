@@ -23,7 +23,7 @@
                 <Element name="ReformattingEditPath" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
-                <Element name="ReformattingReplacementValue" minOccurs="1">
+                <Element name="ReformattingFormat" minOccurs="1">
                     <Attribute name="text()" type="string" />
                 </Element>
             </Document>

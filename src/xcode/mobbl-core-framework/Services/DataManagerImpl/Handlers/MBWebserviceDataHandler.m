@@ -132,7 +132,6 @@
 
 -(MBDocument *) loadFreshDocument:(NSString *)documentName withArguments:(MBDocument *)doc{
     MBDocument *reformattedArgs = [self reformatRequestArgumentsForServer:doc];
-	[self addAttributesToRequestArguments:reformattedArgs];
     MBDocument *result = nil;
     NSString *uniqueId = nil;
     if(doc){
@@ -343,13 +342,6 @@
 -(MBDocument *) reformatRequestArgumentsForServer:(MBDocument * )doc{
     return doc;
 }
-
--(void) addAttributesToRequestArguments:(MBElement *)element{
-}
-
--(void) addChecksumToRequestArguments:(MBElement *)element{
-}
-
 
 - (void) dealloc {
 	[_webServiceConfiguration release];

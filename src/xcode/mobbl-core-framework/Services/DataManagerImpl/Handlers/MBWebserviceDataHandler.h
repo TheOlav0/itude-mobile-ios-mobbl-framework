@@ -93,16 +93,6 @@ typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, i
  */
 -(MBDocument *) reformatRequestArgumentsForServer:(MBDocument * )doc;
 
-/** convenience method to add housekeeping information to the request arguments
- @param element An Element in the Document containing the request arguments
- */
--(void) addAttributesToRequestArguments:(MBDocument *)doc;
-
-/** convenience method to add a checksum to the request arguments
- @param element An Element in the Document containing the request arguments
- */
--(void) addChecksumToRequestArguments:(MBElement *)element;
-
 @end
 
 // Delegate used for callbacks in asynchronous http request. //

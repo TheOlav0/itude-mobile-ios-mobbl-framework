@@ -26,8 +26,7 @@ static NSString * const TestArgumentsHeaderFieldName = @"X-Unit-Test";
 static NSString * const TestArgumentsHeaderFieldValue = @"unit-test-value";
 static NSString * const TestArgumentsBodyText = @"This is the body.\nIt includes a newline.";
 
-static NSString * const TestArgumentsReformattingEditPath = @"WillBeReformatted[0]/@text()";
-static NSString * const TestArgumentsReformattingReplacementValue = @"This field is reformatted";
+static NSString * const TestArgumentsReformattingFormat = @"Reformatted(%@)";
 
 static NSString * const TestConfigFileName = @"MBWebServiceDataHandlerTest_config.xml";
 static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_endpoints.xml";
@@ -39,9 +38,11 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 - (MBMockWebServiceDataHandler *)mockWebServiceDataHandlerWithCacheStorage:(id<MBDocumentCaching>)documentCacheStorage;
 - (MBMockWebServiceDataHandler *)mockWebServiceDataHandlerWithHTTPBehavior:(NSArray *)behavior documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage;
 
+- (NSArray *)connectionBehaviorWithData:(NSData *)httpData andFinishWithResponseHeaders:(NSDictionary *)responseHeaders;
+- (NSArray *)connectionBuilderWithFailureBehavior;
+
 - (NSData *)testData;
 - (MBDocument *)testDocument;
-
 - (NSDictionary *)defaultHTTPHeaders;
 
 - (MBMockHTTPConnectionEvent *)httpResponseEventWithHeaderFields:(NSDictionary *)httpHeaders httpVersion:(NSString *)httpVersion httpStatusCode:(NSUInteger)httpStatusCode;
@@ -113,6 +114,23 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     return [[connectionBuilder copy] autorelease];
 }
 
+- (NSArray *)connectionBehaviorWithData:(NSData *)httpData andFinishWithResponseHeaders:(NSDictionary *)responseHeaders {
+    NSArray * const behavior = @[
+                                 [self httpDataEventWithData:httpData],
+                                 [self httpResponseEventWithHeaderFields:responseHeaders httpVersion:@"HTTP/1.1" httpStatusCode:200]
+                                 ];
+    
+    return behavior;
+}
+
+- (NSArray *)connectionBuilderWithFailureBehavior {
+    NSArray * const behavior = @[
+                                 [self httpFailureEventWithErrorMessage:@"Don't worry, it's just a 'mock' error"]
+                                 ];
+
+    return behavior;
+}
+
 - (MBMockWebServiceDataHandler *)mockWebServiceDataHandlerWithBehavior:(NSArray *)behavior {
     MBMockDocumentCacheManager * const mockCacheManager = [[MBMockDocumentCacheManager alloc] initWithCacheItems:nil];
     MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [self mockWebServiceDataHandlerWithHTTPBehavior:behavior documentCacheStorage:mockCacheManager];
@@ -158,8 +176,9 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     [testArguments setValue:TestArgumentsBodyText forPath:MBMockWebServiceArgumentsBodyPath];
     [testArguments setValue:TestArgumentsHeaderFieldName forPath:MBMockWebServiceArgumentsHeaderFieldNamePath];
     [testArguments setValue:TestArgumentsHeaderFieldValue forPath:MBMockWebServiceArgumentsHeaderFieldValuePath];
-    [testArguments setValue:TestArgumentsReformattingEditPath forPath:MBMockWebServiceArgumentsReformattingEditPathPath];
-    [testArguments setValue:TestArgumentsReformattingReplacementValue forPath:MBMockWebServiceArgumentsReformattingReplacementValuePath];
+
+    [testArguments setValue:MBMockWebServiceArgumentsBodyPath forPath:MBMockWebServiceArgumentsReformattingEditPathPath];
+    [testArguments setValue:TestArgumentsReformattingFormat forPath:MBMockWebServiceArgumentsReformattingFormatPath];
     
     return testArguments;
 }
@@ -173,10 +192,8 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 
 - (void)testCorrectHTTPRequestLoadFreshNoArguments {
     NSData * const httpData = [self testData];
-    NSArray * const mockConnectionBehavior = @[
-                                               [self httpDataEventWithData:httpData],
-                                               [self httpResponseEventWithHeaderFields:@{} httpVersion:@"HTTP/1.1" httpStatusCode:200]
-                                               ];
+    NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
+    
     __block NSURLRequest * urlRequest = nil;
     const MBHTTPConnectionBuilder mockConnectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate>delegate) {
         urlRequest = [request retain];
@@ -203,10 +220,7 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
 
 - (void)testCorrectHTTPRequestLoadFreshWithArguments {
     NSData * const httpData = [self testData];
-    NSArray * const mockConnectionBehavior = @[
-                                               [self httpDataEventWithData:httpData],
-                                               [self httpResponseEventWithHeaderFields:@{} httpVersion:@"HTTP/1.1" httpStatusCode:200]
-                                               ];
+    NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
     __block NSURLRequest * urlRequest = nil;
     const MBHTTPConnectionBuilder mockConnectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate>delegate) {
         urlRequest = [request retain];
@@ -218,36 +232,38 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     
     [mockConnectionBuilder release];
     
-    MBDocument *testArguments = [self testArguments];
-    __unused MBDocument *resultIsIrrelevant = [mockWebServiceDataHandler loadFreshDocument:TestDocumentName withArguments:testArguments];
+    __unused MBDocument *resultIsIrrelevant = [mockWebServiceDataHandler loadFreshDocument:TestDocumentName withArguments:[self testArguments]];
     
     XCTAssertNotNil(urlRequest);
     
     NSDictionary * const effectiveHTTPHeaders = [urlRequest allHTTPHeaderFields];
-    NSString * const httpMethod = [urlRequest HTTPMethod];
-    NSString * const requestURLString = [[urlRequest URL] absoluteString];
-    
-    
     NSMutableDictionary * const expectedHTTPHeaders = [[self defaultHTTPHeaders] mutableCopy];
     expectedHTTPHeaders[TestArgumentsHeaderFieldName] = TestArgumentsHeaderFieldValue;
-    
-    NSString * const expectedURLString = [[NSString alloc] initWithFormat:@"%@?%@=%@", TestEndpointBaseURLString, MBMockWebServiceURLParamName, TestArgumentsURLParamValue];
-    
-    XCTAssertEqualObjects(requestURLString, expectedURLString);
-    XCTAssertEqualObjects(@"POST", httpMethod);
     XCTAssertEqualObjects(effectiveHTTPHeaders, expectedHTTPHeaders);
-    
+
     [expectedHTTPHeaders release];
+
+    NSString * const httpMethod = [urlRequest HTTPMethod];
+    XCTAssertEqualObjects(@"POST", httpMethod);
+    
+    NSString * const requestURLString = [[urlRequest URL] absoluteString];
+    NSString * const expectedURLString = [[NSString alloc] initWithFormat:@"%@?%@=%@", TestEndpointBaseURLString, MBMockWebServiceURLParamName, TestArgumentsURLParamValue];
+    XCTAssertEqualObjects(requestURLString, expectedURLString);
+    
     [expectedURLString release];
+
+    NSString * const bodyString = [[NSString alloc] initWithData:[urlRequest HTTPBody] encoding:NSStringEncodingConversionAllowLossy];
+    NSString * const expectedBodyString = [[NSString alloc] initWithFormat:TestArgumentsReformattingFormat, TestArgumentsBodyText];
+    XCTAssertEqualObjects(expectedBodyString, bodyString);
+
+    [bodyString release];
+    [expectedBodyString release];
 }
 
 
 - (void)testCorrectResultLoadFreshNoArguments {
     NSData * const httpData = [self testData];
-    NSArray * const mockConnectionBehavior = @[
-                                               [self httpDataEventWithData:httpData],
-                                               [self httpResponseEventWithHeaderFields:@{} httpVersion:@"HTTP/1.1" httpStatusCode:200]
-                                               ];
+    NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
     
     const MBHTTPConnectionBuilder mockConnectionBuilder = [self connectionBuilderWithBehavior:mockConnectionBehavior];
     
@@ -264,9 +280,35 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     XCTAssertEqualObjects(expectedDocument, retrievedDocument);
 }
 
-- (void)testLoadCachedDocumentNoArgumentsCacheHit {
+- (void)testCorrectResultLoadFreshWithArguments {
+    NSData * const httpData = [self testData];
+    NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
+    
+    const MBHTTPConnectionBuilder mockConnectionBuilder = [self connectionBuilderWithBehavior:mockConnectionBehavior];
+    
+    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder documentCacheStorage:nil];
+    XCTAssertNotNil(mockWebServiceDataHandler);
+    
+    [mockConnectionBuilder release];
+    
+    MBDocument * const retrievedDocument = [mockWebServiceDataHandler loadFreshDocument:TestDocumentName withArguments:[self testArguments]];
+    XCTAssertNotNil(retrievedDocument);
+    
     MBDocument * const expectedDocument = [self testDocument];
-    NSLog(@"Hallo");
+    
+    XCTAssertEqualObjects(expectedDocument, retrievedDocument);
+}
+
+- (void)testFailureHandlingLoadFreshNoArguments {
+    
+}
+
+- (void)testFailureHandlingLoadFreshWithArguments {
+    
+}
+
+- (void)testCacheHitNoArguments {
+    MBDocument * const expectedDocument = [self testDocument];
     
     MBMockDocumentCacheManager * const mockCacheManager = [[MBMockDocumentCacheManager alloc] initWithCacheItems:@{ TestDocumentName: expectedDocument }];
     
@@ -276,7 +318,65 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     MBDocument * const retrievedDocument = [mockWebServiceHandler loadDocument:TestDocumentName];
     
     XCTAssertEqualObjects(expectedDocument, retrievedDocument);
-    
 }
+
+- (void)testCacheHitWithArguments {
+    MBDocument * const expectedDocument = [self testDocument];
+    
+    MBMockDocumentCacheManager * const mockCacheManager = [[MBMockDocumentCacheManager alloc] initWithCacheItems:@{ [[self testArguments] uniqueId]: expectedDocument }];
+    
+    MBMockWebServiceDataHandler * const mockWebServiceHandler = [self mockWebServiceDataHandlerWithCacheStorage:mockCacheManager];
+    XCTAssertNotNil(mockWebServiceHandler);
+    
+    MBDocument * const retrievedDocument = [mockWebServiceHandler loadDocument:TestDocumentName withArguments:[self testArguments]];
+    
+    XCTAssertEqualObjects(expectedDocument, retrievedDocument);
+}
+
+- (void)testCacheMissNoArguments {
+    MBMockDocumentCacheManager * const mockCacheManager = [[MBMockDocumentCacheManager alloc] initWithCacheItems:@{}];
+    
+    NSData * const httpData = [self testData];
+    NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
+    
+    __block NSURLRequest * urlRequest = nil;
+    const MBHTTPConnectionBuilder mockConnectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate>delegate) {
+        urlRequest = [request retain];
+        return [[MBMockHTTPConnection alloc] initWithRequest:request delegate:delegate connectionBehavior:mockConnectionBehavior];
+    };
+    
+    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder documentCacheStorage:mockCacheManager];
+    XCTAssertNotNil(mockWebServiceDataHandler);
+    
+    [mockConnectionBuilder release];
+    
+    __unused MBDocument *resultIsIrrelevant = [mockWebServiceDataHandler loadDocument:TestDocumentName];
+    
+    XCTAssertNotNil(urlRequest);
+}
+
+- (void)testCacheMissWithArguments {
+    MBMockDocumentCacheManager * const mockCacheManager = [[MBMockDocumentCacheManager alloc] initWithCacheItems:@{}];
+    
+    NSData * const httpData = [self testData];
+    NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
+    
+    __block NSURLRequest * urlRequest = nil;
+    const MBHTTPConnectionBuilder mockConnectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate>delegate) {
+        urlRequest = [request retain];
+        return [[MBMockHTTPConnection alloc] initWithRequest:request delegate:delegate connectionBehavior:mockConnectionBehavior];
+    };
+    
+    MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder documentCacheStorage:mockCacheManager];
+    XCTAssertNotNil(mockWebServiceDataHandler);
+    
+    [mockConnectionBuilder release];
+    
+    __unused MBDocument *resultIsIrrelevant = [mockWebServiceDataHandler loadDocument:TestDocumentName withArguments:[self testArguments]];
+    
+    XCTAssertNotNil(urlRequest);
+
+}
+
 
 @end

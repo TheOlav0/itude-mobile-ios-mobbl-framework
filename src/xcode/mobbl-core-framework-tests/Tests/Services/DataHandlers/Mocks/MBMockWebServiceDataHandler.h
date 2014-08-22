@@ -13,7 +13,7 @@ extern NSString * const MBMockWebServiceArgumentsHeaderFieldNamePath;
 extern NSString * const MBMockWebServiceArgumentsHeaderFieldValuePath;
 extern NSString * const MBMockWebServiceArgumentsBodyPath;
 extern NSString * const MBMockWebServiceArgumentsReformattingEditPathPath;
-extern NSString * const MBMockWebServiceArgumentsReformattingReplacementValuePath;
+extern NSString * const MBMockWebServiceArgumentsReformattingFormatPath;
 
 extern NSString * const MBMockWebServiceURLParamName;
 
