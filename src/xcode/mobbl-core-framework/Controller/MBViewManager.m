@@ -447,6 +447,11 @@
                         [view removeFromSuperview];
                     }
                 }
+                
+                // sometimes, the keyWindow is apparently not part of the application, or something.. :/
+                for (UIView *view in [[[UIApplication sharedApplication] keyWindow] subviewsOfClass:[MBActivityIndicator class] ]) {
+                    [view removeFromSuperview];
+                }
 			}
 		}
 	});
