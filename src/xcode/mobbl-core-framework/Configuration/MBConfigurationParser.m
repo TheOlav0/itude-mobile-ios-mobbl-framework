@@ -29,21 +29,32 @@
 
 - (id) parseData:(NSData*)data ofDocument:(NSString*) documentName {
 	self.documentName = documentName;
-	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-    [parser setDelegate:self];
-	
+    
 	_stack = [[NSMutableArray alloc] init];
 	_characters = nil;
-	if([parser parse] == NO) {
-		NSError *error = [parser parserError];
-		@throw [NSException exceptionWithName:@"ParseError" reason: [error description] userInfo:nil];
-	}
-
+    
+    // NSXMLParser is thread safe but not reentrant so we do the parsing on a separate thread in it's own queue. Doing this in the NSXMLParser itself will cause a crash on iOS 8.
+    // http://stackoverflow.com/questions/25363560/ios8-nsxmlparser-crash
+    NSString *queueName = [@"reentrantAvoidanceQueueForDocWithName_" stringByAppendingString:documentName];
+    const char *queueNameCString = [queueName UTF8String];
+    dispatch_queue_t reentrantAvoidanceQueue = dispatch_queue_create(queueNameCString, DISPATCH_QUEUE_SERIAL);
+    dispatch_async(reentrantAvoidanceQueue, ^{
+        NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+        [parser setDelegate:self];
+        if([parser parse] == NO) {
+            NSError *error = [parser parserError];
+            @throw [NSException exceptionWithName:@"ParseError" reason: [error description] userInfo:nil];
+        }
+        [parser release];
+    });
+    dispatch_sync(reentrantAvoidanceQueue, ^{ });
+    dispatch_release(reentrantAvoidanceQueue);
+    
+    
 	id config = [[_stack lastObject] retain];
 	[_stack release];
 	[_characters release];
 	
-	[parser release];
 	return [config autorelease];
 }
 
