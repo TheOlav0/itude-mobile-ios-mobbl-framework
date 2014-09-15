@@ -38,7 +38,8 @@
 	if(doc == nil)
 	{
 		// Not yet in the store; handle default construction of the document using a file as template
-		NSData *data = [[MBResourceService sharedInstance].fileManager dataWithContentsOfMainBundle: documentName];
+        NSString *fileName = [documentName stringByAppendingString:@".xml"];
+		NSData *data = [[MBResourceService sharedInstance].fileManager dataWithContentsOfMainBundle: fileName];
 		MBDocumentDefinition *docDef = [[MBMetadataService sharedInstance] definitionForDocumentName: documentName];
 		return [[MBDocumentFactory sharedInstance] documentWithData: data withType:PARSER_XML andDefinition:docDef];
 	}
