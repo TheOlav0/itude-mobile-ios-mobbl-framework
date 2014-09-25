@@ -55,6 +55,10 @@
 	return newElement;
 }
 
+- (BOOL)isEqualToElement:(MBElement *)element {
+    return [self isEqualToElementContainer:element];
+}
+
 - (void) assignByName:(MBElementContainer*) other {
 	[other deleteAllChildElements];
 

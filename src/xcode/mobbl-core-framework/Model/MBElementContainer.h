@@ -42,6 +42,8 @@
 - (NSString*) documentName;
 - (NSString*) uniqueId;
 
+- (BOOL) isEqualToElementContainer:(MBElementContainer *)elementContainer;
+
 /// @name Adding Elements to the Tree
 - (MBElement*) createElementWithName: (NSString*) name;
 - (MBElement*) createElementWithName: (NSString*) name atIndex:(NSInteger)index;
