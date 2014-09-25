@@ -49,6 +49,8 @@
 #import "MBEmptyContentViewWrapper.h"
 #import "MBSlidingMenuContentViewWrapper.h"
 
+#import "UIView+TreeWalker.h"
+
 #import <objc/runtime.h>
 #import <objc/message.h>
 
@@ -62,6 +64,8 @@
     
     NSMutableDictionary *_activityIndicatorCounts;
 	int _activityIndicatorCount;
+    
+
 }
 
 @property (nonatomic, retain) NSMutableDictionary *activityIndicatorCounts;
@@ -432,18 +436,22 @@
 }
 
 - (void)hideActivityIndicatorOnDialog:(MBDialogController *)dialogController {
-	UIViewController *topMostVisibleViewController = (dialogController) ? dialogController.rootViewController : [self topMostVisibleViewController];
-
 	dispatch_async(dispatch_get_main_queue(), ^{
 		if(_activityIndicatorCount > 0) {
 			_activityIndicatorCount--;
 			
 			if(_activityIndicatorCount == 0) {
-				for (UIView *subview in [[topMostVisibleViewController view] subviews]) {
-					if ([subview isKindOfClass:[MBActivityIndicator class]]) {
-						[subview removeFromSuperview];
-					}
-				}
+                
+                for (UIWindow *window in [[UIApplication sharedApplication] windows]) {
+                    for (UIView *view in [window subviewsOfClass:[MBActivityIndicator class] ]) {
+                        [view removeFromSuperview];
+                    }
+                }
+                
+                // sometimes, the keyWindow is apparently not part of the application, or something.. :/
+                for (UIView *view in [[[UIApplication sharedApplication] keyWindow] subviewsOfClass:[MBActivityIndicator class] ]) {
+                    [view removeFromSuperview];
+                }
 			}
 		}
 	});
