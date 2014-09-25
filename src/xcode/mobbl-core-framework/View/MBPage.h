@@ -71,6 +71,7 @@
 - (MBViewState) currentViewState;
 - (void) unregisterAllViewControllers;
 - (id) viewControllerOfType:(Class) clazz;
+- (void)hideKeyboard:(id)sender;
 
 - (MBDocumentDiff*) diffDocument:(MBDocument*) other;
 

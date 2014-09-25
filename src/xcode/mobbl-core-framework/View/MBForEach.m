@@ -51,7 +51,7 @@
 			if(pathResult != nil) {
 				if(![pathResult isKindOfClass:[NSArray class]]) @throw [[[NSException alloc]initWithName:@"InvalidPath" reason:_value userInfo:nil] autorelease];
 
-				for(MBElement *element in pathResult) {
+				for(NSInteger unusedIndex = 0; unusedIndex < [pathResult count]; unusedIndex++) {
 					MBForEachItem *row = [[[MBForEachItem alloc] initWithDefinition: [self definition] document: document parent: self] autorelease];
 					[self addRow: row];
 					for(MBForEachDefinition *childDef in [definition children]) {
@@ -87,7 +87,7 @@
 }
 
 -(void) addRow: (MBForEachItem*) row {
-	row.index = [_rows count];
+	row.index = (int)[_rows count];
 	[_rows addObject:row];
 	[row setParent:self];
 }

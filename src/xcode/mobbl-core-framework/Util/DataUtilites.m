@@ -50,7 +50,7 @@
 	
 	if (! [encoded canBeConvertedToEncoding:NSASCIIStringEncoding]) return nil;
 	const char *chars = [encoded cStringUsingEncoding:NSASCIIStringEncoding]; // avoids using characterAtIndex.
-	int charsLen = [encoded lengthOfBytesUsingEncoding:NSASCIIStringEncoding];
+	NSUInteger charsLen = [encoded lengthOfBytesUsingEncoding:NSASCIIStringEncoding];
 	
 	// Note that the code below could detect non canonical Base32 length within the loop. However canonical Base32 length can be tested before entering the loop.
 	// A canonical Base32 length modulo 8 cannot be:
@@ -64,7 +64,7 @@
 			return nil; // non-canonical length
 	}
 	int charDigitsLen = sizeof(charDigits);
-	int bytesLen = (charsLen * 5) >> 3;
+	NSUInteger bytesLen = (charsLen * 5) >> 3;
 	Byte bytes[bytesLen];
 	int bytesOffset = 0, charsOffset = 0;
 	// Also the code below does test that other discarded bits
@@ -150,8 +150,10 @@
 		,'2','3','4','5','6','7'                             // 26..31
 	};
 	const Byte *bytes = [self bytes];
-	int bytesOffset = 0, bytesLen = [self length];
-	int charsOffset = 0, charsLen = ((bytesLen << 3) + 4) / 5+1;
+	NSUInteger bytesOffset = 0;
+    NSUInteger bytesLen = [self length];
+	int charsOffset = 0;
+    NSUInteger charsLen = ((bytesLen << 3) + 4) / 5+1;
 	char chars[charsLen];
 	while (bytesLen != 0) {
 		int digit, lastDigit;
@@ -241,7 +243,7 @@
 	if ([self length] == 0) return self;
 	
 	const Byte *ptr = [self bytes];
-	unsigned length = [self length];
+	NSUInteger length = [self length];
 	NSMutableData *decoded = [NSMutableData dataWithLength:length];
 	Byte *dst = [decoded mutableBytes];
 	Byte *basedst = dst;
@@ -262,8 +264,8 @@
 {
 	if ([self length] == 0) return self;
 	
-	unsigned full_length = [self length];
-	unsigned half_length = [self length] / 2;
+	NSUInteger full_length = [self length];
+	NSUInteger half_length = [self length] / 2;
 	
 	NSMutableData *decompressed = [NSMutableData dataWithLength: full_length + half_length];
 	BOOL done = NO;
@@ -271,7 +273,7 @@
 	
 	z_stream strm;
 	strm.next_in = (Bytef *)[self bytes];
-	strm.avail_in = [self length];
+	strm.avail_in = (unsigned int)[self length];
 	strm.total_out = 0;
 	strm.zalloc = Z_NULL;
 	strm.zfree = Z_NULL;
@@ -284,7 +286,7 @@
 		if (strm.total_out >= [decompressed length])
 			[decompressed increaseLengthBy: half_length];
 		strm.next_out = [decompressed mutableBytes] + strm.total_out;
-		strm.avail_out = [decompressed length] - strm.total_out;
+		strm.avail_out = (unsigned int)([decompressed length] - strm.total_out);
 		
 		// Inflate another chunk.
 		status = inflate (&strm, Z_SYNC_FLUSH);
@@ -313,7 +315,7 @@
 	strm.opaque = Z_NULL;
 	strm.total_out = 0;
 	strm.next_in=(Bytef *)[self bytes];
-	strm.avail_in = [self length];
+	strm.avail_in = (unsigned int)[self length];
 	
 	// Compresssion Levels:
 	//   Z_NO_COMPRESSION
@@ -331,7 +333,7 @@
 			[compressed increaseLengthBy: 16384];
 		
 		strm.next_out = [compressed mutableBytes] + strm.total_out;
-		strm.avail_out = [compressed length] - strm.total_out;
+		strm.avail_out = (unsigned int)([compressed length] - strm.total_out);
 		
 		deflate(&strm, Z_FINISH);
 		
@@ -347,8 +349,8 @@
 {
 	if ([self length] == 0) return self;
 	
-	unsigned full_length = [self length];
-	unsigned half_length = [self length] / 2;
+	NSUInteger full_length = [self length];
+	NSUInteger half_length = [self length] / 2;
 	
 	NSMutableData *decompressed = [NSMutableData dataWithLength: full_length + half_length];
 	BOOL done = NO;
@@ -356,7 +358,7 @@
 	
 	z_stream strm;
 	strm.next_in = (Bytef *)[self bytes];
-	strm.avail_in = [self length];
+	strm.avail_in = (unsigned int)[self length];
 	strm.total_out = 0;
 	strm.zalloc = Z_NULL;
 	strm.zfree = Z_NULL;
@@ -368,7 +370,7 @@
 		if (strm.total_out >= [decompressed length])
 			[decompressed increaseLengthBy: half_length];
 		strm.next_out = [decompressed mutableBytes] + strm.total_out;
-		strm.avail_out = [decompressed length] - strm.total_out;
+		strm.avail_out = (unsigned int)([decompressed length] - strm.total_out);
 		
 		// Inflate another chunk.
 		status = inflate (&strm, Z_SYNC_FLUSH);
@@ -397,7 +399,7 @@
 	strm.opaque = Z_NULL;
 	strm.total_out = 0;
 	strm.next_in=(Bytef *)[self bytes];
-	strm.avail_in = [self length];
+	strm.avail_in = (unsigned int)[self length];
 	
 	// Compresssion Levels:
 	//   Z_NO_COMPRESSION
@@ -415,7 +417,7 @@
 			[compressed increaseLengthBy: 16384];
 		
 		strm.next_out = [compressed mutableBytes] + strm.total_out;
-		strm.avail_out = [compressed length] - strm.total_out;
+		strm.avail_out = (unsigned int)([compressed length] - strm.total_out);
 		
 		deflate(&strm, Z_FINISH);
 		
