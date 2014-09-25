@@ -84,10 +84,13 @@ static NSString *_localeCode = nil;
 }
 
 -(void) setCurrentLanguage:(NSString*) code {
-	_currentLanguage = code;	
+    if (![_currentLanguage isEqualToString:code]) {
+        [_currentLanguage release];
+        _currentLanguage = [code retain];
 	
-	// Keep a local reference to the currentDictionary for optimization because getting the dictionary for it every time a translation is requested, is verry, verry costly
-	_currentDictionary = [self languageForCode:code];
+        // Keep a local reference to the currentDictionary for optimization because getting the dictionary for it every time a translation is requested, is verry, verry costly
+        _currentDictionary = [self languageForCode:code];
+    }
 }
 
 -(NSString*) textForKey:(NSString*) key {
@@ -122,7 +125,7 @@ static NSString *_localeCode = nil;
 	if(text == nil) {
 		// NOTE for optimization: This log is printed only in a debug build (not in release build). Logging to the console is verry costly! Keep that in minde when optimizing code!
 		if (logWarnings) {
-			WLog(@"Warning: no translation defined for key '%@' using languageCode=%@", key, self.currentLanguage);
+            WLog(@"Warning: no translation defined for key '%@' using languageCode=%@", key, self.currentLanguage ? self.currentLanguage : @"");
 		}
 		text = key;
 	}
