@@ -15,7 +15,8 @@
  */
 
 //  MBPickerControllerDelegate.h
-//  mobbl-core-lib
+//  mobbl-core-framework
+//
 //  Created by Frank van Eenbergen on 26/11/13.
 
 #import <Foundation/Foundation.h>

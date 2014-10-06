@@ -15,7 +15,8 @@
  */
 
 //  MBEmptyContentViewWrapper.m
-//  kitchensink-app
+//  mobbl-core-framework
+//
 //  Created by Pjotter Tommassen on 2013/25/11.
 
 #import "MBEmptyContentViewWrapper.h"
