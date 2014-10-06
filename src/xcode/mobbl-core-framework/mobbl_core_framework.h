@@ -230,6 +230,7 @@
 #include <mobbl-core-framework/MBValueChangeListenerProtocol.h>
 #include <mobbl-core-framework/MBTableViewController.h>
 #include <mobbl-core-framework/MBFileManager.h>
+#include <mobbl-core-framework/MBCaching.h>
 
 @interface mobbl_core_framework : NSObject
 

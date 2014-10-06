@@ -15,17 +15,17 @@
  */
 
 //
-//  MBDatePickerPopoverController.h
+//  MBMockCacheManager.h
 //  mobbl-core-framework
 //
-//  Created by Frank van Eenbergen on 08/11/13.
-//
+//  Created by Sven Meyer on 23/07/14.
 
-#import "MBDatePickerController.h"
+#import <Foundation/Foundation.h>
 
+#import "MBCaching.h"
 
-@interface MBDatePickerPopoverController : MBDatePickerController
+@interface MBMockDocumentCacheManager : NSObject <MBDocumentCaching>
 
-@property (nonatomic, retain) UIPopoverController *popover;
+- (id)initWithCacheItems:(NSDictionary *)cacheItems;
 
 @end

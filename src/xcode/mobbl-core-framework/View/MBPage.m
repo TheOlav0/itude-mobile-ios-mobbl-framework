@@ -161,7 +161,7 @@
 	return self;
 }
 
--(void) hideKeyboard: (id) msg {
+-(void) hideKeyboard:(id) sender {
 	[self resignFirstResponder];
 }
 

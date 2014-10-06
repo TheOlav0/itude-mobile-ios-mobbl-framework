@@ -48,6 +48,8 @@
 - (id) initWithDocumentDefinition: (MBDocumentDefinition*) definition;
 - (void) assignToDocument:(MBDocument*) target;
 
+- (BOOL)isEqualToDocument:(MBDocument *)document;
+
 /** Loads a fresh copy of this document using the registered DataHandler. 
  
  See [MBDataManagerService loadFreshDocument:withArguments:forDelegate:resultSelector:errorSelector:]

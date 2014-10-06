@@ -21,9 +21,18 @@
 
 @interface MBModalDialogDecorator ()
 @property (nonatomic, retain) NSString *originPageStackName;
+@property (nonatomic, assign) BOOL shown;
 @end
 
 @implementation MBModalDialogDecorator
+
+-(instancetype)init {
+    self = [super init];
+    if (self) {
+        _shown = false;
+    }
+    return self;
+}
 
 - (void)dealloc
 {
@@ -44,14 +53,25 @@
 	UIViewController *viewController = dialog.rootViewController;
 	id<MBTransitionStyle> transition = [[[MBApplicationFactory sharedInstance] transitionStyleFactory] transitionForStyle:transitionStyle];
 	[transition applyTransitionStyleToViewController:viewController forMovement:MBTransitionMovementPush];
-	BOOL animated = [transition animated];
+    BOOL animated = [transition animated];
 	UIViewController *topMostVisibleViewController = [[[MBApplicationController currentInstance] viewManager] topMostVisibleViewController];
 
-	// Pjotter: I have absolutely no idea why this needs to be dispatched async when queue starting this is the main queue.. O_o
-	//  Works perfectly fine without the dispatch if called from a different queue (even if it is the main thread), or when running iOS 6 instead of 7
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[[[MBApplicationController currentInstance] viewManager] presentViewController:viewController fromViewController:topMostVisibleViewController animated:animated ];
-	});
+
+    // If the modal has been shown before, the presentViewController call for some reason needs to be dispatched to the main queue (even if the current queue
+    // is the main queue), otherwise the modal will end up blank. Absolutely no idea why.. :/
+    // However, if we do this when the modal hasn't been shown before, didShowViewController in the corresponding MBPageStackController doesn't get called
+    // on iOS 8, hence this weird if-statement.
+    
+    if (!_shown) {
+        [[[MBApplicationController currentInstance] viewManager] presentViewController:viewController fromViewController:topMostVisibleViewController animated:animated ];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[[MBApplicationController currentInstance] viewManager] presentViewController:viewController fromViewController:topMostVisibleViewController animated:animated ];
+
+        });
+    }
+    
+    _shown = true;
 }
 
 -(void)dismissDialog:(MBDialogController *)dialog withTransitionStyle:(NSString *)transitionStyle {

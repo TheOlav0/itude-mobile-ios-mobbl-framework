@@ -15,17 +15,22 @@
  */
 
 //
-//  MBDatePickerPopoverController.h
+//  MBMockWebServiceDataHandler.h
 //  mobbl-core-framework
 //
-//  Created by Frank van Eenbergen on 08/11/13.
-//
+//  Created by Sven Meyer on 18/07/14.
 
-#import "MBDatePickerController.h"
+#import "MBWebserviceDataHandler.h"
 
+extern NSString * const MBMockWebServiceArgumentsURLParamPath;
+extern NSString * const MBMockWebServiceArgumentsHeaderFieldNamePath;
+extern NSString * const MBMockWebServiceArgumentsHeaderFieldValuePath;
+extern NSString * const MBMockWebServiceArgumentsBodyPath;
+extern NSString * const MBMockWebServiceArgumentsReformattingEditPathPath;
+extern NSString * const MBMockWebServiceArgumentsReformattingFormatPath;
 
-@interface MBDatePickerPopoverController : MBDatePickerController
+extern NSString * const MBMockWebServiceURLParamName;
 
-@property (nonatomic, retain) UIPopoverController *popover;
+@interface MBMockWebServiceDataHandler : MBWebserviceDataHandler
 
 @end

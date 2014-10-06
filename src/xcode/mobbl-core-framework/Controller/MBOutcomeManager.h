@@ -15,7 +15,8 @@
  */
 
 //  MBOutcomeManager.h
-//  mobbl-core-lib
+//  mobbl-core-framework
+//
 //  Created by Pjotter Tommassen on 2013/29/11.
 
 #import <Foundation/Foundation.h>

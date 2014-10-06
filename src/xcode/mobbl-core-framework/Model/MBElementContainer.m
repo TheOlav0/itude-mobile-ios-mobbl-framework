@@ -74,6 +74,22 @@
 	return uid;
 }
 
+- (NSUInteger)hash {
+    return [[self uniqueId] hash];
+}
+
+- (BOOL)isEqualToElementContainer:(MBElementContainer *)elementContainer {
+    return (self == elementContainer) || [[self uniqueId] isEqualToString:[elementContainer uniqueId]];
+}
+
+- (BOOL)isEqual:(id)object {
+    if ([object isKindOfClass:[self class]]) {
+        return [self isEqualToElementContainer:object];
+    } else {
+        return [super isEqual:object];
+    }
+}
+
 -(void) addAllPathsTo:(NSMutableSet*) set currentPath:(NSString*) currentPath {
 	for(NSString *elementName in [_elements allKeys]) {
 		int idx = 0;

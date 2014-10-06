@@ -15,17 +15,16 @@
  */
 
 //
-//  MBDatePickerPopoverController.h
+//  MBHTTPConnectionImpl.h
 //  mobbl-core-framework
 //
-//  Created by Frank van Eenbergen on 08/11/13.
-//
+//  Created by Sven Meyer on 16/07/14.
 
-#import "MBDatePickerController.h"
+#import <Foundation/Foundation.h>
+#import "MBHTTPConnection.h"
 
+@interface MBHTTPConnectionImpl : NSObject <MBHTTPConnection>
 
-@interface MBDatePickerPopoverController : MBDatePickerController
-
-@property (nonatomic, retain) UIPopoverController *popover;
+- initWithRequest:(NSURLRequest *)request delegate:(id<MBHTTPConnectionDelegate>)delegate;
 
 @end

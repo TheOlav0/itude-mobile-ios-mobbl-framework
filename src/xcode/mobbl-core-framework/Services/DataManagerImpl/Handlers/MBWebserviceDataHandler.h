@@ -16,6 +16,11 @@
 
 #import "MBDataHandlerBase.h"
 #import "MBWebservicesConfigurationParser.h"
+#import "MBCaching.h"
+
+#import "MBHTTPConnectionDelegate.h"
+
+typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate);
 
 /** retrieves and sends MBDocument instances to and from a webservice.
  
@@ -35,8 +40,10 @@
 // Initialize with configuration read from config files
 - (id) init;
 
-// Initialize with custom configuration
+// Designated initializer (custom config and connection builder)
 - (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration;
+- (id) initWithConnectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage;
+- (id) initWithConfiguration:(MBWebservicesConfiguration *)configuration connectionBuilder:(MBHTTPConnectionBuilder)connectionBuilder documentCacheStorage:(id<MBDocumentCaching>)documentCacheStorage;
 
 - (MBDocument *) loadDocument:(NSString *)documentName;
 - (MBDocument *) loadDocument:(NSString *)documentName withArguments:(MBDocument *)args;
@@ -86,32 +93,13 @@
  */
 -(MBDocument *) reformatRequestArgumentsForServer:(MBDocument * )doc;
 
-/** convenience method to add housekeeping information to the request arguments
- @param element An Element in the Document containing the request arguments
- */
--(void) addAttributesToRequestArguments:(MBDocument *)doc;
-
-/** convenience method to add a checksum to the request arguments
- @param element An Element in the Document containing the request arguments
- */
--(void) addChecksumToRequestArguments:(MBElement *)element;
-
 @end
 
 // Delegate used for callbacks in asynchronous http request. //
-@interface MBRequestDelegate : NSObject // <NSURLConnectionDelegate> from iOS 5 on
-{
-	
-	BOOL _finished;
-	NSMutableData *_data;
-	NSURLConnection *_connection;
-	NSError *_err;
-	NSURLResponse *_response;
-	
-}
+@interface MBHTTPConnectionDelegateImpl : NSObject <MBHTTPConnectionDelegate>
 
 @property BOOL finished;
-@property (nonatomic, retain) NSURLConnection *connection;
+@property (nonatomic, retain) id<MBHTTPConnection> connection;
 @property (nonatomic, retain) NSError *err;
 @property (nonatomic, retain) NSURLResponse *response;
 @property (nonatomic, retain) NSMutableData *data;
