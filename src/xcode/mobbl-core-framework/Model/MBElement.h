@@ -32,6 +32,8 @@
 /// @name Creating and Initializing an Element
 - (id) initWithDefinition:(id) definition;
 
+- (BOOL) isEqualToElement:(MBElement *)element;
+
 /// @name Getting Element Properties
 - (NSString *) name;
 - (MBElementDefinition*) definition;

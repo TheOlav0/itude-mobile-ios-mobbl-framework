@@ -7,10 +7,12 @@
 //
 
 #import <XCTest/XCTest.h>
+
+#import "MBFileManager.h"
 #import "MBResourceService.h"
 
-NSString * const ReadingTestFileName    =   @"MBFileManagerReadTest.xml";
-NSString * const WritingTestFileName    =   @"MBFileManagerWriteTest.xml";
+NSString * const ReadingTestFileName    =   @"MBFileManagerTest_read.xml";
+NSString * const WritingTestFileName    =   @"MBFileManagerTest_write.xml";
 
 NSString * const TestContentsString     =   @"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
                                             @"<root>\n"

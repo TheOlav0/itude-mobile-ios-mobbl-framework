@@ -64,6 +64,10 @@
 	[self copyChildrenInto: target];
 }
 
+- (BOOL)isEqualToDocument:(MBDocument *)document {
+    return [self isEqualToElementContainer:document];
+}
+
 - (NSString*) uniqueId {
 	NSMutableString *uid = [NSMutableString stringWithCapacity:200];
 	

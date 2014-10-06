@@ -30,7 +30,7 @@ static MBCacheManager *_instance = nil;
 #define CACHE_TTL_FILE      @"cache_ttl.plist"
 @implementation MBCacheManager
 
-+(MBCacheManager *) sharedInstance {
++(instancetype) sharedInstance {
 	@synchronized(self) {
 		if(_instance == nil) {
 			_instance = [[self alloc] init];
@@ -86,6 +86,35 @@ static MBCacheManager *_instance = nil;
 	[_ttls release];
     [super dealloc];
 }
+
+- (NSData *) dataForKey:(NSString *) key {
+    return [self doGetValueForKey:key];
+}
+
+- (void) setData:(NSData *) data forKey:(NSString*) key timeToLive:(NSUInteger) ttl {
+    [self doSetValue:data forKey:key timeToLive:(int)ttl];
+}
+
+- (void) expireDataForKey:(NSString *) key {
+    [self doExpireDataForKey:key];
+}
+
+- (void) expireDocumentForKey:(NSString *) key {
+    [self doExpireDataForKey:key];
+}
+
+- (void) expireAllDocuments {
+    [self doExpireAllDocuments];
+}
+
+- (MBDocument *) documentForKey:(NSString *) key {
+    return [self doGetDocumentForKey:key];
+}
+
+- (void) setDocument:(MBDocument *) document forKey:(NSString *) key timeToLive:(NSUInteger) ttl {
+    
+}
+
 
 -(NSString*) determineAbsPath:(NSString*) fileName {
 	NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
