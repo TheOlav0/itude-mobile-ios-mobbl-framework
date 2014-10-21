@@ -44,6 +44,7 @@
     // Private
 	NSInteger _activityIndicatorCount;
 	BOOL _temporary;
+    BOOL _calledDidShowViewController;
     
     volatile int32_t _needsRelease;
 }
@@ -90,7 +91,7 @@
 		[self showActivityIndicator];
 		_navigationSemaphore = dispatch_semaphore_create(1);
 		_needsRelease = 0;
-		self.markedForReset = true; 
+ 		self.markedForReset = true; 
         [[[MBViewBuilderFactory sharedInstance] styleHandler] styleNavigationBar:self.navigationController.navigationBar];
 	}
 	return self;
@@ -161,7 +162,6 @@
 		[self setupCloseButtonForPage:page];
 	};
 
-
 	/* This is where stuff gets tricky; it is possible that a navigation animation is playing (usually because a page is being popped)
 		while is showPage-call is made. In that case, we want to wait until that animation has finished, because iOS shows weird behaviour if not.
 	   However, when no animation is being played, the showing of the page should be queued in the main thread immediately.
@@ -227,7 +227,16 @@
 }
 
 -(void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    _calledDidShowViewController = NO;
     [self willActivate];
+    
+    // for whatever reason, if the application is starting up (i.e. 'not active'), didShowViewController doesn't get called;
+    // in that case, we just do it here :)
+    // (The _calledDidShowViewController-check is to prevent didShowViewController from getting called twice if the app
+    // becomes active after the call to willShowViewController, but before UIKit calls UINavigationController navigationTransitionView:didEndTransition:fromView:toView:)
+    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
+        [self navigationController:navigationController didShowViewController:viewController animated:NO];
+    }
 }
 
 -(void)didActivate {
@@ -235,11 +244,14 @@
 }
 
 -(void) navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
-	_navigationController = viewController.navigationController;
-    [self didActivate];
-	if (OSAtomicCompareAndSwap32Barrier(1, 0, &_needsRelease)) {
-		dispatch_semaphore_signal(self.navigationSemaphore);
-	}
+    if (!_calledDidShowViewController) {
+        _navigationController = viewController.navigationController;
+        [self didActivate];
+        if (OSAtomicCompareAndSwap32Barrier(1, 0, &_needsRelease)) {
+            dispatch_semaphore_signal(self.navigationSemaphore);
+        }
+        _calledDidShowViewController = YES;
+    }
 }
 
 -(void) clearSubviews {
