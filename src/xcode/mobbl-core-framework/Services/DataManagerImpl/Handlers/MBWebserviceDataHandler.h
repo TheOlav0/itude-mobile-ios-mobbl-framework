@@ -37,6 +37,8 @@ typedef id<MBHTTPConnection> (^MBHTTPConnectionBuilder)(NSURLRequest *request, i
 	MBWebservicesConfiguration *_webServiceConfiguration;
 }
 
+@property (nonatomic, readonly) MBHTTPConnectionBuilder connectionBuilder;
+
 // Initialize with configuration read from config files
 - (id) init;
 
