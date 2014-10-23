@@ -88,19 +88,27 @@
 #pragma mark - Connection delegate
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    [self.delegate connection:self didFailWithError:error];
+    if ([self.delegate respondsToSelector:@selector(connection:didFailWithError:)]) {
+        [self.delegate connection:self didFailWithError:error];
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    [self.delegate connection:self didReceiveData:data];
+    if ([self.delegate respondsToSelector:@selector(connection:didReceiveData:)]) {
+        [self.delegate connection:self didReceiveData:data];
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    [self.delegate connection:self didReceiveResponse:response];
+    if ([self.delegate respondsToSelector:@selector(connection:didReceiveResponse:)]) {
+        [self.delegate connection:self didReceiveResponse:response];
+    }
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    [self.delegate connectionDidFinishLoading:self];
+    if ([self.delegate respondsToSelector:@selector(connectionDidFinishLoading:)]) {
+        [self.delegate connectionDidFinishLoading:self];
+    }
 }
 
 - (NSCachedURLResponse *)connection:(NSURLConnection *)connection willCacheResponse:(NSCachedURLResponse *)cachedResponse {
@@ -108,11 +116,17 @@
 }
 
 - (BOOL)connection:(NSURLConnection *)connection canAuthenticateAgainstProtectionSpace:(NSURLProtectionSpace *)protectionSpace {
-    return [self.delegate connection:self canAuthenticateAgainstProtectionSpace:protectionSpace];
+    if ([self.delegate respondsToSelector:@selector(connection:canAuthenticateAgainstProtectionSpace:)]) {
+        return [self.delegate connection:self canAuthenticateAgainstProtectionSpace:protectionSpace];
+    } else {
+        return NO;
+    }
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge {
-    [self.delegate connection:self didReceiveAuthenticationChallenge:challenge];
+    if ([self.delegate respondsToSelector:@selector(connection:didReceiveAuthenticationChallenge:)]) {
+        return [self.delegate connection:self didReceiveAuthenticationChallenge:challenge];
+    }
 }
 
 @end

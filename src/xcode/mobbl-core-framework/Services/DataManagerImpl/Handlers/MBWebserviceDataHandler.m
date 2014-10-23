@@ -32,7 +32,6 @@
 
 @interface MBWebserviceDataHandler()
 
-@property (nonatomic, readonly) MBHTTPConnectionBuilder connectionBuilder;
 @property (nonatomic, readonly) id<MBDocumentCaching> documentCacheStorage;
 
 -(NSString*) convertDataToString:(NSData*) data;

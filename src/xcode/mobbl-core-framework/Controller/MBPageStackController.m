@@ -87,11 +87,16 @@
 		self.name = definition.name;
 		self.title = definition.title;
 		self.navigationController = [[UINavigationController new] autorelease];
+        
+        // when using iOS8, this apparently initializes /something/ that causes
+        // didShowViewController to be called when expected, instead of not at all.. :/
+        self.navigationController.viewControllers = [NSArray array];
+
 		self.activityIndicatorCount = 0;
 		[self showActivityIndicator];
 		_navigationSemaphore = dispatch_semaphore_create(1);
 		_needsRelease = 0;
- 		self.markedForReset = true; 
+ 		self.markedForReset = true;
         [[[MBViewBuilderFactory sharedInstance] styleHandler] styleNavigationBar:self.navigationController.navigationBar];
 	}
 	return self;
@@ -129,9 +134,9 @@
 	MBBasicViewController *viewController = (MBBasicViewController*)[page.viewController retain];
 
 	viewController.pageStackController = self;
-    
-	void (^actuallyShowPage)(void) =^{
 
+    void (^actuallyShowPage)(void) =^{
+       
 		// Apply transitionStyle for a regular page navigation
 		id<MBTransitionStyle> style = [[[MBApplicationFactory sharedInstance] transitionStyleFactory] transitionForStyle:transitionStyle];
 		[style applyTransitionStyleToViewController:nav forMovement:MBTransitionMovementPush];
@@ -160,6 +165,18 @@
 
 		// This needs to be done after the page (viewController) is visible, because before that we have nothing to set the close button to
 		[self setupCloseButtonForPage:page];
+        
+
+        // page is ready for display; make sure we actually show the dialog
+
+        MBDialogManager * manager = [[[MBApplicationController currentInstance] viewManager] dialogManager];
+        if (![[manager activeDialogName] isEqualToString:[self dialogController].name]) {
+
+            [[[MBViewBuilderFactory sharedInstance] dialogDecoratorFactory] presentDialog:[self dialogController] withTransitionStyle:transitionStyle];
+        }
+        if (![page.pageStackName isEqualToString:manager.activePageStackName]) {
+            [manager activatePageStackWithName:page.pageStackName];
+        }
 	};
 
 	/* This is where stuff gets tricky; it is possible that a navigation animation is playing (usually because a page is being popped)
@@ -229,14 +246,6 @@
 -(void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     _calledDidShowViewController = NO;
     [self willActivate];
-    
-    // for whatever reason, if the application is starting up (i.e. 'not active'), didShowViewController doesn't get called;
-    // in that case, we just do it here :)
-    // (The _calledDidShowViewController-check is to prevent didShowViewController from getting called twice if the app
-    // becomes active after the call to willShowViewController, but before UIKit calls UINavigationController navigationTransitionView:didEndTransition:fromView:toView:)
-    if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive) {
-        [self navigationController:navigationController didShowViewController:viewController animated:NO];
-    }
 }
 
 -(void)didActivate {
@@ -244,6 +253,7 @@
 }
 
 -(void) navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    // for some reason, didShowViewController gets called twice during application startup.. :/
     if (!_calledDidShowViewController) {
         _navigationController = viewController.navigationController;
         [self didActivate];

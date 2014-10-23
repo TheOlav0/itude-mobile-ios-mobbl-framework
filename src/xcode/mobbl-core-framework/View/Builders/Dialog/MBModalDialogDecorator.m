@@ -56,20 +56,7 @@
     BOOL animated = [transition animated];
 	UIViewController *topMostVisibleViewController = [[[MBApplicationController currentInstance] viewManager] topMostVisibleViewController];
 
-
-    // If the modal has been shown before, the presentViewController call for some reason needs to be dispatched to the main queue (even if the current queue
-    // is the main queue), otherwise the modal will end up blank. Absolutely no idea why.. :/
-    // However, if we do this when the modal hasn't been shown before, didShowViewController in the corresponding MBPageStackController doesn't get called
-    // on iOS 8, hence this weird if-statement.
-    
-    if (!_shown) {
-        [[[MBApplicationController currentInstance] viewManager] presentViewController:viewController fromViewController:topMostVisibleViewController animated:animated ];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[[MBApplicationController currentInstance] viewManager] presentViewController:viewController fromViewController:topMostVisibleViewController animated:animated ];
-
-        });
-    }
+    [[[MBApplicationController currentInstance] viewManager] presentViewController:viewController fromViewController:topMostVisibleViewController animated:animated ];
     
     _shown = true;
 }
