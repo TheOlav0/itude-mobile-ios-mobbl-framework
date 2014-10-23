@@ -28,7 +28,7 @@
 
 - (void)handleInitialOutcomes {
 	MBDocument *initialOutcomes = [[MBDataManagerService sharedInstance] loadDocument:[self documentName]];
-	for(MBElement *element in [initialOutcomes valueForPath:@"/Outcome"]) {
+	for(MBElement *element in [[initialOutcomes valueForPath:@"/Outcome"] reverseObjectEnumerator]) {
         MBOutcome *outcome = [self outcomeForElement:element];
 
 		[self handleOutcomeOnMainThread:outcome];
