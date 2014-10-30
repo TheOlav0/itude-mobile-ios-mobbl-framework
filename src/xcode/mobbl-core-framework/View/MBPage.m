@@ -234,7 +234,7 @@
 				ignorePath = TRUE;
 			}
 			else {
-				NSString *msg = [NSString stringWithFormat:@"Invalid root path %@->%@; does not conform to defined document root path %@", path, stripped, mustBe];
+				NSString *msg = [NSString stringWithFormat:@"Invalid root path %@->%@; does not conform to defined document root path %@ for page %@", path, stripped, mustBe, [self name]];
 				@throw [NSException exceptionWithName:@"InvalidPath" reason: msg userInfo:nil];
 			}
 		}

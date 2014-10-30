@@ -67,9 +67,10 @@ static MBCacheManager *_instance = nil;
         _ttlsFileName = [[docsDirectory stringByAppendingPathComponent: CACHE_TTL_FILE] retain];
         
 		NSMutableDictionary *ttlFromFile = [[NSMutableDictionary alloc] initWithContentsOfFile:_ttlsFileName];
-        _ttls = [NSMutableDictionary new];
         if (ttlFromFile) {
             _ttls = [[NSMutableDictionary alloc] initWithDictionary:ttlFromFile];
+        } else {
+            _ttls = [NSMutableDictionary new];
         }
         [ttlFromFile release];
     }
