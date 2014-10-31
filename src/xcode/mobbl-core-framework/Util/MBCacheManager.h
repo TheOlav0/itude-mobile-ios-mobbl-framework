@@ -28,6 +28,8 @@
 }
 
 + (instancetype)sharedInstance;
++(void)setSharedInstance:(MBCacheManager*) instance;
+
 
 +(NSData*) dataForKey:(NSString*) key DEPRECATED_MSG_ATTRIBUTE("use -dataForKey: instead");
 +(void) setData:(NSData*) data forKey:(NSString*) key timeToLive:(int) ttl DEPRECATED_MSG_ATTRIBUTE("use -setData:forKey:timeToLive: instead");
