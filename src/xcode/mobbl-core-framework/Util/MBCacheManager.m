@@ -39,6 +39,14 @@ static MBCacheManager *_instance = nil;
 	return _instance;
 }
 
++(void)setSharedInstance:(MBCacheManager*) instance {
+    if (_instance != instance) {
+        [_instance release];
+        _instance = instance;
+        [_instance retain];
+    }
+}
+
 - (id) init
 {
     self = [super init];
@@ -113,7 +121,7 @@ static MBCacheManager *_instance = nil;
 }
 
 - (void) setDocument:(MBDocument *) document forKey:(NSString *) key timeToLive:(NSUInteger) ttl {
-    
+    [self doSetDocument:document forKey:key timeToLive:(int)ttl];
 }
 
 
