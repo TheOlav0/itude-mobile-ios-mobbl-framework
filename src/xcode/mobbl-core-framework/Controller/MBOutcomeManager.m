@@ -42,6 +42,32 @@
 #define THREAD_RELEASE
 #endif
 
+typedef enum {
+    Initializing = 0,
+    InformListenersStart,
+    Persist,
+    GatherOutcomes,
+    DialogChanges,
+    Action,
+    PreparePage,
+    ShowPage,
+    Alert,
+    InformDone,
+    
+    Done,
+} OutcomePhase;
+
+typedef struct {
+    OutcomePhase phase;
+    MBOutcome *outcome;
+    MBOutcomeManager *manager;
+    NSArray *outcomesToProcess;
+    BOOL error;
+    NSArray *documents;
+    NSArray *pageDefinitions;
+    dispatch_semaphore_t latch;
+} OutcomeState;
+
 
 @interface MBOutcomeManager ()
 @property (nonatomic, retain) NSMutableArray *outcomeListeners;
@@ -57,7 +83,7 @@
 	self = [super init];
 	if (self != nil) {
 		_outcomeListeners = [[NSMutableArray array] retain];
-		_queue = dispatch_queue_create("com.itude.mobbl.OutcomeQueue", DISPATCH_QUEUE_SERIAL);
+		_queue = dispatch_queue_create("com.itude.mobbl.OutcomeQueue", DISPATCH_QUEUE_CONCURRENT);
 	}
 	return self;
 }
@@ -86,12 +112,6 @@
 	THREAD_RELEASE
 }
 
-void runOnMain(void (^block)(void)) {
-	if ([NSThread isMainThread])
-		block ();
-	else dispatch_sync(dispatch_get_main_queue(), block);
-}
-
 - (BOOL)shouldHandleOutcome:(MBOutcome *)outcome {
     // Ask all outcome listeners if the outcome should be handled
     for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
@@ -106,249 +126,349 @@ void runOnMain(void (^block)(void)) {
     return TRUE;
 }
 
+
+void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^block)(OutcomeState *state)) {
+    if ([inState.outcome noBackgroundProcessing]) {
+        @autoreleasepool {
+            __block OutcomeState state = inState;
+            @try {
+                block (&state);
+            }
+            @catch (NSException *e) {
+                state.error = YES;
+                [[MBApplicationController currentInstance] handleException: e outcome: state.outcome];
+            }
+            @finally {
+                [state.manager finishedPhase:state];
+            }
+        }
+    } else {
+        dispatch_async(queue, ^{
+            @autoreleasepool {
+                __block OutcomeState state = inState;
+                @try {
+                    block (&state);
+                }
+                @catch (NSException *e) {
+                    state.error = YES;
+                    [[MBApplicationController currentInstance] handleException: e outcome: state.outcome];
+                }
+                @finally {
+                    [state.manager finishedPhase:state];
+                }
+            }
+        });
+    }
+    
+}
+
 - (void) doHandleOutcome:(MBOutcome *)outcome {
-	THREAD_DUMP("doHandleOutcome");
-	DLog(@"MBApplicationController:handleOutcome: %@", outcome);
-
-	// notify all outcome listeners
-	for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
-		if ([lsnr respondsToSelector:@selector(outcomeProduced:)])
-			[lsnr outcomeProduced:outcome];
-	}
-
-	// Make sure that the (external) document cache of the document itself is cleared since this
-	// might interfere with the preconditions that are evaluated later on. Also: if the document is transferred
-	// the next page / action will also have fresh copies
-	[outcome.document clearAllCaches];
-
-	MBMetadataService *metadataService = [MBMetadataService sharedInstance];
-
-	NSArray *outcomeDefinitions = [metadataService outcomeDefinitionsForOrigin:outcome.originName outcomeName:outcome.outcomeName throwIfInvalid:FALSE];
-    if([outcomeDefinitions count] == 0) {
-        NSString *msg = [NSString stringWithFormat:@"No outcome defined for origin=%@ outcome=%@", outcome.originName, outcome.outcomeName];
-        @throw [NSException exceptionWithName:@"NoOutcomesDefined" reason:msg userInfo:nil];
+    DLog(@"MBApplicationController:handleOutcome: %@", outcome);
+    
+    OutcomeState state;
+    state.phase = Initializing;
+    state.outcome = [outcome retain];
+    state.manager = self;
+    state.outcomesToProcess = nil;
+    state.error = NO;
+    state.documents = nil;
+    state.pageDefinitions = nil;
+    state.latch = dispatch_semaphore_create(0);
+    [self finishedPhase:state];
+    
+    if ([outcome noBackgroundProcessing]) {
+        dispatch_semaphore_wait(state.latch, DISPATCH_TIME_FOREVER);
     }
+    
+    dispatch_release (state.latch);
+    
+}
 
-    BOOL shouldPersist = FALSE;
-    for(MBOutcomeDefinition *outcomeDef in outcomeDefinitions) {
-        shouldPersist |= outcomeDef.persist;
+- (void) finishedPhase:(OutcomeState) state {
+    
+    if (state.error) goto releaseState;
+    
+    state.phase++;
+
+    switch (state.phase) {
+        case Initializing: // ?
+        case InformListenersStart:
+            [self informListenersDone:state];
+            break;
+        case Persist:
+            [self persist:state];
+            break;
+        case GatherOutcomes:
+            [self gatherOutcomes:state];
+            break;
+        case DialogChanges:
+            [self dialogChanges:state];
+            break;
+        case Action:
+            [self action:state];
+            break;
+        case PreparePage:
+            [self preparePage:state];
+            break;
+        case ShowPage:
+            [self showPages:state];
+            break;
+        case Alert:
+            [self alert:state];
+            break;
+        case InformDone:
+            [self informListenersDone:state];
+            break;
+        case Done:
+            goto releaseState;
     }
-
-    if(shouldPersist) {
-		if([outcome document] == nil) {
-			DLog(@"WARNING: origin=%@ and name=%@ has persistDocument=TRUE but there is no document (probably the outcome originates from an action; which cannot have a document)", outcome.originName, outcome.outcomeName);
-		}
-		else [[MBDataManagerService sharedInstance] storeDocument: outcome.document];
-	}
-
-    NSMutableArray *pageStacks = [NSMutableArray array];
-
-	// We need to make sure that the order of the dialog tabs conforms to the order of the outcomes
-	// This is not necessarily the case because preparing of page A might take longer in the background than page B
-	// Because of this, page B migh be places on a tab prior to page A which is undesired. We handle this by
-	// notifying the view handler of the dialogs used by the outcome in sequental order. The viewmanager will then
-	// use this information to sort the tabs
-
-    for(MBOutcomeDefinition *outcomeDef in outcomeDefinitions) {
-
-		if([@"RESET_CONTROLLER" isEqualToString:outcomeDef.action]) {
-			[[MBApplicationController currentInstance] resetController];
-		}
-		else {
-
-			// Create a working copy of the outcome; we manipulate the outcome below and we want the passed outcome to be left unchanged (good practise)
-			MBOutcome *outcomeToProcess = [[[MBOutcome alloc] initWithOutcomeDefinition: outcomeDef] autorelease];
-
-			outcomeToProcess.path = outcome.path;
-			outcomeToProcess.document = outcome.document;
-            if (outcomeToProcess.pageStackName.length == 0) outcomeToProcess.pageStackName = outcome.pageStackName;
-            if (outcomeToProcess.pageStackName.length == 0) outcomeToProcess.pageStackName = outcome.originPageStackName;
-			if (outcome.displayMode != nil) outcomeToProcess.displayMode = outcome.displayMode;
-			outcomeToProcess.noBackgroundProcessing = outcome.noBackgroundProcessing || outcomeDef.noBackgroundProcessing;
-
-
-			void (^actuallyProcessOutcome)(void) = ^{
-				if([outcomeToProcess isPreConditionValid]) {
-
-					// Update a possible switch of pageStack/display mode set by the outcome definition
-					if(outcomeDef.pageStackName != nil) outcomeToProcess.pageStackName = outcomeDef.pageStackName;
-					if(outcomeToProcess.displayMode.length == 0) outcomeToProcess.displayMode = outcomeDef.displayMode;
-					if(outcomeToProcess.originPageStackName == nil) outcomeToProcess.originPageStackName = outcomeToProcess.pageStackName;
-
-					if(outcomeToProcess.pageStackName != nil) [pageStacks addObject: outcomeToProcess.pageStackName];
-
-					runOnMain(^{
-						if([@"ENDMODAL" isEqualToString: outcomeToProcess.displayMode]) {
-							MBDialogController *dialog = [[MBApplicationController currentInstance].viewManager.dialogManager dialogForPageStackName:outcomeToProcess.pageStackName];
-							[[[MBViewBuilderFactory sharedInstance] dialogDecoratorFactory] dismissDialog:dialog withTransitionStyle:outcomeToProcess.transitionStyle];
-						}
-
-						else if([@"POP" isEqualToString: outcomeToProcess.displayMode]) {
-							// TODO: This causes a bug when the user desides to pop the rootViewController
-							[[MBApplicationController currentInstance].viewManager.dialogManager popPageOnPageStackWithName: outcomeToProcess.pageStackName];
-						}
-						else if([@"POPALL" isEqualToString: outcomeToProcess.displayMode]) {
-							[[MBApplicationController currentInstance].viewManager.dialogManager endPageStackWithName: outcomeToProcess.pageStackName keepPosition:TRUE];
-						}
-						else if([@"CLEAR" isEqualToString: outcomeToProcess.displayMode]) {
-							[[MBApplicationController currentInstance].viewManager resetView];
-						}
-						else if([@"END" isEqualToString: outcomeToProcess.displayMode]) {
-							[[MBApplicationController currentInstance].viewManager.dialogManager endPageStackWithName: outcomeToProcess.pageStackName keepPosition: FALSE];
-							[pageStacks removeObject:outcomeToProcess.pageStackName];
-						}
-					});
-
-
-					// Action
-					MBActionDefinition *actionDef = [metadataService definitionForActionName:outcomeDef.action throwIfInvalid: FALSE];
-					if(actionDef != nil) {
-						if(!outcomeToProcess.noBackgroundProcessing)
-							[[MBApplicationController currentInstance].viewManager showActivityIndicatorWithMessage:outcomeToProcess.processingMessage];
-
-							[self performActionInBackground:[NSArray arrayWithObjects:[[[MBOutcome alloc] initWithOutcome:outcomeToProcess] autorelease], actionDef,  nil]];
-					}
-
-					// Page
-					MBPageDefinition *pageDef = [metadataService definitionForPageName:outcomeDef.action throwIfInvalid: FALSE];
-					if(pageDef != nil) {
-						if(!outcomeToProcess.noBackgroundProcessing)
-							[[MBApplicationController currentInstance].viewManager showActivityIndicatorWithMessage:outcomeToProcess.processingMessage];
-
-						[self preparePageInBackground:@[[[[MBOutcome alloc] initWithOutcome:outcomeToProcess]autorelease], pageDef.name]];
-					}
-
-					// Alert
-					MBAlertDefinition *alertDef = [metadataService definitionForAlertName:outcomeDef.action throwIfInvalid:FALSE];
-					if (alertDef != nil) {
-						[[MBApplicationController currentInstance].alertController handleAlert:alertDef forOutcome:outcomeToProcess];
-					}
-
-					if(actionDef == nil && pageDef == nil && alertDef == nil && ![outcomeDef.action isEqualToString:@"none"]) {
-						NSString *msg = [NSString stringWithFormat:@"Invalid outcome; no action or page with name %@ defined. See outcome origin=%@ action=%@. Check \n%@", outcomeDef.action, outcomeDef.origin, outcomeDef.name, [outcomeDef asXmlWithLevel:5]];
-						@throw [NSException exceptionWithName:@"InvalidOutcome" reason:msg userInfo:nil];
-					}
-				}
-			};
-
-			if ( outcomeToProcess.noBackgroundProcessing) {
-				if (dispatch_get_current_queue() == self.queue) actuallyProcessOutcome();
-				else dispatch_sync(self.queue, actuallyProcessOutcome);
-			} else {
-				dispatch_async(self.queue, actuallyProcessOutcome);
-			}
-		}
-	}
-
-	dispatch_async(self.queue, ^{
-		dispatch_async(dispatch_get_main_queue(), ^{
-			// notify all outcome listeners
-			for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
-				if ([lsnr respondsToSelector:@selector(outcomeHandled:)])
-					[lsnr outcomeHandled:outcome];
-			}
-		});
-	});
-	THREAD_RELEASE
+    
+    return;
+    
+releaseState:
+    [state.outcome release];
+    [state.outcomesToProcess release];
+    [state.documents release];
+    [state.pageDefinitions release];
+    dispatch_semaphore_signal(state.latch);
 }
 
 
 
-//////// PAGE HANDLING
-
-- (void)preparePageInBackground:(NSArray*)args {
-	THREAD_DUMP("preparePageInBackground")
-
-    MBOutcome *causingOutcome = [args objectAtIndex:0];
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-    @try {
-
-        NSString *pageName = [args objectAtIndex:1];
-
-        // construct the page
-        MBPageDefinition *pageDefinition = [[MBMetadataService sharedInstance] definitionForPageName:pageName];
-
-		// Load the document from the store
-		MBDocument *document = nil;
-
-		if(causingOutcome.transferDocument) {
-			if(causingOutcome.document == nil)  {
-				NSString *msg = [NSString stringWithFormat:@"No document provided (nil) in outcome '%@' by action/page '%@' but transferDocument='TRUE' in outcome definition",causingOutcome.outcomeName , causingOutcome.originName];
-				@throw [NSException exceptionWithName:@"InvalidOutcome" reason:msg userInfo:nil];
-			}
-			NSString *actualType =  [[causingOutcome.document definition] name];
-			if(![actualType isEqualToString: [pageDefinition documentName]]) {
-				NSString *msg = [NSString stringWithFormat:@"Document provided via outcome by action/page=%@ (transferDocument='TRUE') is of type %@ but must be of type %@",
-								 causingOutcome.originName, actualType, [pageDefinition documentName]];
-				@throw [NSException exceptionWithName:@"InvalidOutcome" reason:msg userInfo:nil];
-			}
-			document = causingOutcome.document;
-		}
-		else {
-			document = [[MBDataManagerService sharedInstance] loadDocument:[pageDefinition documentName]];
-
-			if(document == nil) {
-				document = [[MBDataManagerService sharedInstance] loadDocument:[pageDefinition documentName]];
-				NSString *msg = [NSString stringWithFormat:@"Document with name %@ not found (check filesystem/webservice)", [pageDefinition documentName]];
-				@throw [NSException exceptionWithName:@"NoDocument" reason:msg userInfo:nil];
-			}
-		}
-
-		[self showResultingPage:@[causingOutcome, pageDefinition, document]    ];
-	}
-    @catch (NSException *e) {
-        [[MBApplicationController currentInstance] handleException: e outcome: causingOutcome];
-    }
-    @finally {
-        [pool release];
-		THREAD_RELEASE
-    }
+- (void) informListenersStart:(OutcomeState) state {
+    dispatchOutcomePhase (self.queue, state, ^(OutcomeState *state) {
+            // notify all outcome listeners
+            for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
+                if ([lsnr respondsToSelector:@selector(outcomeProduced:)])
+                    [lsnr outcomeProduced:state->outcome];
+            }
+    });
 }
 
-- (void)showResultingPage:(NSArray*)args {
-	THREAD_DUMP("showResultingPage")
-
-    MBOutcome *causingOutcome = [args objectAtIndex:0];
-    @try {
-        [[MBApplicationController currentInstance].viewManager hideActivityIndicator];
-        NSString *displayMode = causingOutcome.displayMode;
-        NSString *transitionStyle = causingOutcome.transitionStyle;
-		MBViewState viewState = [[MBApplicationController currentInstance].viewManager currentViewState];
-
-		if([displayMode isEqualToString:@"MODAL"] ||
-		   [displayMode isEqualToString:@"MODALFORMSHEET"] ||
-		   [displayMode isEqualToString:@"MODALFORMSHEETWITHCLOSEBUTTON"] ||
-		   [displayMode isEqualToString:@"MODALPAGESHEET" ] ||
-		   [displayMode isEqualToString:@"MODALFULLSCREEN"] ||
-		   [displayMode isEqualToString:@"MODALCURRENTCONTEXT"] ){
-			viewState = MBViewStateModal;
-		}
-
-		runOnMain(^{
-			THREAD_DUMP("showResultingPage (inner block)")
-			MBPageDefinition *pageDefinition = [args objectAtIndex:1];
-			MBDocument *document = [args objectAtIndex:2];
-			CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
-
-			MBPage *page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition
-												  document: document
-												  rootPath: causingOutcome.path
-												 viewState: viewState
-											 withMaxBounds: bounds];
-			page.applicationController = [MBApplicationController currentInstance];
-			page.pageStackName = causingOutcome.pageStackName;
-
-	        [[MBApplicationController currentInstance].viewManager showPage: page displayMode: displayMode transitionStyle: transitionStyle];
-			THREAD_RELEASE
-		});
-    }
-    @catch (NSException *e) {
-        [[MBApplicationController currentInstance] handleException: e outcome: causingOutcome];
-    }
-	THREAD_RELEASE
+-(void) persist:(OutcomeState) state {
+    dispatchOutcomePhase(self.queue, state, ^(OutcomeState *state){
+        MBOutcome *outcome = state->outcome;
+        // Make sure that the (external) document cache of the document itself is cleared since this
+        // might interfere with the preconditions that are evaluated later on. Also: if the document is transferred
+        // the next page / action will also have fresh copies
+        [outcome.document clearAllCaches];
+        
+        MBMetadataService *metadataService = [MBMetadataService sharedInstance];
+        
+        NSArray *outcomeDefinitions = [metadataService outcomeDefinitionsForOrigin:outcome.originName outcomeName:outcome.outcomeName throwIfInvalid:FALSE];
+        if([outcomeDefinitions count] == 0) {
+            NSString *msg = [NSString stringWithFormat:@"No outcome defined for origin=%@ outcome=%@", outcome.originName, outcome.outcomeName];
+            @throw [NSException exceptionWithName:@"NoOutcomesDefined" reason:msg userInfo:nil];
+        }
+        
+        BOOL shouldPersist = FALSE;
+        for(MBOutcomeDefinition *outcomeDef in outcomeDefinitions) {
+            shouldPersist |= outcomeDef.persist;
+        }
+        
+        if(shouldPersist) {
+            if([outcome document] == nil) {
+                DLog(@"WARNING: origin=%@ and name=%@ has persistDocument=TRUE but there is no document (probably the outcome originates from an action; which cannot have a document)", outcome.originName, outcome.outcomeName);
+            }
+            else [[MBDataManagerService sharedInstance] storeDocument: outcome.document];
+        }
+    });
 }
 
-//////// END OF PAGE HANDLING
+-(void) gatherOutcomes:(OutcomeState) state {
+    dispatchOutcomePhase(self.queue, state, ^(OutcomeState *state){
+        NSMutableArray *toProcess = [NSMutableArray new];
+        MBOutcome *outcome = state->outcome;
+        
+        MBMetadataService *metadataService = [MBMetadataService sharedInstance];
+        NSArray *outcomeDefinitions = [metadataService outcomeDefinitionsForOrigin:outcome.originName outcomeName:outcome.outcomeName throwIfInvalid:FALSE];
+
+        for(MBOutcomeDefinition *outcomeDef in outcomeDefinitions) {
+            
+            if([@"RESET_CONTROLLER" isEqualToString:outcomeDef.action]) {
+                [[MBApplicationController currentInstance] resetController];
+            }
+            else {
+                
+                // Create a working copy of the outcome; we manipulate the outcome below and we want the passed outcome to be left unchanged (good practise)
+                MBOutcome *outcomeToProcess = [[[MBOutcome alloc] initWithOutcomeDefinition: outcomeDef] autorelease];
+                
+                outcomeToProcess.path = outcome.path;
+                outcomeToProcess.document = outcome.document;
+                if (outcomeToProcess.pageStackName.length == 0) outcomeToProcess.pageStackName = outcome.pageStackName;
+                if (outcomeToProcess.pageStackName.length == 0) outcomeToProcess.pageStackName = outcome.originPageStackName;
+                if (outcome.displayMode != nil) outcomeToProcess.displayMode = outcome.displayMode;
+                outcomeToProcess.noBackgroundProcessing = outcome.noBackgroundProcessing || outcomeDef.noBackgroundProcessing;
+                
+                if([outcomeToProcess isPreConditionValid]) [toProcess addObject:outcomeToProcess];
+            }
+        }
+        
+        state->outcomesToProcess = toProcess;
+     });
+}
+
+
+- (void) dialogChanges:(OutcomeState) state {
+    
+    dispatchOutcomePhase(dispatch_get_main_queue(), state, ^(OutcomeState *state){
+        for (MBOutcome *outcomeToProcess in state->outcomesToProcess) {
+            if([@"ENDMODAL" isEqualToString: outcomeToProcess.displayMode]) {
+                MBDialogController *dialog = [[MBApplicationController currentInstance].viewManager.dialogManager dialogForPageStackName:outcomeToProcess.pageStackName];
+                [[[MBViewBuilderFactory sharedInstance] dialogDecoratorFactory] dismissDialog:dialog withTransitionStyle:outcomeToProcess.transitionStyle];
+            }
+            
+            else if([@"POP" isEqualToString: outcomeToProcess.displayMode]) {
+                // TODO: This causes a bug when the user desides to pop the rootViewController
+                [[MBApplicationController currentInstance].viewManager.dialogManager popPageOnPageStackWithName: outcomeToProcess.pageStackName];
+            }
+            else if([@"POPALL" isEqualToString: outcomeToProcess.displayMode]) {
+                [[MBApplicationController currentInstance].viewManager.dialogManager endPageStackWithName: outcomeToProcess.pageStackName keepPosition:TRUE];
+            }
+            else if([@"CLEAR" isEqualToString: outcomeToProcess.displayMode]) {
+                [[MBApplicationController currentInstance].viewManager resetView];
+            }
+            else if([@"END" isEqualToString: outcomeToProcess.displayMode]) {
+                [[MBApplicationController currentInstance].viewManager.dialogManager endPageStackWithName: outcomeToProcess.pageStackName keepPosition: FALSE];
+            }
+        }
+    });
+}
+
+-(void) action:(OutcomeState) state
+{
+    dispatchOutcomePhase(self.queue, state, ^(OutcomeState *state) {
+        for (MBOutcome *outcomeToProcess in state->outcomesToProcess) {
+            MBMetadataService *metadataService = [MBMetadataService sharedInstance];
+            MBActionDefinition *actionDef = [metadataService definitionForActionName:outcomeToProcess.action throwIfInvalid: FALSE];
+            if(actionDef != nil) {
+                if(!outcomeToProcess.noBackgroundProcessing)
+                    [[MBApplicationController currentInstance].viewManager showActivityIndicatorWithMessage:outcomeToProcess.processingMessage];
+                
+                [self performActionInBackground:[NSArray arrayWithObjects:[[[MBOutcome alloc] initWithOutcome:outcomeToProcess] autorelease], actionDef,  nil]];
+            }
+        }
+    });
+}
+
+-(void) preparePage:(OutcomeState) state {
+    dispatchOutcomePhase(self.queue, state, ^(OutcomeState *state) {
+        NSMutableArray *documents = [NSMutableArray new];
+        NSMutableArray *pageDefinitions = [NSMutableArray new];
+        for (MBOutcome *causingOutcome in state->outcomesToProcess) {
+            
+            MBMetadataService *metadataService = [MBMetadataService sharedInstance];
+            MBPageDefinition *pageDef = [metadataService definitionForPageName:causingOutcome.action throwIfInvalid: FALSE];
+            
+            if(pageDef != nil) {
+                if(!causingOutcome.noBackgroundProcessing)
+                    [[MBApplicationController currentInstance].viewManager showActivityIndicatorWithMessage:causingOutcome.processingMessage];
+                
+                NSString *pageName = pageDef.name;
+                
+                // construct the page
+                MBPageDefinition *pageDefinition = [[MBMetadataService sharedInstance] definitionForPageName:pageName];
+                
+                // Load the document from the store
+                MBDocument *document = nil;
+                
+                if(causingOutcome.transferDocument) {
+                    if(causingOutcome.document == nil)  {
+                        NSString *msg = [NSString stringWithFormat:@"No document provided (nil) in outcome '%@' by action/page '%@' but transferDocument='TRUE' in outcome definition",causingOutcome.outcomeName , causingOutcome.originName];
+                        @throw [NSException exceptionWithName:@"InvalidOutcome" reason:msg userInfo:nil];
+                    }
+                    
+                    NSString *actualType =  [[causingOutcome.document definition] name];
+                    if(![actualType isEqualToString: [pageDefinition documentName]]) {
+                        NSString *msg = [NSString stringWithFormat:@"Document provided via outcome by action/page=%@ (transferDocument='TRUE') is of type %@ but must be of type %@",
+                                         causingOutcome.originName, actualType, [pageDefinition documentName]];
+                        @throw [NSException exceptionWithName:@"InvalidOutcome" reason:msg userInfo:nil];
+                    }
+                    
+                    document = causingOutcome.document;
+                } else {
+                    document = [[MBDataManagerService sharedInstance] loadDocument:[pageDefinition documentName]];
+                    
+                    if(document == nil) {
+                        document = [[MBDataManagerService sharedInstance] loadDocument:[pageDefinition documentName]];
+                        NSString *msg = [NSString stringWithFormat:@"Document with name %@ not found (check filesystem/webservice)", [pageDefinition documentName]];
+                        @throw [NSException exceptionWithName:@"NoDocument" reason:msg userInfo:nil];
+                    }
+                }
+                
+                [documents addObject:document];
+                [pageDefinitions addObject:pageDefinition];
+            }
+            else {
+                [documents addObject:[NSNull null]];
+                [pageDefinitions addObject:[NSNull null]];
+
+            }
+
+        }
+        
+        
+        state->documents = documents;
+        state->pageDefinitions = pageDefinitions;
+    });
+}
+
+
+-(void) showPages:(OutcomeState) state {
+    dispatchOutcomePhase(dispatch_get_main_queue(), state, ^(OutcomeState *state) {
+        for (int i=0; i < [state->outcomesToProcess count]; ++i) {
+            MBOutcome *causingOutcome = [state->outcomesToProcess objectAtIndex:i];
+            MBDocument *document = [state->documents objectAtIndex:i];
+            MBPageDefinition *pageDefinition = [state->pageDefinitions objectAtIndex:i];
+            
+            if (pageDefinition != [NSNull null]) {
+            
+                [[MBApplicationController currentInstance].viewManager hideActivityIndicator];
+                NSString *displayMode = causingOutcome.displayMode;
+                NSString *transitionStyle = causingOutcome.transitionStyle;
+                MBViewState viewState = [[MBApplicationController currentInstance].viewManager currentViewState];
+                
+                CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
+                
+                MBPage *page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition
+                                                                                               document: document
+                                                                                               rootPath: causingOutcome.path
+                                                                                              viewState: viewState
+                                                                                          withMaxBounds: bounds];
+                page.applicationController = [MBApplicationController currentInstance];
+                page.pageStackName = causingOutcome.pageStackName;
+                
+                [[MBApplicationController currentInstance].viewManager showPage: page displayMode: displayMode transitionStyle: transitionStyle];
+            }
+        }
+    });
+}
+
+
+-(void) alert:(OutcomeState) state
+{
+    dispatchOutcomePhase(self.queue, state, ^(OutcomeState *state) {
+        for (MBOutcome *outcomeToProcess in state->outcomesToProcess) {
+            MBMetadataService *metadataService = [MBMetadataService sharedInstance];
+
+            MBAlertDefinition *alertDef = [metadataService definitionForAlertName:outcomeToProcess.action throwIfInvalid:FALSE];
+            if (alertDef != nil) {
+                [[MBApplicationController currentInstance].alertController handleAlert:alertDef forOutcome:outcomeToProcess];
+            }
+        }
+    });
+}
+
+
+-(void) informListenersDone:(OutcomeState) state {
+    dispatchOutcomePhase(dispatch_get_main_queue(), state, ^(OutcomeState *state) {
+        for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
+            if ([lsnr respondsToSelector:@selector(outcomeHandled:)])
+                [lsnr outcomeHandled:state->outcome];
+        }
+
+    });
+}
 
 //////// ACTION HANDLING
 

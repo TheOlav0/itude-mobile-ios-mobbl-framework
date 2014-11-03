@@ -47,6 +47,7 @@
 @property (nonatomic, assign) BOOL persist;
 @property (nonatomic, assign) BOOL transferDocument;
 @property (nonatomic, assign) BOOL noBackgroundProcessing;
+@property (nonatomic, retain, readonly) NSString *action;
 
 -(id) initWithOutcome:(MBOutcome*) outcome;
 -(id) initWithOutcomeDefinition:(MBOutcomeDefinition*) definition;
