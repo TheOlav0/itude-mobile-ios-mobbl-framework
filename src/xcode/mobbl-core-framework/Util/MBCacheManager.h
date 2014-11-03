@@ -39,4 +39,9 @@
 +(MBDocument*) documentForKey:(NSString*) key DEPRECATED_MSG_ATTRIBUTE("use -documentForKey: instead");
 +(void) setDocument:(MBDocument*) document forKey:(NSString*) key timeToLive:(int) ttl DEPRECATED_MSG_ATTRIBUTE("use -setDocument:forKey:timeToLive: instead");
 
+/**
+ Should only be used by subclasses of MBCacheManager!
+ */
+-(NSString*) determineAbsPath:(NSString*) fileName;
+
 @end
