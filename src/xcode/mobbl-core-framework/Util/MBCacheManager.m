@@ -39,6 +39,14 @@ static MBCacheManager *_instance = nil;
 	return _instance;
 }
 
++(void)setSharedInstance:(MBCacheManager*) instance {
+    if (_instance != instance) {
+        [_instance release];
+        _instance = instance;
+        [_instance retain];
+    }
+}
+
 - (id) init
 {
     self = [super init];
@@ -67,9 +75,10 @@ static MBCacheManager *_instance = nil;
         _ttlsFileName = [[docsDirectory stringByAppendingPathComponent: CACHE_TTL_FILE] retain];
         
 		NSMutableDictionary *ttlFromFile = [[NSMutableDictionary alloc] initWithContentsOfFile:_ttlsFileName];
-        _ttls = [NSMutableDictionary new];
         if (ttlFromFile) {
             _ttls = [[NSMutableDictionary alloc] initWithDictionary:ttlFromFile];
+        } else {
+            _ttls = [NSMutableDictionary new];
         }
         [ttlFromFile release];
     }
@@ -112,7 +121,7 @@ static MBCacheManager *_instance = nil;
 }
 
 - (void) setDocument:(MBDocument *) document forKey:(NSString *) key timeToLive:(NSUInteger) ttl {
-    
+    [self doSetDocument:document forKey:key timeToLive:(int)ttl];
 }
 
 

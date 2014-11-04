@@ -64,7 +64,7 @@
             return nil;
         }
         
-        _connectionBuilder = [connectionBuilder copy];
+        _connectionBuilder = [connectionBuilder retain];
         _webServiceConfiguration = [configuration retain];
         _documentCacheStorage = [documentCacheStorage retain];
     }
@@ -85,10 +85,10 @@
 
 - (MBHTTPConnectionBuilder)defaultConnectionBuilder {
     MBHTTPConnectionBuilder connectionBuilder = ^id<MBHTTPConnection>(NSURLRequest *request, id<MBHTTPConnectionDelegate> delegate) {
-        return [[MBHTTPConnectionImpl alloc] initWithRequest:request delegate:delegate];
+        return [[[MBHTTPConnectionImpl alloc] initWithRequest:request delegate:delegate] autorelease];
     };
     
-    return [[connectionBuilder copy] autorelease];
+    return [connectionBuilder copy];
 }
 
 - (id<MBDocumentCaching>)defaultDocumentCacheStorage {
@@ -149,7 +149,8 @@
         }
     }
     @catch (NSException *exception) {
-        [self.documentCacheStorage expireDocumentForKey:uniqueId];
+        if (self->_webServiceConfiguration.eraseDocumentFromCacheOnError)
+            [self.documentCacheStorage expireDocumentForKey:uniqueId];
         @throw exception;
     }
     @finally {
@@ -220,7 +221,7 @@
         delegate.err = nil;
         delegate.response = nil;
         delegate.finished = NO;
-        delegate.data = [[NSMutableData new] retain];
+        delegate.data = [[NSMutableData new] autorelease];
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
 
         id<MBHTTPConnection> connection = self.connectionBuilder(request, delegate);

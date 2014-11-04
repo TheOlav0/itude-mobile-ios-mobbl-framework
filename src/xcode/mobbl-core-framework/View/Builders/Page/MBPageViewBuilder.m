@@ -31,6 +31,9 @@
 }
 
 -(void)rebuildPageView:(MBPage *)page currentView:(UIView *)view withMaxBounds:(CGRect)maxBounds viewState:(MBViewState)viewState {
+    @autoreleasepool {
+
+
     // create a copy to make sure iterator doesn't break
     for (UIView *child in [view.subviews.copy autorelease])
         child.removeFromSuperview;
@@ -47,7 +50,7 @@
     
 	[[self styleHandler] applyStyle:page forView:view viewState: viewState];
 
-    
+    }
 }
 
 @end

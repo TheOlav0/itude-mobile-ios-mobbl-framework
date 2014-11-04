@@ -101,10 +101,12 @@
 	[_originName release];
 	[_outcomeName release];
 	[_pageStackName release];
-	[_document release];
-	[_path release];
-	[_preCondition release];
+    [_originPageStackName release];
+    [_displayMode release];
     [_transitionStyle release];
+    [_path release];
+	[_document release];
+	[_preCondition release];
     [_processingMessage release];
 	[super dealloc];
 }
