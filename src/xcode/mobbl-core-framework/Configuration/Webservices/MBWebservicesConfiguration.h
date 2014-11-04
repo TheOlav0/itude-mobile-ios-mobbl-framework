@@ -22,6 +22,8 @@
 	NSMutableArray *_resultListeners;
 }
 
+@property(nonatomic, assign) BOOL eraseDocumentFromCacheOnError;
+
 - (void) addEndPoint:(MBEndPointDefinition *)definition;
 - (MBEndPointDefinition *)getEndPointForDocumentName:(NSString *)documentName;
 - (void) addResultListener:(MBResultListenerDefinition*) lsnr;
