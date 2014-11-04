@@ -313,7 +313,7 @@
 }
 
 -(void)setCustomAttribute:(NSString *)value forKey:(NSString *)key {
-	if (!_customAttributes) _customAttributes = [[[NSMutableDictionary alloc] init]retain];
+	if (!_customAttributes) _customAttributes = [[NSMutableDictionary alloc] init];
 	[_customAttributes setValue:value forKey:key];
 }
 

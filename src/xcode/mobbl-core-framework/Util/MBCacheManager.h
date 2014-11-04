@@ -28,6 +28,8 @@
 }
 
 + (instancetype)sharedInstance;
++(void)setSharedInstance:(MBCacheManager*) instance;
+
 
 +(NSData*) dataForKey:(NSString*) key DEPRECATED_MSG_ATTRIBUTE("use -dataForKey: instead");
 +(void) setData:(NSData*) data forKey:(NSString*) key timeToLive:(int) ttl DEPRECATED_MSG_ATTRIBUTE("use -setData:forKey:timeToLive: instead");
@@ -36,5 +38,10 @@
 +(void) expireAllDocuments DEPRECATED_MSG_ATTRIBUTE("use -documentForKey: instead");
 +(MBDocument*) documentForKey:(NSString*) key DEPRECATED_MSG_ATTRIBUTE("use -documentForKey: instead");
 +(void) setDocument:(MBDocument*) document forKey:(NSString*) key timeToLive:(int) ttl DEPRECATED_MSG_ATTRIBUTE("use -setDocument:forKey:timeToLive: instead");
+
+/**
+ Should only be used by subclasses of MBCacheManager!
+ */
+-(NSString*) determineAbsPath:(NSString*) fileName;
 
 @end

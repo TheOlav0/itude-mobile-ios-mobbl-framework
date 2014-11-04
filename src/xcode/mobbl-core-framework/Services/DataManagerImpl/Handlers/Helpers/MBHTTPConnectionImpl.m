@@ -46,7 +46,7 @@
             return nil;
         }
         
-        _delegate = [delegate retain];
+        _delegate = delegate;
         
         [self startWithRequest:request];
     }
@@ -55,7 +55,6 @@
 }
 
 - (void)dealloc {
-    [_delegate release];
     [_connection release];
     
     [super dealloc];

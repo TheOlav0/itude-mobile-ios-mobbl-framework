@@ -123,11 +123,12 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     MBOutcome *outcome = [self.currentAlert outcomeForButtonAtIndex:buttonIndex];
+    self.currentAlert = nil;
     if (outcome) {
         [[MBApplicationController currentInstance] handleOutcome:outcome];
-    }    
+    }
     else if (buttonIndex != alertView.cancelButtonIndex) {
-        WLog(@"WARNING! Button at index %i has no outcome defined",buttonIndex);
+        WLog(@"WARNING! Button at index %i has no outcome defined",(int)buttonIndex);
     }
         
 }
