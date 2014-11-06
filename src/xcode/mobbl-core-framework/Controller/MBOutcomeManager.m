@@ -193,7 +193,7 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
     switch (state.phase) {
         case Initializing: // ?
         case InformListenersStart:
-            [self informListenersDone:state];
+            [self informListenersStart:state];
             break;
         case Persist:
             [self persist:state];
