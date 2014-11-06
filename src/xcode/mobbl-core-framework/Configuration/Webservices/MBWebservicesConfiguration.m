@@ -24,6 +24,7 @@
 	if (self != nil) {
 		_endPoints = [NSMutableDictionary new];
         _resultListeners = [NSMutableArray new];
+        _eraseDocumentFromCacheOnError = YES;
 	}
 	return self;
 }

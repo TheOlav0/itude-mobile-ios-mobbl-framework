@@ -149,7 +149,8 @@
         }
     }
     @catch (NSException *exception) {
-        [self.documentCacheStorage expireDocumentForKey:uniqueId];
+        if (self->_webServiceConfiguration.eraseDocumentFromCacheOnError)
+            [self.documentCacheStorage expireDocumentForKey:uniqueId];
         @throw exception;
     }
     @finally {
