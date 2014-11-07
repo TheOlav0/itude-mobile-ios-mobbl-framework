@@ -186,7 +186,10 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 
 - (void) finishedPhase:(OutcomeState) state {
     
-    if (state.error) goto releaseState;
+    if (state.error) {
+        [self releaseState:&state];
+        return;
+    }
     
     state.phase++;
 
@@ -220,19 +223,21 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
             [self informListenersDone:state];
             break;
         case Done:
-            goto releaseState;
+        [self releaseState:&state];
     }
     
     return;
     
-releaseState:
-    [state.outcome release];
-    [state.outcomesToProcess release];
-    [state.documents release];
-    [state.pageDefinitions release];
-    dispatch_semaphore_signal(state.latch);
+   
 }
 
+-(void) releaseState:(OutcomeState*) state {
+    [state->outcome release];
+    [state->outcomesToProcess release];
+    [state->documents release];
+    [state->pageDefinitions release];
+    dispatch_semaphore_signal(state->latch);
+}
 
 
 - (void) informListenersStart:(OutcomeState) state {
