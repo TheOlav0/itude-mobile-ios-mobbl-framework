@@ -100,6 +100,8 @@
 	[[MBDataManagerService sharedInstance] loadFreshDocument:_definition.name withArguments:_argumentsUsed forDelegate:delegate resultSelector:resultSelector errorSelector:errorSelector];
 }
 
+
+
 - (NSString *) asXmlWithLevel:(int)level
 {
     NSString *elementName = _definition.rootElement ? _definition.rootElement : _definition.name;
@@ -111,7 +113,7 @@
 		for(MBElementDefinition *elemDef in [_definition children]) {
 			NSArray *lst = [[self elements] objectForKey:elemDef.name];
             for(MBElement *elem in lst)
-    			[result appendString:[elem asXmlWithLevel:level + 2]];
+                [elem asXml: result withLevel:(level + 2)];
 		}
 		[result appendFormat:@"%*s</%@>\n", level, "", elementName];
 	}
