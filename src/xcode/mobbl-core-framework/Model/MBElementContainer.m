@@ -314,7 +314,6 @@
     }
 	else {
 		if(![self.definition isValidChild:name]) {
-            DLog(@"Child element with name %@ not present", name);
             return nil;
 		}
 		

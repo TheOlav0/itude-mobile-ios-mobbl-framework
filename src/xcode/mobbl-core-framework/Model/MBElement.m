@@ -189,10 +189,10 @@
 	return cooked;
 }
 
--(NSString*) attributeAsXml:(NSString*)name withValue:(id) attrValue {
+-(void) attributeAsXml:(NSString*)name withValue:(id) attrValue withBuffer:(NSMutableString*) buffer {
 	
 	NSString *escaped = [attrValue xmlSimpleEscape];
-	return attrValue == nil?@"": [NSString stringWithFormat:@" %@='%@'", name, escaped];
+    if (attrValue) [buffer appendFormat:@" %@='%@'", name, escaped];
 }
 
 - (NSString *) bodyText {
@@ -204,33 +204,38 @@
 	[self setValue:text forAttribute:TEXT_ATTRIBUTE];	
 }
 
+- (void) asXml:(NSMutableString*) buffer withLevel:(int)level {
+    BOOL hasBodyText = [self isValidAttribute: TEXT_ATTRIBUTE] && [[self bodyText] length] > 0;
+    [buffer appendFormat: @"%*s<%@", level, "", _definition.name];
+    for(MBAttributeDefinition* def in [_definition attributes]) {
+        NSString *attrName = def.name;
+        NSString *attrValue = [_values valueForKey: attrName];
+        if(![attrName isEqualToString:TEXT_ATTRIBUTE]) [self attributeAsXml:attrName withValue:attrValue withBuffer:buffer];
+    }
+    if([[_definition children] count] == 0 && !hasBodyText)
+        [buffer appendString:@"/>\n"];
+    else {
+        [buffer appendString:@">"];
+        if(hasBodyText)
+            [buffer appendString: [self.bodyText xmlSimpleEscape]];
+        else [buffer appendString: @"\n"];
+        
+        for(MBElementDefinition *elemDef in [_definition children]) {
+            NSArray *lst = [[self elements] objectForKey:elemDef.name];
+            for(MBElement *elem in lst)
+                [elem asXml: buffer withLevel:(level + 2)];
+        }
+        
+        [buffer appendFormat:@"%*s</%@>\n", hasBodyText?0:level, "", _definition.name];
+    }
+    
+}
+
 - (NSString *) asXmlWithLevel:(int)level
 {
-	BOOL hasBodyText = [self isValidAttribute: TEXT_ATTRIBUTE] && [[self bodyText] length] > 0;
-	NSMutableString *result = [NSMutableString stringWithFormat: @"%*s<%@", level, "", _definition.name];
-	for(MBAttributeDefinition* def in [_definition attributes]) {
-		NSString *attrName = def.name;
-		NSString *attrValue = [_values valueForKey: attrName];
-		if(![attrName isEqualToString:TEXT_ATTRIBUTE]) [result appendString: [self attributeAsXml:attrName withValue:attrValue]];
-	}
-	if([[_definition children] count] == 0 && !hasBodyText)
-		[result appendString:@"/>\n"];
-	else {
-		[result appendString:@">"];
-		if(hasBodyText) 
-			[result appendString: [[self bodyText] xmlSimpleEscape]];
-		else [result appendString: @"\n"];
-
-		for(MBElementDefinition *elemDef in [_definition children]) {
-			NSArray *lst = [[self elements] objectForKey:elemDef.name];
-			for(MBElement *elem in lst)
-					[result appendString: [elem asXmlWithLevel: level+2]];
-			}
-		
-		[result appendFormat:@"%*s</%@>\n", hasBodyText?0:level, "", _definition.name];
-	}
-
-	return result;
+    NSMutableString *result = [[NSMutableString new] autorelease];
+    [self asXml:result withLevel: level];
+    return result;
 }
 
 - (NSString *) description {

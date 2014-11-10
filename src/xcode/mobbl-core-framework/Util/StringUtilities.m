@@ -320,10 +320,83 @@
 
 // XML Encoding
 - (NSString *)xmlSimpleEscape {
-	self = [[[[[self stringByReplacingOccurrencesOfString: @"&" withString: @"&amp;"] stringByReplacingOccurrencesOfString: @"\"" withString: @"&quot;"] stringByReplacingOccurrencesOfString: @"'" withString: @"&#39;"] stringByReplacingOccurrencesOfString: @">" withString: @"&gt;"] stringByReplacingOccurrencesOfString: @"<" withString: @"&lt;"];
-	return self;
+    if (self == nil || [self length] == 0) {
+        return self;
+    }
+    
+    const int len = [self length];
+    int longer = ((int) (len * 0.10));
+    if (longer < 5) {
+        longer = 5;
+    }
+    
+    longer = len + longer;
+    NSMutableString *mStr = [NSMutableString stringWithCapacity:longer];
+    
+    NSRange subrange;
+    subrange.location = 0;
+    subrange.length = 0;
+    
+    for (int i = 0; i < len; i++) {
+        char c = [self characterAtIndex:i];
+        NSString *replaceWithStr = nil;
+        
+        if (c == '\"')
+        {
+            replaceWithStr = @"&quot;";
+        }
+        else if (c == '\'')
+        {
+            replaceWithStr = @"&#x27;";
+        }
+        else if (c == '<')
+        {
+            replaceWithStr = @"&lt;";
+        }
+        else if (c == '>')
+        {
+            replaceWithStr = @"&gt;";
+        }
+        else if (c == '&')
+        {
+            replaceWithStr = @"&amp;";
+        }
+        
+        if (replaceWithStr == nil) {
+            // The current character is not an XML escape character, increase subrange length
+            
+            subrange.length += 1;
+        } else {
+            // The current character will be replaced, but append any pending substring first
+            
+            if (subrange.length > 0) {
+                NSString *substring = [self substringWithRange:subrange];
+                [mStr appendString:substring];
+            }
+            
+            [mStr appendString:replaceWithStr];
+            
+            subrange.location = i + 1;
+            subrange.length = 0;
+        }
+    }
+    
+    // Got to end of unescapedStr so append any pending substring, in the
+    // case of no escape characters this will append the whole string.
+    
+    if (subrange.length > 0) {
+        if (subrange.location == 0) {
+            [mStr appendString:self];
+        } else {
+            NSString *substring = [self substringWithRange:subrange];
+            [mStr appendString:substring];
+        }
+    }
+    
+    return mStr;
 }
-
+    
+    
 -(BOOL) hasHTML {
     BOOL result = NO;
     NSString * lowercaseText = [self lowercaseString];
