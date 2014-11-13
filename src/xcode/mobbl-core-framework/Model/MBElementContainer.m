@@ -55,7 +55,7 @@
 
 - (void) copyChildrenInto:(MBElementContainer*) other {
 	for(NSString *elementName in [_elements allKeys]) {
-		for(MBElement *src in [_elements valueForKey:elementName]) {
+		for(MBElement *src in [_elements objectForKey:elementName]) {
 			MBElement *copy = [src copy];
      		[other addElement: copy];		
 			[copy release];
@@ -67,7 +67,7 @@
 	NSMutableString *uid = [NSMutableString stringWithCapacity:200];
 	for(NSString *elementName in [_elements allKeys]) {
 		int idx = 0;
-		for(MBElement *element in [_elements valueForKey:elementName]) {
+		for(MBElement *element in [_elements objectForKey:elementName]) {
 			[uid appendFormat:@"[%i_%@", idx, [element uniqueId]];
 		}
 	}
@@ -93,7 +93,7 @@
 -(void) addAllPathsTo:(NSMutableSet*) set currentPath:(NSString*) currentPath {
 	for(NSString *elementName in [_elements allKeys]) {
 		int idx = 0;
-		for(MBElement *element in [_elements valueForKey:elementName]) {
+		for(MBElement *element in [_elements objectForKey:elementName]) {
 			NSString *path = [NSString stringWithFormat:@"%@/%@[%i]", currentPath, elementName, idx++];
 			[element addAllPathsTo: set currentPath:path];
 		}
@@ -248,7 +248,7 @@
         if(elementContainer == nil)
         {
             elementContainer = [[NSMutableArray alloc] init];
-            [_elements setValue:elementContainer forKey:name];
+            [_elements setObject:elementContainer forKey:name];
             [elementContainer release];
         }
         [elementContainer addObject:element];
@@ -267,7 +267,7 @@
         if(elementContainer == nil)
         {
             elementContainer = [[NSMutableArray alloc] init];
-            [_elements setValue:elementContainer forKey:name];
+            [_elements setObject:elementContainer forKey:name];
             [elementContainer release];
         }
         [elementContainer insertObject:element atIndex:index];
@@ -344,10 +344,10 @@
             return nil;
 		}
 		
-		NSMutableArray *result = [_elements valueForKey:name];	
+		NSMutableArray *result = [_elements objectForKey:name];
 		if(result == nil) {
 			result = [NSMutableArray array];
-			[_elements setValue:result forKey:name];
+			[_elements setObject:result forKey:name];
 		}
 		return result;
 	}
