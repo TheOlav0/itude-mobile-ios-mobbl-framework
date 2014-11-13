@@ -320,25 +320,20 @@
 
 // XML Encoding
 - (NSString *)xmlSimpleEscape {
-    if (self == nil || [self length] == 0) {
+    size_t len = [self length];
+    if (self == nil || len  == 0) {
         return self;
     }
-    
-    const int len = [self length];
-    int longer = ((int) (len * 0.10));
-    if (longer < 5) {
-        longer = 5;
-    }
-    
-    longer = len + longer;
-    NSMutableString *mStr = [NSMutableString stringWithCapacity:longer];
+  
+    NSMutableString *mStr = nil;
     
     NSRange subrange;
     subrange.location = 0;
     subrange.length = 0;
     
+    const char *ptr = [self UTF8String];
     for (int i = 0; i < len; i++) {
-        char c = [self characterAtIndex:i];
+        char c = *ptr++;
         NSString *replaceWithStr = nil;
         
         if (c == '\"')
@@ -369,6 +364,8 @@
         } else {
             // The current character will be replaced, but append any pending substring first
             
+            if (!mStr) mStr = [NSMutableString stringWithCapacity:len * 2];
+            
             if (subrange.length > 0) {
                 NSString *substring = [self substringWithRange:subrange];
                 [mStr appendString:substring];
@@ -386,7 +383,7 @@
     
     if (subrange.length > 0) {
         if (subrange.location == 0) {
-            [mStr appendString:self];
+            return self;
         } else {
             NSString *substring = [self substringWithRange:subrange];
             [mStr appendString:substring];
@@ -488,6 +485,43 @@ static NSString *NumberStrings [] = {
         return NumberStrings[i];
     }
     else return @(i).stringValue;
+}
+
+static NSString *SpaceStrings []= {
+    @"",
+    @" ",
+    @"  ",
+    @"   ",
+    @"    ",
+    @"     ",
+    @"      ",
+    @"       ",
+    @"        ",
+    @"         ",
+    @"          ",
+    @"           ",
+    @"            ",
+    @"             ",
+    @"              ",
+    @"               ",
+    @"                ",
+    @"                 ",
+    @"                  ",
+    @"                   "
+};
+
+
++(NSString *)stringWithSpaces:(int)numSpaces {
+    if (numSpaces >=0 && numSpaces < sizeof(SpaceStrings) / sizeof(NSString*)) {
+        return SpaceStrings[numSpaces];
+    }
+    else {
+        NSMutableString * result = [NSMutableString stringWithCapacity:numSpaces];
+        for (;numSpaces; numSpaces--)
+            [result appendString:@" "];
+        
+        return result;
+    }
 }
 
 @end

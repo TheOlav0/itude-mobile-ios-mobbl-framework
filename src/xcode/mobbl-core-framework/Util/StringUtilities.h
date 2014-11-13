@@ -18,6 +18,7 @@
 
 
 + (NSString*) stringFromInt:(int) i;
++ (NSString*) stringWithSpaces:(int) numSpaces;
 - (NSNumber*) asNumber;
 - (NSString*) stripCharacters:(NSString*)characters;
 - (NSMutableArray*) splitPath;
