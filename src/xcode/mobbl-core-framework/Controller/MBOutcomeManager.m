@@ -31,17 +31,6 @@
 #import "MBAlertController.h"
 #import "MBMacros.h"
 #import <CoreFoundation/CoreFoundation.h>
-#include <malloc/malloc.h>
-
-
-#ifdef DEBUG
-#define THREAD_DUMP(n) CFAbsoluteTime time = CFAbsoluteTimeGetCurrent (); const char *method = n; NSLog(@"Method: %s Thread: %s Queue: %s", n, [[NSThread currentThread] isMainThread] ? "main" : "other", dispatch_queue_get_label (dispatch_get_current_queue ()));
-
-#define THREAD_RELEASE NSLog (@"Leaving %s Time: %f", method, (CFAbsoluteTimeGetCurrent () - time));
-#else
-#define THREAD_DUMP(n)
-#define THREAD_RELEASE
-#endif
 
 typedef enum {
     Initializing = 0,
@@ -99,8 +88,6 @@ typedef struct {
 
 
 -(void) handleOutcome:(MBOutcome *)outcome {
-	THREAD_DUMP("handleOutcome")
-
 	@try {
         if ([self shouldHandleOutcome:outcome]) {
             [self doHandleOutcome: outcome];
@@ -109,8 +96,6 @@ typedef struct {
 	@catch (NSException *e) {
 		[[MBApplicationController currentInstance] handleException: e outcome: outcome];
 	};
-
-	THREAD_RELEASE
 }
 
 - (BOOL)shouldHandleOutcome:(MBOutcome *)outcome {
@@ -155,7 +140,6 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                 }
                 @finally {
                     [state.manager finishedPhase:state];
-                    malloc_zone_check(nil);
                 }
             }
         });
@@ -243,7 +227,6 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
         NSAssert([state->latch retainCount] == 1, @"Trying to signal a released latch!");
         NSLog (@"Signal latch 0x%x", (uint)state->latch);
         dispatch_semaphore_signal(state->latch);
-        malloc_zone_check(nil);
     }
 }
 
@@ -486,8 +469,6 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 //////// ACTION HANDLING
 
 - (void) performActionInBackground:(NSArray *)args {
-	THREAD_DUMP("performActionInBackground")
-
     MBOutcome *causingOutcome = [args objectAtIndex:0];
 
 	@autoreleasepool {
@@ -509,12 +490,9 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 			[[MBApplicationController currentInstance] handleException: e outcome: causingOutcome];
 		}
 	}
-	THREAD_RELEASE
 }
 
 - (void) handleActionResult:(NSArray *)args {
-	THREAD_DUMP("handleActionResult")
-
     MBOutcome *causingOutcome = [args objectAtIndex:0];
 
     @try {
@@ -531,7 +509,6 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
     @catch (NSException *e) {
         [[MBApplicationController currentInstance] handleException: e outcome: causingOutcome];
     }
-	THREAD_RELEASE
 }
 
 
