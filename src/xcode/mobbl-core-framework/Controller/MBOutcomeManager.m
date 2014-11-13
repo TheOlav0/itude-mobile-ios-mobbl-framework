@@ -164,7 +164,6 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
     
     if ([outcome noBackgroundProcessing]) {
         dispatch_semaphore_wait(state.latch, DISPATCH_TIME_FOREVER);
-        NSLog (@"Release latch 0x%x", (uint) state.latch);
         dispatch_release (state.latch);
     }
 }
@@ -225,7 +224,6 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 
     if (state->latch) {
         NSAssert([state->latch retainCount] == 1, @"Trying to signal a released latch!");
-        NSLog (@"Signal latch 0x%x", (uint)state->latch);
         dispatch_semaphore_signal(state->latch);
     }
 }
