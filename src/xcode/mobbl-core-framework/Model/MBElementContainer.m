@@ -102,32 +102,54 @@
 
 
 - (id) valueForPathComponents:(NSMutableArray*)pathComponents withPath: (NSString*) originalPath nillIfMissing:(BOOL) nillIfMissing translatedPathComponents:(NSMutableArray*) translatedPathComponents {
+    
+    static const int NOT_FOUND = -99;
 	if([pathComponents count] > 0) {
-		NSArray *rootNameParts = [[pathComponents objectAtIndex:0]componentsSeparatedByString:@"["]; 
-		NSString *childElementName = [rootNameParts objectAtIndex:0];
-		
-		int idx = -99;
-		
-		// If the pathComponent is indexed (hello[0]) if the rootNameParts contains more than one entry
-		if([rootNameParts count] > 1) {
-			NSMutableString *idxStr = [NSMutableString stringWithString: [rootNameParts objectAtIndex:1]];
-		    [idxStr replaceOccurrencesOfString:@"]" withString:@"" options:NSCaseInsensitiveSearch range:NSMakeRange(0, [idxStr length])];
-			
-			// Look for the index value if the index is an expression (contains the '=' sign)
-			if([idxStr rangeOfString:@"="].length != 0) {
-				idx = [self evaluateIndexExpression:idxStr forElementName: childElementName];
-			}
-			else {
-				idx = [idxStr intValue];
-			}
-		}
+        NSString *pathComponent = [pathComponents objectAtIndex:0];
+        
+        // do this manually, since Obj-C's string manipulation routines are SLOOOOWW
+        size_t length = [pathComponent length];
+        const char *ptr = [pathComponent UTF8String];
+        const char *ptrEnd = ptr + length - 1;
+
+        
+        NSString *childElementName = nil;
+        int idx = NOT_FOUND;
+        
+        if (*ptrEnd == ']') {
+            BOOL isExpression = NO;
+            while (ptrEnd > ptr) {
+                if (*ptrEnd == '[') break;
+                // Look for the index value if the index is an expression (contains the '=' sign)
+                if (*ptrEnd == '=') isExpression = YES;
+                ptrEnd--;
+            }
+            
+            if (ptrEnd != ptr) {
+                size_t openingBracketIdx = ptrEnd - ptr;
+                
+                childElementName = [pathComponent substringToIndex:(openingBracketIdx)];
+                NSString *idxStr = [pathComponent substringWithRange:NSMakeRange(openingBracketIdx + 1, length - openingBracketIdx - 2)];
+                
+
+                if(isExpression) {
+                    idx = [self evaluateIndexExpression:idxStr forElementName: childElementName];
+                }
+                else {
+                    idx = [idxStr intValue];
+                }
+                
+            }
+        }
+        
+        if (idx == NOT_FOUND) childElementName = pathComponent;
 		
 		[pathComponents removeObjectAtIndex:0];
 		NSArray *allElementsWithSameNameAsChild = [self elementsWithName:childElementName];
 		//NSArray *rootList = [self elementsWithName:childElementName];
 		
 		// If the pathComponent is not indexed (just hello, not hello[1]), return all the found elements with the same name
-		if(idx  == -99) { 
+		if(idx  == NOT_FOUND) {
 			if([pathComponents count] == 0) return allElementsWithSameNameAsChild;
 			NSString *msg = [NSString stringWithFormat:@"No index specified for %@ in path %@", childElementName, originalPath];
 			@throw [NSException exceptionWithName:@"NoIndexSpecified" reason: msg userInfo:nil];
@@ -145,7 +167,12 @@
 		}
 		
 		MBElement *root = [allElementsWithSameNameAsChild objectAtIndex:idx];
-		[translatedPathComponents addObject: [NSString stringWithFormat: @"%@[%i]", root.name, idx]];
+        NSMutableString *component = [[[NSMutableString alloc] initWithCapacity:root.name.length + 10] autorelease];
+        [component appendString:root.name];
+        [component appendString:@"["];
+        [component appendString:[NSString stringFromInt:idx]];
+        [component appendString:@"]"];
+		[translatedPathComponents addObject: component];
 		return [root valueForPathComponents: pathComponents withPath: originalPath nillIfMissing: nillIfMissing translatedPathComponents:translatedPathComponents];
 	}
 	return self;
