@@ -31,6 +31,7 @@
 #import "MBAlertController.h"
 #import "MBMacros.h"
 #import <CoreFoundation/CoreFoundation.h>
+#include <malloc/malloc.h>
 
 
 #ifdef DEBUG
@@ -126,7 +127,6 @@ typedef struct {
     return TRUE;
 }
 
-
 void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^block)(OutcomeState *state)) {
     if ([inState.outcome noBackgroundProcessing]) {
         @autoreleasepool {
@@ -155,6 +155,7 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                 }
                 @finally {
                     [state.manager finishedPhase:state];
+                    malloc_zone_check(nil);
                 }
             }
         });
@@ -173,15 +174,15 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
     state.error = NO;
     state.documents = nil;
     state.pageDefinitions = nil;
-    state.latch = dispatch_semaphore_create(0);
+    state.latch = nil;
+    if ([outcome noBackgroundProcessing]) state.latch = dispatch_semaphore_create(0);
     [self finishedPhase:state];
     
     if ([outcome noBackgroundProcessing]) {
         dispatch_semaphore_wait(state.latch, DISPATCH_TIME_FOREVER);
+        NSLog (@"Release latch 0x%x", (uint) state.latch);
+        dispatch_release (state.latch);
     }
-    
-    dispatch_release (state.latch);
-    
 }
 
 - (void) finishedPhase:(OutcomeState) state {
@@ -233,10 +234,17 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 
 -(void) releaseState:(OutcomeState*) state {
     [state->outcome release];
-    [state->outcomesToProcess release];
     [state->documents release];
     [state->pageDefinitions release];
-    dispatch_semaphore_signal(state->latch);
+    [state->outcomesToProcess release];
+
+
+    if (state->latch) {
+        NSAssert([state->latch retainCount] == 1, @"Trying to signal a released latch!");
+        NSLog (@"Signal latch 0x%x", (uint)state->latch);
+        dispatch_semaphore_signal(state->latch);
+        malloc_zone_check(nil);
+    }
 }
 
 
