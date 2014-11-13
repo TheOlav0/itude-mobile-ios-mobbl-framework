@@ -16,6 +16,8 @@
 
 @interface NSString(StringUtilities) 
 
+
++ (NSString*) stringFromInt:(int) i;
 - (NSNumber*) asNumber;
 - (NSString*) stripCharacters:(NSString*)characters;
 - (NSMutableArray*) splitPath;

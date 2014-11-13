@@ -22,7 +22,7 @@
 
 @implementation MBElementContainer (Preconditions)
 
-- (int) evaluateIndexExpression:(NSMutableString*) combinedExpression forElementName:(NSString*) elementName {
+- (int) evaluateIndexExpression:(NSString*) combinedExpression forElementName:(NSString*) elementName {
 	NSMutableArray *matchAttributes = [[NSMutableArray new] autorelease];
 	NSMutableArray *matchValues = [[NSMutableArray new] autorelease];
     
