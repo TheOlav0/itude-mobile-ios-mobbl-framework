@@ -44,6 +44,7 @@
 }
 
 -(void) handleOutcomeOnMainThread:(MBOutcome*) outcome {
+    outcome.noBackgroundProcessing = YES;
 	[[MBApplicationController currentInstance] handleOutcome:outcome];
 }
 

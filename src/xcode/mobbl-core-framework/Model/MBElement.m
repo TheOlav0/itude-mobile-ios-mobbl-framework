@@ -21,7 +21,6 @@
 
 @interface MBElement()
   -(void) setDefinition:(MBElementDefinition*) definition;
-  -(NSString*) attributeAsXml:(NSString*)name withValue:(id) attrValue;
   -(NSString*) cookValue:(NSString*) uncooked;
 @end
 
@@ -36,7 +35,7 @@
 	self = [super init];
 	if (self != nil) {
 		self.definition = definition;
-		_values = [[NSMutableDictionary alloc] init];
+		_values = [[NSMutableDictionary alloc] initWithCapacity:8];
 	}
 	return self;
 }
@@ -95,7 +94,7 @@
 	for(MBAttributeDefinition* def in [_definition attributes]) {
 		NSString *attrName = def.name;
 		if(![attrName isEqualToString:@"xmlns"]) {
-			NSString *attrValue = [_values valueForKey: attrName];
+			NSString *attrValue = [_values objectForKey: attrName];
 			[uid appendString: @"_"];
 			if(attrValue != nil) [uid appendString: [self cookValue: attrValue]];
 		}
@@ -146,18 +145,20 @@
 }
 
 - (void) setValue:(id)value forAttribute:(NSString *)attributeName throwIfInvalid:(BOOL) throwIfInvalid {
+    if ([value isKindOfClass:[NSMutableString class]])
+        value = [NSString stringWithString:value];
 	if(throwIfInvalid) {
 		[self validateAttribute: attributeName];
-		[_values setValue:value forKey:attributeName];
+		[_values setObject:value forKey:attributeName];
 	}
 	else {
-		if([self isValidAttribute: attributeName]) [_values setValue:value forKey:attributeName];
+		if([self isValidAttribute: attributeName]) [_values setObject:value forKey:attributeName];
 	}
 }
 
 -(NSString*) valueForAttribute:(NSString*)attributeName {
 	[self validateAttribute: attributeName];
-	return [_values valueForKey:attributeName];
+	return [_values objectForKey:attributeName];
 }
 
 -(id) valueForKey:(NSString *)key {
@@ -189,10 +190,10 @@
 	return cooked;
 }
 
--(NSString*) attributeAsXml:(NSString*)name withValue:(id) attrValue {
+-(void) attributeAsXml:(NSString*)name withValue:(id) attrValue withBuffer:(NSMutableString*) buffer {
 	
 	NSString *escaped = [attrValue xmlSimpleEscape];
-	return attrValue == nil?@"": [NSString stringWithFormat:@" %@='%@'", name, escaped];
+    if (attrValue) [buffer appendFormat:@" %@='%@'", name, escaped];
 }
 
 - (NSString *) bodyText {
@@ -204,33 +205,46 @@
 	[self setValue:text forAttribute:TEXT_ATTRIBUTE];	
 }
 
+- (void) asXml:(NSMutableString*) buffer withLevel:(int)level {
+    BOOL hasBodyText = [[self bodyText] length];
+    [buffer appendString:[NSString stringWithSpaces:level]];
+    [buffer appendString:@"<"];
+    [buffer appendString:_definition.name];
+
+    for(MBAttributeDefinition* def in [_definition attributes]) {
+        NSString *attrName = def.name;
+        NSString *attrValue = [_values objectForKey: attrName];
+        if(![attrName isEqualToString:TEXT_ATTRIBUTE]) [self attributeAsXml:attrName withValue:attrValue withBuffer:buffer];
+    }
+    if([[_definition children] count] == 0 && !hasBodyText)
+        [buffer appendString:@"/>\n"];
+    else {
+        [buffer appendString:@">"];
+        if(hasBodyText) {
+            NSString *escaped =[self.bodyText xmlSimpleEscape];
+            [buffer appendString: escaped];
+        }
+        else [buffer appendString: @"\n"];
+        
+        for(MBElementDefinition *elemDef in [_definition children]) {
+            NSArray *lst = [[self elements] objectForKey:elemDef.name];
+            for(MBElement *elem in lst)
+                [elem asXml: buffer withLevel:(level + 2)];
+        }
+        
+        [buffer appendString:[NSString stringWithSpaces:hasBodyText?0:level]];
+        [buffer appendString:@"</"];
+        [buffer appendString:_definition.name];
+        [buffer appendString:@">"];
+    }
+    
+}
+
 - (NSString *) asXmlWithLevel:(int)level
 {
-	BOOL hasBodyText = [self isValidAttribute: TEXT_ATTRIBUTE] && [[self bodyText] length] > 0;
-	NSMutableString *result = [NSMutableString stringWithFormat: @"%*s<%@", level, "", _definition.name];
-	for(MBAttributeDefinition* def in [_definition attributes]) {
-		NSString *attrName = def.name;
-		NSString *attrValue = [_values valueForKey: attrName];
-		if(![attrName isEqualToString:TEXT_ATTRIBUTE]) [result appendString: [self attributeAsXml:attrName withValue:attrValue]];
-	}
-	if([[_definition children] count] == 0 && !hasBodyText)
-		[result appendString:@"/>\n"];
-	else {
-		[result appendString:@">"];
-		if(hasBodyText) 
-			[result appendString: [[self bodyText] xmlSimpleEscape]];
-		else [result appendString: @"\n"];
-
-		for(MBElementDefinition *elemDef in [_definition children]) {
-			NSArray *lst = [[self elements] objectForKey:elemDef.name];
-			for(MBElement *elem in lst)
-					[result appendString: [elem asXmlWithLevel: level+2]];
-			}
-		
-		[result appendFormat:@"%*s</%@>\n", hasBodyText?0:level, "", _definition.name];
-	}
-
-	return result;
+    NSMutableString *result = [[NSMutableString new] autorelease];
+    [self asXml:result withLevel: level];
+    return result;
 }
 
 - (NSString *) description {
