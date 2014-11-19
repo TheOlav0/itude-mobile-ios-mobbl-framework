@@ -96,7 +96,7 @@
 		if(![attrName isEqualToString:@"xmlns"]) {
 			NSString *attrValue = [_values objectForKey: attrName];
 			[uid appendString: @"_"];
-			if(attrValue != nil) [uid appendString: [self cookValue: attrValue]];
+			if (attrValue) [uid appendString: [self cookValue: attrValue]];
 		}
 	}
 	[uid appendString:[super uniqueId]];
@@ -145,20 +145,25 @@
 }
 
 - (void) setValue:(id)value forAttribute:(NSString *)attributeName throwIfInvalid:(BOOL) throwIfInvalid {
-    if ([value isKindOfClass:[NSMutableString class]])
-        value = [NSString stringWithString:value];
-	if(throwIfInvalid) {
+   	if(throwIfInvalid) {
 		[self validateAttribute: attributeName];
-		[_values setObject:value forKey:attributeName];
+        if (value)
+            [_values setObject:value forKey:attributeName];
+        else
+            [_values removeObjectForKey:attributeName];
 	}
 	else {
-		if([self isValidAttribute: attributeName]) [_values setObject:value forKey:attributeName];
+        if([self isValidAttribute: attributeName]) {
+            if (value) [_values setObject:value forKey:attributeName];
+            else [_values removeObjectForKey:attributeName];
+        }
 	}
 }
 
 -(NSString*) valueForAttribute:(NSString*)attributeName {
 	[self validateAttribute: attributeName];
-	return [_values objectForKey:attributeName];
+	id result =  [_values objectForKey:attributeName];
+    return result;
 }
 
 -(id) valueForKey:(NSString *)key {
