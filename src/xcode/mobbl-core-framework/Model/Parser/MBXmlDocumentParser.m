@@ -120,7 +120,7 @@ didStartElement:(NSString *)elementName
 	}
 	else {
 		[_pathStack addObject:elementName];
-		MBElementDefinition *elementDefinition = [_definition elementWithPath:[self currentPath]];
+		MBElementDefinition *elementDefinition = [_definition elementWithPathComponents:[NSMutableArray arrayWithArray:_pathStack]];
         if (elementDefinition == nil) {
 			WLog(@"Found unexpected element with name '%@'. Check element definition.", elementName);
         } 

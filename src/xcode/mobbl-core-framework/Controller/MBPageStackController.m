@@ -196,7 +196,7 @@
 	} else {
 		// we don't have the semaphore, so wait for it in a different queue
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-			dispatch_semaphore_wait(self.navigationSemaphore, DISPATCH_TIME_FOREVER);
+			dispatch_semaphore_wait(self.navigationSemaphore, dispatch_time(0, 1 * NSEC_PER_SEC));
 
             _needsRelease = true;
             
@@ -219,7 +219,7 @@
         animated = [style animated];
     }
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-		dispatch_semaphore_wait(self.navigationSemaphore, DISPATCH_TIME_FOREVER);
+		dispatch_semaphore_wait(self.navigationSemaphore, dispatch_time(0, 1 * NSEC_PER_SEC));
         _needsRelease = true;
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[nav popViewControllerAnimated:animated];
