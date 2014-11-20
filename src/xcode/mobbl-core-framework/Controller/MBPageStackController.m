@@ -192,7 +192,10 @@
 		_needsRelease = true;
 
 		// yay, we immediately got the semaphore, so we can dispatch the showing of the page in the expected order
-		dispatch_async(dispatch_get_main_queue(), actuallyShowPage);
+        if ([NSThread isMainThread])
+            actuallyShowPage ();
+        else
+            dispatch_async(dispatch_get_main_queue(), actuallyShowPage);
 	} else {
 		// we don't have the semaphore, so wait for it in a different queue
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
