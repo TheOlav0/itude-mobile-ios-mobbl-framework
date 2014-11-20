@@ -54,6 +54,8 @@
 
 /// @name Exporting to XML
 - (NSString *) asXmlWithLevel:(int)level;
+- (void) asXml:(NSMutableString*) buffer withLevel:(int)level;
+
 
 /// @name Copying Element State
 - (void) assignToElement:(MBElement*) target;

@@ -50,6 +50,7 @@
         self.preCondition = outcome.preCondition;
         self.noBackgroundProcessing = outcome.noBackgroundProcessing;
         self.processingMessage = outcome.processingMessage;
+        _action = [outcome.action retain];
     }
     return self;
 }
@@ -93,6 +94,7 @@
 		self.path = nil;	
         self.preCondition = definition.preCondition;
         self.processingMessage = definition.processingMessage;
+        _action = [definition.action retain];
 	}
 	return self;
 }
@@ -108,6 +110,7 @@
 	[_document release];
 	[_preCondition release];
     [_processingMessage release];
+    [_action release];
 	[super dealloc];
 }
 

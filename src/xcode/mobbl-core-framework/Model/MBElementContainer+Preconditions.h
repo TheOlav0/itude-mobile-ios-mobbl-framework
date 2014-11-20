@@ -18,7 +18,7 @@
 
 @interface MBElementContainer (Preconditions)
 
-- (int) evaluateIndexExpression:(NSMutableString*) combinedExpression forElementName:(NSString*) elementName;
+- (int) evaluateIndexExpression:(NSString*) combinedExpression forElementName:(NSString*) elementName;
 - (NSString*) substituteExpressions:(NSString*) expression usingNilMarker:(NSString*) nilMarker currentPath:(NSString*) currentPath ;
 //- (NSString*) substituteExpressionsNew:(NSString *)expression usingNilMarker:(NSString*) nilMarker currentPath:(NSString*) currentPath;
 

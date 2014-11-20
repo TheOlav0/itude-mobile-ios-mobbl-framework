@@ -320,10 +320,80 @@
 
 // XML Encoding
 - (NSString *)xmlSimpleEscape {
-	self = [[[[[self stringByReplacingOccurrencesOfString: @"&" withString: @"&amp;"] stringByReplacingOccurrencesOfString: @"\"" withString: @"&quot;"] stringByReplacingOccurrencesOfString: @"'" withString: @"&#39;"] stringByReplacingOccurrencesOfString: @">" withString: @"&gt;"] stringByReplacingOccurrencesOfString: @"<" withString: @"&lt;"];
-	return self;
+    size_t len = [self length];
+    if (self == nil || len  == 0) {
+        return self;
+    }
+  
+    NSMutableString *mStr = nil;
+    
+    NSRange subrange;
+    subrange.location = 0;
+    subrange.length = 0;
+    
+    const char *ptr = [self UTF8String];
+    for (int i = 0; i < len; i++) {
+        char c = *ptr++;
+        NSString *replaceWithStr = nil;
+        
+        if (c == '\"')
+        {
+            replaceWithStr = @"&quot;";
+        }
+        else if (c == '\'')
+        {
+            replaceWithStr = @"&#x27;";
+        }
+        else if (c == '<')
+        {
+            replaceWithStr = @"&lt;";
+        }
+        else if (c == '>')
+        {
+            replaceWithStr = @"&gt;";
+        }
+        else if (c == '&')
+        {
+            replaceWithStr = @"&amp;";
+        }
+        
+        if (replaceWithStr == nil) {
+            // The current character is not an XML escape character, increase subrange length
+            
+            subrange.length += 1;
+        } else {
+            // The current character will be replaced, but append any pending substring first
+            
+            if (!mStr) mStr = [NSMutableString stringWithCapacity:len * 2];
+            
+            if (subrange.length > 0) {
+                NSString *substring = [self substringWithRange:subrange];
+                [mStr appendString:substring];
+            }
+            
+            [mStr appendString:replaceWithStr];
+            
+            subrange.location = i + 1;
+            subrange.length = 0;
+        }
+    }
+    
+    // Got to end of unescapedStr so append any pending substring, in the
+    // case of no escape characters this will append the whole string.
+    
+    if (subrange.length > 0) {
+        if (subrange.location == 0) {
+            return self;
+        } else {
+            NSString *substring = [self substringWithRange:subrange];
+            [mStr appendString:substring];
+        }
+    }
+    
+    return mStr;
 }
-
+    
+    
 -(BOOL) hasHTML {
     BOOL result = NO;
     NSString * lowercaseText = [self lowercaseString];
@@ -340,6 +410,118 @@
     if (found.location != NSNotFound) result = YES;
 
     return result;
+}
+
+static NSString *NumberStrings [] = {
+    @"0",
+    @"1",
+    @"2",
+    @"3",
+    @"4",
+    @"5",
+    @"6",
+    @"7",
+    @"8",
+    @"9",
+    @"10",
+    @"11",
+    @"12",
+    @"13",
+    @"14",
+    @"15",
+    @"16",
+    @"17",
+    @"18",
+    @"19",
+    @"20",
+    @"21",
+    @"22",
+    @"23",
+    @"24",
+    @"25",
+    @"26",
+    @"27",
+    @"28",
+    @"29",
+    @"30",
+    @"31",
+    @"32",
+    @"33",
+    @"34",
+    @"35",
+    @"36",
+    @"37",
+    @"38",
+    @"39",
+    @"40",
+    @"41",
+    @"42",
+    @"43",
+    @"44",
+    @"45",
+    @"46",
+    @"47",
+    @"48",
+    @"49",
+    @"50",
+    @"51",
+    @"52",
+    @"53",
+    @"54",
+    @"55",
+    @"56",
+    @"57",
+    @"58",
+    @"59",
+    @"60",
+    @"61",
+    @"62",
+    @"63"
+};
+
+
++(NSString *)stringFromInt:(int)i {
+    if (i >=0 && i < sizeof(NumberStrings) / sizeof(NSString*)) {
+        return NumberStrings[i];
+    }
+    else return @(i).stringValue;
+}
+
+static NSString *SpaceStrings []= {
+    @"",
+    @" ",
+    @"  ",
+    @"   ",
+    @"    ",
+    @"     ",
+    @"      ",
+    @"       ",
+    @"        ",
+    @"         ",
+    @"          ",
+    @"           ",
+    @"            ",
+    @"             ",
+    @"              ",
+    @"               ",
+    @"                ",
+    @"                 ",
+    @"                  ",
+    @"                   "
+};
+
+
++(NSString *)stringWithSpaces:(int)numSpaces {
+    if (numSpaces >=0 && numSpaces < sizeof(SpaceStrings) / sizeof(NSString*)) {
+        return SpaceStrings[numSpaces];
+    }
+    else {
+        NSMutableString * result = [NSMutableString stringWithCapacity:numSpaces];
+        for (;numSpaces; numSpaces--)
+            [result appendString:@" "];
+        
+        return result;
+    }
 }
 
 @end
