@@ -153,7 +153,6 @@
 			// Replace the last page on the stack
 			if([displayMode isEqualToString:@"REPLACE"]) {
 				[nav replaceLastViewController:viewController];
-				return;
 			}
 
 			// Regular navigation to new page
