@@ -231,6 +231,20 @@
 #include <mobbl-core-framework/MBTableViewController.h>
 #include <mobbl-core-framework/MBFileManager.h>
 #include <mobbl-core-framework/MBCaching.h>
+#include <mobbl-core-framework/MBBaseViewBinder.h>
+#include <mobbl-core-framework/MBBuildState.h>
+#include <mobbl-core-framework/MBCategoryProperties.h>
+#include <mobbl-core-framework/MBComponentContainer+ViewBinding.h>
+#include <mobbl-core-framework/MBViewBinder.h>
+#include <mobbl-core-framework/MBButtonBinder.h>
+#include <mobbl-core-framework/MBDefaultStyleTableViewBinder.h>
+#include <mobbl-core-framework/MBPageBinder.h>
+#include <mobbl-core-framework/MBSimpleTableViewBinder.h>
+#include <mobbl-core-framework/MBSimpleWebViewBinder.h>
+#include <mobbl-core-framework/MBStandardStyleTableViewBinder.h>
+#include <mobbl-core-framework/MBSwitchBinder.h>
+#include <mobbl-core-framework/MBTextFieldBinder.h>
+#include <mobbl-core-framework/UIView+ViewBinding.h>
 
 @interface mobbl_core_framework : NSObject
 
