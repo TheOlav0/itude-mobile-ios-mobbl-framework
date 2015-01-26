@@ -115,4 +115,14 @@
     [panel handleOutcome:panel.outcomeName withPathArgument:panel.absoluteDataPath];
 }
 
+#pragma mark - Misc
+
+- (void)dealloc
+{
+    self.state = nil;
+    self.components = nil;
+    self.cellNib = nil;
+    [super dealloc];
+}
+
 @end

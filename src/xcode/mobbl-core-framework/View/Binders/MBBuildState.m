@@ -22,4 +22,14 @@
     return other;
 }
 
+- (void)dealloc
+{
+    self.mainViewBinder = nil;
+    self.view = nil;
+    self.document = nil;
+    self.element = nil;
+    self.component = nil;
+    [super dealloc];
+}
+
 @end

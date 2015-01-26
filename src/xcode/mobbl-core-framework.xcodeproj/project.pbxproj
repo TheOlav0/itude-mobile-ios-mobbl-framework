@@ -1202,6 +1202,7 @@
 		1724FBF91A7289B3000ACDA2 /* Binders */ = {
 			isa = PBXGroup;
 			children = (
+				1724FC021A7289B3000ACDA2 /* Standard Binders */,
 				1724FBFA1A7289B3000ACDA2 /* MBBaseViewBinder.h */,
 				1724FBFB1A7289B3000ACDA2 /* MBBaseViewBinder.m */,
 				1724FBFC1A7289B3000ACDA2 /* MBBuildState.h */,
@@ -1209,7 +1210,6 @@
 				1724FBFF1A7289B3000ACDA2 /* MBComponentContainer+ViewBinding.h */,
 				1724FC001A7289B3000ACDA2 /* MBComponentContainer+ViewBinding.m */,
 				1724FC011A7289B3000ACDA2 /* MBViewBinder.h */,
-				1724FC021A7289B3000ACDA2 /* Standard Binders */,
 				1724FC151A7289B3000ACDA2 /* UIView+ViewBinding.h */,
 				1724FC161A7289B3000ACDA2 /* UIView+ViewBinding.m */,
 			);

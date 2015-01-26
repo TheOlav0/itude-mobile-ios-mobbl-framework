@@ -71,4 +71,11 @@
     self.childViewBinders[[(id)binder identifier]] = binder;
 }
 
+- (void)dealloc
+{
+    self.state = nil;
+    self.childViewBinders = nil;
+    [super dealloc];
+}
+
 @end

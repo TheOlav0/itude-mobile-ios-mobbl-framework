@@ -51,4 +51,10 @@
     return [state.view viewWithBindingIdentifier:self.identifier];
 }
 
+- (void)dealloc
+{
+    self.identifier = nil;
+    [super dealloc];
+}
+
 @end

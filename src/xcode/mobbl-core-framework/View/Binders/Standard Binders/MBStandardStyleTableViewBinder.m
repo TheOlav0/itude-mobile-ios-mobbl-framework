@@ -48,4 +48,11 @@
     return [[[UITableViewCell alloc] initWithStyle:self.style reuseIdentifier:reuseIdentifier] autorelease];
 }
 
+- (void)dealloc
+{
+    self.titleBindingIdentifier = nil;
+    self.detailBindingIdentifier = nil;
+    [super dealloc];
+}
+
 @end
