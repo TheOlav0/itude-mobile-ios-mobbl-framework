@@ -31,6 +31,8 @@
 @class MBDocument;
 @class MBDialogController;
 
+@protocol MBViewControllerProtocol;
+
 /** Factory class for creating custom UIViewControllers, MBResultListeners and MBActions 
  * In short there are three steps to using custom code with MOBBL framework:
 
@@ -49,16 +51,30 @@
 /** the shared instance */
 +(MBApplicationFactory *) sharedInstance;
 +(void) setSharedInstance:(MBApplicationFactory *) factory;
+
 /** override this class to create MBPages, UIViewControllers and bind the two together */
--(MBPage *) createPage:(MBPageDefinition *)definition 
+-(MBPage *) createPage:(MBPageDefinition *)definition
 			  document:(MBDocument*) document 
 			  rootPath:(NSString*) rootPath 
 			 viewState:(MBViewState) viewState
-		 withMaxBounds:(CGRect) bounds;
+         withMaxBounds:(CGRect) bounds __deprecated_msg("use viewControllerForPageWithName: instead");
+
 -(MBAlert *)createAlert:(MBAlertDefinition *)definition
                document:(MBDocument *) document
                rootPath:(NSString *)rootPath
                delegate:(id<UIAlertViewDelegate>)alertViewDelegate;
+
+/**
+ *  Given a page name, this returns the corresponding view controller instance.
+ *
+ *  The default implementation for this method returns nil. It should be overwritten by subclass (i.e. a custom ApplicationFactory). After this method is called, the MBPage gets bound to the instance.
+ *
+ *  @param pageName The name of the page
+ *
+ *  @return A view controller instance
+ */
+- (UIViewController <MBViewControllerProtocol>*)viewControllerForPageWithName:(NSString *)pageName;
+
 /** override to create MBAction conforming custom actions */
 -(id<MBAction>) createAction:(NSString *)actionClassName;
 

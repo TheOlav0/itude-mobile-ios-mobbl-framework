@@ -74,7 +74,7 @@ static MBApplicationFactory *_instance = nil;
 	}
 }
 
--(MBPage *) createPage:(MBPageDefinition *)definition 
+-(MBPage *) createPage:(MBPageDefinition *)definition
 			  document:(MBDocument*) document 
 			  rootPath:(NSString*) rootPath 
 			 viewState:(MBViewState) viewState 
@@ -82,6 +82,10 @@ static MBApplicationFactory *_instance = nil;
 	return [[[MBPage alloc] initWithDefinition: definition document: document rootPath:(NSString*) rootPath viewState: viewState withMaxBounds: bounds] autorelease];
 }
 
+- (UIViewController <MBViewControllerProtocol>*)viewControllerForPageWithName:(NSString *)pageName
+{
+    return nil;
+}
 
 -(UIViewController<MBViewControllerProtocol> *) createViewController:(MBPage*) page {
     return [[[MBBasicViewController alloc] init] autorelease];

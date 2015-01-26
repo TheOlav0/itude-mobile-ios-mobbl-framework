@@ -408,7 +408,8 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 }
 
 
--(void) showPages:(OutcomeState) state {
+-(void) showPages:(OutcomeState) state
+{
     dispatchOutcomePhase(dispatch_get_main_queue(), state, ^(OutcomeState *state) {
         for (int i=0; i < [state->outcomesToProcess count]; ++i) {
             MBOutcome *causingOutcome = [state->outcomesToProcess objectAtIndex:i];
@@ -424,15 +425,28 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                 
                 CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
                 
-                MBPage *page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition
-                                                                                               document: document
-                                                                                               rootPath: causingOutcome.path
-                                                                                              viewState: viewState
-                                                                                          withMaxBounds: bounds];
+                UIViewController<MBViewControllerProtocol>* viewController = [[MBApplicationController currentInstance].applicationFactory viewControllerForPageWithName:pageDefinition.name]; // hopefully this is auto-released by ARC
+                
+                MBPage *page = nil;
+                
+                if (viewController) {
+                    page = [[[MBPage alloc] initWithDefinition:pageDefinition
+                                                      document:document
+                                                      rootPath:causingOutcome.path
+                                                     viewState:viewState
+                                                 withMaxBounds:bounds] autorelease];
+                    viewController.page = page;
+                    page.viewController = viewController;
+                } else {
+                    // For backwards compatibility
+                    page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition document:document rootPath:causingOutcome.path viewState:viewState withMaxBounds:bounds];
+                    [page rebuildView];
+                }
+                
                 page.applicationController = [MBApplicationController currentInstance];
                 page.pageStackName = causingOutcome.pageStackName;
                 
-                [[MBApplicationController currentInstance].viewManager showPage: page displayMode: displayMode transitionStyle: transitionStyle];
+                [[MBApplicationController currentInstance].viewManager showPage: page displayMode:displayMode transitionStyle:transitionStyle];
             }
         }
     });

@@ -137,7 +137,8 @@
         self.viewController = (UIViewController<MBViewControllerProtocol>*)[[MBApplicationFactory sharedInstance]createViewController:self];
         self.viewController.navigationItem.title = [self title];
         [self.viewController setPage:self];
-        [self rebuildView];
+        
+        //[self rebuildView];
     }
     
 	return self;
