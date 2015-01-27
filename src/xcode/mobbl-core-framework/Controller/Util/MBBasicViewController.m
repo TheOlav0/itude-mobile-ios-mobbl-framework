@@ -73,7 +73,10 @@
 
 - (void)rebuildView
 {
-	[self.page rebuildView];	
+    // Make sure we clear the cache of all related documents:
+    [self.page rebuild];
+    self.view = [self.page buildViewWithMaxBounds:self.page.maxBounds forParent:nil viewState:self.page.viewState];
+    [self setupLayoutForIOS7];
 }
 
 - (void)showActivityIndicator

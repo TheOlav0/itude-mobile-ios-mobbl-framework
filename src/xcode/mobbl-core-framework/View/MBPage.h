@@ -45,6 +45,9 @@
 @property (nonatomic, assign) MBPageType pageType;
 @property (nonatomic, retain) NSString *transitionStyle;
 
+@property (nonatomic, assign) CGRect maxBounds;
+@property (nonatomic, assign) MBViewState viewState;
+
 // for loading interface builder files:
 - (instancetype)initWithDefinition:(MBPageDefinition*) definition
                 withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
@@ -53,26 +56,25 @@
                          viewState:(MBViewState) viewState;
 
 // for initialising a generic page:
-- (instancetype) initWithDefinition:(id)definition
-                           document:(MBDocument*) document
-                           rootPath:(NSString*) rootPath
-                          viewState:(MBViewState) viewState
-                      withMaxBounds:(CGRect) bounds;
+- (instancetype)initWithDefinition:(id)definition
+                          document:(MBDocument*) document
+                          rootPath:(NSString*) rootPath
+                         viewState:(MBViewState) viewState
+                     withMaxBounds:(CGRect) bounds;
 
 // Outcome handling
-- (void) handleOutcome:(NSString *)outcomeName;
-- (void) handleOutcome:(NSString *)outcomeName withPathArgument:(NSString*) path;
-- (void) handleException:(NSException *)exception;
+- (void)handleOutcome:(NSString *)outcomeName;
+- (void)handleOutcome:(NSString *)outcomeName withPathArgument:(NSString*) path;
+- (void)handleException:(NSException *)exception;
 
 // View
-- (UIView*) view;
+- (UIView*)view;
 - (void)rebuild;
-- (void) rebuildView;
-- (MBViewState) currentViewState;
-- (void) unregisterAllViewControllers;
-- (id) viewControllerOfType:(Class) clazz;
+- (MBViewState)currentViewState;
+- (void)unregisterAllViewControllers;
+- (id)viewControllerOfType:(Class) clazz;
 - (void)hideKeyboard:(id)sender;
 
-- (MBDocumentDiff*) diffDocument:(MBDocument*) other;
+- (MBDocumentDiff*)diffDocument:(MBDocument*)other;
 
 @end

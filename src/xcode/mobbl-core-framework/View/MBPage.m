@@ -36,8 +36,6 @@
 @interface MBPage ()
 
 @property (nonatomic, retain) NSMutableDictionary *valueChangedListeners;
-@property (nonatomic, assign) CGRect maxBounds;
-@property (nonatomic, assign) MBViewState viewState;
 
 @end
 
@@ -116,15 +114,13 @@
                      withMaxBounds:(CGRect) bounds
 {
     self = [self initWithDefinition:definition withViewController:nil document:document rootPath:rootPath viewState:viewState];
-    if(self) {
+    if (self) {
         self.maxBounds = bounds;
         self.viewController = (UIViewController<MBViewControllerProtocol>*)[[MBApplicationFactory sharedInstance]createViewController:self];
         self.viewController.navigationItem.title = [self title];
-        [self.viewController setPage:self];
-        
+        self.viewController.page = self;
         //[self rebuildView];
     }
-    
 	return self;
 }
 
@@ -133,14 +129,6 @@
 {
 	[self.document clearAllCaches];
 	[super rebuild];
-}
-
-- (void)rebuildView
-{
-	// Make sure we clear the cache of all related documents:
-	[self rebuild];
-    self.viewController.view = [self buildViewWithMaxBounds:self.maxBounds forParent:nil viewState:self.viewState];
-    [self.viewController setupLayoutForIOS7];
 }
 
 // This is a method required by component so any component can find the page
@@ -156,15 +144,11 @@
 
 - (UIView*)buildViewWithMaxBounds:(CGRect)bounds forParent:(UIView*)parent viewState:(MBViewState)viewState
 {
-    if (self.viewController.isViewLoaded)
-    {
-        [[MBViewBuilderFactory sharedInstance].pageViewBuilder rebuildPageView:self currentView:self.viewController.view withMaxBounds:bounds viewState:viewState];
-        return self.viewController.view;
+    if (self.viewController.isViewLoaded) {
+        self.viewController.view = [[[UIView alloc] initWithFrame:bounds] autorelease];
     }
-    else
-    {
-        return [[MBViewBuilderFactory sharedInstance].pageViewBuilder buildPageView:self withMaxBounds:bounds viewState:viewState];
-    }
+    [[MBViewBuilderFactory sharedInstance].pageViewBuilder rebuildPageView:self currentView:self.viewController.view withMaxBounds:bounds viewState:viewState];
+    return self.viewController.view;
 }
 
 - (void)handleException:(NSException *)exception

@@ -22,21 +22,14 @@
 
 @implementation MBPageViewBuilder
 
--(UIView*) buildPageView:(MBPage*) page withMaxBounds:(CGRect) maxBounds viewState:(MBViewState) viewState {
-	UIView *view = [[[UIView alloc] initWithFrame: maxBounds] autorelease];  
-
-    [self rebuildPageView:page currentView:view withMaxBounds:maxBounds viewState:viewState];
-    
-	return view;	
-}
-
 -(void)rebuildPageView:(MBPage *)page currentView:(UIView *)view withMaxBounds:(CGRect)maxBounds viewState:(MBViewState)viewState {
     @autoreleasepool {
 
 
     // create a copy to make sure iterator doesn't break
-    for (UIView *child in [view.subviews.copy autorelease])
-        child.removeFromSuperview;
+    for (UIView *child in [view.subviews.copy autorelease]) {
+        [child removeFromSuperview];
+    }
     
     view.backgroundColor = [UIColor groupTableViewBackgroundColor];
 	

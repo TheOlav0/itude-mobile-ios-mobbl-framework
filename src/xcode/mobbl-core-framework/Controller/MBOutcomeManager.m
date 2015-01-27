@@ -440,13 +440,13 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                 } else {
                     // For backwards compatibility
                     page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition document:document rootPath:causingOutcome.path viewState:viewState withMaxBounds:bounds];
-                    [page rebuildView];
+                    [page.viewController rebuildView];
                 }
                 
                 page.applicationController = [MBApplicationController currentInstance];
                 page.pageStackName = causingOutcome.pageStackName;
                 
-                [[MBApplicationController currentInstance].viewManager showPage: page displayMode:displayMode transitionStyle:transitionStyle];
+                [[MBApplicationController currentInstance].viewManager showPage:page displayMode:displayMode transitionStyle:transitionStyle];
             }
         }
     });
