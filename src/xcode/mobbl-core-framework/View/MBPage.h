@@ -46,18 +46,18 @@
 @property (nonatomic, retain) NSString *transitionStyle;
 
 // for loading interface builder files:
-- (id) initWithDefinition:(MBPageDefinition*) definition
-	   withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
-				 document:(MBDocument*) document
-				 rootPath:(NSString*) rootPath
-				viewState:(MBViewState) viewState;
+- (instancetype)initWithDefinition:(MBPageDefinition*) definition
+                withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
+                          document:(MBDocument*) document
+                          rootPath:(NSString*) rootPath
+                         viewState:(MBViewState) viewState;
 
 // for initialising a generic page:
-- (id) initWithDefinition:(id)definition
-				 document:(MBDocument*) document
-				 rootPath:(NSString*) rootPath
-				viewState:(MBViewState) viewState
-			withMaxBounds:(CGRect) bounds;
+- (instancetype) initWithDefinition:(id)definition
+                           document:(MBDocument*) document
+                           rootPath:(NSString*) rootPath
+                          viewState:(MBViewState) viewState
+                      withMaxBounds:(CGRect) bounds;
 
 // Outcome handling
 - (void) handleOutcome:(NSString *)outcomeName;
