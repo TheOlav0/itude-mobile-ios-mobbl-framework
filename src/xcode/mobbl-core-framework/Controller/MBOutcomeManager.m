@@ -436,17 +436,19 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                                                      viewState:viewState
                                                  withMaxBounds:bounds] autorelease];
                     viewController.page = page;
-                    page.viewController = viewController;
                 } else {
                     // For backwards compatibility
                     page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition document:document rootPath:causingOutcome.path viewState:viewState withMaxBounds:bounds];
-                    [page.viewController rebuildView];
+                    viewController = (UIViewController<MBViewControllerProtocol>*)[[MBApplicationFactory sharedInstance] createViewController:page];
+                    viewController.page = page;
+                    viewController.navigationItem.title = page.title;
+                    [viewController rebuildView];
                 }
                 
                 page.applicationController = [MBApplicationController currentInstance];
                 page.pageStackName = causingOutcome.pageStackName;
                 
-                [[MBApplicationController currentInstance].viewManager showPage:page displayMode:displayMode transitionStyle:transitionStyle];
+                [[MBApplicationController currentInstance].viewManager showViewController:(MBBasicViewController *)viewController displayMode:displayMode transitionStyle:transitionStyle];
             }
         }
     });
