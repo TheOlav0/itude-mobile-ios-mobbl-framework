@@ -56,12 +56,6 @@
         
         if ([child isKindOfClass:[MBPanel class]]) {
             childView = [[MBViewBuilderFactory sharedInstance].panelViewBuilderFactory buildPanelView:(MBPanel *)child forParent:view withMaxBounds:maxChildBounds viewState:viewState];
-        } else if ([child isKindOfClass:[MBForEach class]]) {
-            childView = [[MBViewBuilderFactory sharedInstance].forEachViewBuilder buildForEachView:(MBForEach *)child forParent:view withMaxBounds:maxChildBounds viewState:viewState];
-        } else if ([child isKindOfClass:[MBField class]]) {
-            childView = [[MBViewBuilderFactory sharedInstance].fieldViewBuilderFactory buildFieldView:(MBField *)child forParent:view withMaxBounds:maxChildBounds];
-        } else {
-            childView = [child buildViewWithMaxBounds:maxChildBounds forParent: view viewState: viewState];
         }
             
 		if(childView)

@@ -75,7 +75,11 @@
 {
     // Make sure we clear the cache of all related documents:
     [self.page rebuild];
-    self.view = [self.page buildViewWithMaxBounds:self.page.maxBounds forParent:nil viewState:self.page.viewState];
+    
+    if (self.isViewLoaded) {
+        self.view = [[[UIView alloc] initWithFrame:self.page.maxBounds] autorelease];
+    }
+    [[MBViewBuilderFactory sharedInstance].pageViewBuilder rebuildPageView:self.page currentView:self.view withMaxBounds:self.page.maxBounds viewState:self.page.viewState];
     [self setupLayoutForIOS7];
 }
 

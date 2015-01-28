@@ -46,7 +46,7 @@
 - (NSMutableDictionary *)valueChangedListeners
 {
     if (!_valueChangedListeners) {
-        _valueChangedListeners = [NSMutableDictionary dictionary];
+        _valueChangedListeners = [[NSMutableDictionary alloc] init];
     }
     return _valueChangedListeners;
 }
@@ -140,15 +140,6 @@
 - (void)hideKeyboard:(id)sender
 {
 	[self resignFirstResponder];
-}
-
-- (UIView*)buildViewWithMaxBounds:(CGRect)bounds forParent:(UIView*)parent viewState:(MBViewState)viewState
-{
-    if (self.viewController.isViewLoaded) {
-        self.viewController.view = [[[UIView alloc] initWithFrame:bounds] autorelease];
-    }
-    [[MBViewBuilderFactory sharedInstance].pageViewBuilder rebuildPageView:self currentView:self.viewController.view withMaxBounds:bounds viewState:viewState];
-    return self.viewController.view;
 }
 
 - (void)handleException:(NSException *)exception
