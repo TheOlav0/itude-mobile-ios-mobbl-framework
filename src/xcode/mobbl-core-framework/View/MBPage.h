@@ -46,8 +46,8 @@
 @property (nonatomic, assign) MBViewState viewState;
 
 // Deprecated properties
-@property (nonatomic, assign) UIViewController<MBViewControllerProtocol> *viewController __deprecated;
-@property (nonatomic, retain) NSMutableArray *childViewControllers __deprecated; // Contains the ViewControllers of potential child views (like UITableViewControllers)
+@property (nonatomic, assign) UIViewController<MBViewControllerProtocol> *viewController __deprecated; // Deprecated since 29-01-2015
+@property (nonatomic, retain) NSMutableArray *childViewControllers __deprecated; // Contains the ViewControllers of potential child views (like UITableViewControllers). Deprecated since 29-01-2015.
 
 // for initialising a generic page:
 - (instancetype)initWithDefinition:(id)definition
@@ -68,13 +68,13 @@
 
 - (MBDocumentDiff*)diffDocument:(MBDocument*)other;
 
-// Deprecated
+// Deprecated since 29-01-2015
 // for loading interface builder files:
 - (instancetype)initWithDefinition:(MBPageDefinition*) definition
                 withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
                           document:(MBDocument*) document
                           rootPath:(NSString*) rootPath
-                         viewState:(MBViewState) viewState __deprecated;
+                         viewState:(MBViewState) viewState __deprecated; 
 - (void)unregisterAllViewControllers __deprecated;
 - (id)viewControllerOfType:(Class) clazz __deprecated;
 
