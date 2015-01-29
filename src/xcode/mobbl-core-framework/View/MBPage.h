@@ -39,27 +39,22 @@
 @property (nonatomic, retain) NSString *dialogName;
 @property (nonatomic, retain) MBDocument *document;
 @property (nonatomic, assign) MBApplicationController *applicationController;
-@property (nonatomic, retain) NSMutableArray *childViewControllers; // Contains the ViewControllers of potential child views (like UITableViewControllers)
 @property (nonatomic, retain) MBDocumentDiff *documentDiff;
 @property (nonatomic, assign) MBPageType pageType;
 @property (nonatomic, retain) NSString *transitionStyle;
-
 @property (nonatomic, assign) CGRect maxBounds;
 @property (nonatomic, assign) MBViewState viewState;
 
-// for loading interface builder files:
-- (instancetype)initWithDefinition:(MBPageDefinition*) definition
-                withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
-                          document:(MBDocument*) document
-                          rootPath:(NSString*) rootPath
-                         viewState:(MBViewState) viewState;
+// Deprecated properties
+@property (nonatomic, assign) UIViewController<MBViewControllerProtocol> *viewController __deprecated;
+@property (nonatomic, retain) NSMutableArray *childViewControllers __deprecated; // Contains the ViewControllers of potential child views (like UITableViewControllers)
 
 // for initialising a generic page:
 - (instancetype)initWithDefinition:(id)definition
-                          document:(MBDocument*) document
-                          rootPath:(NSString*) rootPath
-                         viewState:(MBViewState) viewState
-                     withMaxBounds:(CGRect) bounds;
+                          document:(MBDocument*)document
+                          rootPath:(NSString*)rootPath
+                         viewState:(MBViewState)viewState
+                     withMaxBounds:(CGRect)bounds;
 
 // Outcome handling
 - (void)handleOutcome:(NSString *)outcomeName;
@@ -69,10 +64,18 @@
 // View
 - (void)rebuild;
 - (MBViewState)currentViewState;
-- (void)unregisterAllViewControllers;
-- (id)viewControllerOfType:(Class) clazz;
 - (void)hideKeyboard:(id)sender;
 
 - (MBDocumentDiff*)diffDocument:(MBDocument*)other;
+
+// Deprecated
+// for loading interface builder files:
+- (instancetype)initWithDefinition:(MBPageDefinition*) definition
+                withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
+                          document:(MBDocument*) document
+                          rootPath:(NSString*) rootPath
+                         viewState:(MBViewState) viewState __deprecated;
+- (void)unregisterAllViewControllers __deprecated;
+- (id)viewControllerOfType:(Class) clazz __deprecated;
 
 @end

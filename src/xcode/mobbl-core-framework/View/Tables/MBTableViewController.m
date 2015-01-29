@@ -43,7 +43,7 @@
 #define C_CELL_Y_MARGIN 4
 
 // TODO: Get the font size and name from the styleHandler
-@interface MBTableViewController()/*<MBFontCustomizerDelegate>*/
+@interface MBTableViewController()<MBFontCustomizerDelegate>
 
 @property (nonatomic, retain) NSMutableDictionary *rowsByIndexPath;
 @property (nonatomic, assign) NSInteger fontCustomizerFontSizeDifference;
@@ -334,7 +334,7 @@
 }
 
 
-/*#pragma mark -
+#pragma mark -
 #pragma mark MBFontChangeListenerProtocol methods
 
 -(void)showFontCustomizer:(BOOL)show {
@@ -373,7 +373,7 @@
         }
         [self.tableView reloadData];
     }
-}*/
+}
 
 
 #pragma mark -

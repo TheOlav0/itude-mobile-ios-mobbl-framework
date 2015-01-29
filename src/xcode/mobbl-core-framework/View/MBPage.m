@@ -93,7 +93,8 @@
         self.pageType = definition.pageType;
 		self.viewState = viewState;
         self.maxBounds = [UIScreen mainScreen].applicationFrame;
-
+        self.viewController = viewController;
+        
 		// Ok; now we can build the children:
         for(MBDefinition *def in definition.children) {
             if([def isPreConditionValid:document currentPath:self.absoluteDataPath]) {
@@ -212,12 +213,6 @@
         [_rootPath retain];
     }
 }
-
-
-/*- (UIView*)view
-{
-    return self.viewController.view;
-}*/
 
 - (void)unregisterAllViewControllers
 {
