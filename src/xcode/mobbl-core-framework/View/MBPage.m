@@ -93,7 +93,9 @@
         self.pageType = definition.pageType;
 		self.viewState = viewState;
         self.maxBounds = [UIScreen mainScreen].applicationFrame;
+        
         self.viewController = viewController;
+        self.viewController.page = self;
         
 		// Ok; now we can build the children:
         for(MBDefinition *def in definition.children) {
@@ -114,6 +116,10 @@
     self = [self initWithDefinition:definition withViewController:nil document:document rootPath:rootPath viewState:viewState];
     if (self) {
         self.maxBounds = bounds;
+        self.viewController = (UIViewController<MBViewControllerProtocol>*)[[MBApplicationFactory sharedInstance] createViewController:self];
+        self.viewController.navigationItem.title = [self title];
+        self.viewController.page = self;
+        [self.viewController rebuildView];
         //[self rebuildView];
     }
 	return self;

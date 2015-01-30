@@ -75,8 +75,7 @@
 {
     // Make sure we clear the cache of all related documents:
     [self.page rebuild];
-    
-    if (self.isViewLoaded) {
+    if (!self.isViewLoaded) {
         self.view = [[[UIView alloc] initWithFrame:self.page.maxBounds] autorelease];
     }
     [[MBViewBuilderFactory sharedInstance].pageViewBuilder rebuildPageView:self.page currentView:self.view withMaxBounds:self.page.maxBounds viewState:self.page.viewState];

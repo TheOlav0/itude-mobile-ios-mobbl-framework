@@ -425,6 +425,7 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                 
                 CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
                 
+                // The default way since MOBBL 0.0.23 to load a ViewController from a xib. This is ARC compatible, the older createPage: method is not.
                 UIViewController<MBViewControllerProtocol>* viewController = [[MBApplicationController currentInstance].applicationFactory viewControllerForPageWithName:pageDefinition.name]; // hopefully this is auto-released by ARC
                 
                 MBPage *page = nil;
@@ -438,12 +439,9 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
                     viewController.page = page;
                     page.viewController = viewController; // For backwards compatibility
                 } else {
-                    // For backwards compatibility
+                    // For backwards compatibility with ViewBuilders
                     page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition document:document rootPath:causingOutcome.path viewState:viewState withMaxBounds:bounds];
-                    viewController = (UIViewController<MBViewControllerProtocol>*)[[MBApplicationFactory sharedInstance] createViewController:page];
-                    viewController.page = page;
-                    page.viewController = viewController;
-                    [viewController rebuildView];
+                    viewController = page.viewController;
                 }
                 
                 viewController.navigationItem.title = page.title;
