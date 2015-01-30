@@ -52,18 +52,6 @@
 +(MBApplicationFactory *) sharedInstance;
 +(void) setSharedInstance:(MBApplicationFactory *) factory;
 
-/** override this class to create MBPages, UIViewControllers and bind the two together */
--(MBPage *) createPage:(MBPageDefinition *)definition
-			  document:(MBDocument*) document 
-			  rootPath:(NSString*) rootPath 
-			 viewState:(MBViewState) viewState
-         withMaxBounds:(CGRect) bounds __deprecated_msg("use viewControllerForPageWithName: instead");
-
--(MBAlert *)createAlert:(MBAlertDefinition *)definition
-               document:(MBDocument *) document
-               rootPath:(NSString *)rootPath
-               delegate:(id<UIAlertViewDelegate>)alertViewDelegate;
-
 /**
  *  Given a page name, this returns the corresponding view controller instance.
  *
@@ -75,14 +63,23 @@
  */
 - (UIViewController <MBViewControllerProtocol>*)viewControllerForPageWithName:(NSString *)pageName;
 
+-(MBAlert *)createAlert:(MBAlertDefinition *)definition
+               document:(MBDocument *) document
+               rootPath:(NSString *)rootPath
+               delegate:(id<UIAlertViewDelegate>)alertViewDelegate;
 /** override to create MBAction conforming custom actions */
 -(id<MBAction>) createAction:(NSString *)actionClassName;
-
 -(MBDialogController *)createDialogController:(MBDialogDefinition *)definition;
-
 /** override to create custom MBResultListeners */
 -(id<MBResultListener>) createResultListener:(NSString *)listenerClassName;
--(UIViewController *) createViewController:(MBPage*) page;
-
 -(id<MBContentViewWrapper>) createContentViewWrapper;
+
+/** override this class to create MBPages, UIViewControllers and bind the two together */
+-(MBPage *) createPage:(MBPageDefinition *)definition
+              document:(MBDocument*) document
+              rootPath:(NSString*) rootPath
+             viewState:(MBViewState) viewState
+         withMaxBounds:(CGRect) bounds __deprecated_msg("use viewControllerForPageWithName: instead");
+-(UIViewController *) createViewController:(MBPage*) page __deprecated_msg("only use for backwards compatibility with View Builders");
+
 @end

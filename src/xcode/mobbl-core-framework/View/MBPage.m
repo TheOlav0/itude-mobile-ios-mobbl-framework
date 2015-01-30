@@ -117,7 +117,7 @@
     if (self) {
         self.maxBounds = bounds;
         self.viewController = (UIViewController<MBViewControllerProtocol>*)[[MBApplicationFactory sharedInstance] createViewController:self];
-        self.viewController.navigationItem.title = [self title];
+        self.viewController.navigationItem.title = self.title;
         self.viewController.page = self;
         [self.viewController rebuildView];
         //[self rebuildView];
