@@ -419,36 +419,13 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
             if (pageDefinition != [NSNull null]) {
             
                 [[MBApplicationController currentInstance].viewManager hideActivityIndicator];
-                NSString *displayMode = causingOutcome.displayMode;
-                NSString *transitionStyle = causingOutcome.transitionStyle;
-                MBViewState viewState = [[MBApplicationController currentInstance].viewManager currentViewState];
                 
-                CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
+                UIViewController<MBViewControllerProtocol>* viewController = [[MBApplicationController currentInstance].applicationFactory createViewControllerForPageWithDefinition:pageDefinition document:document rootPath:causingOutcome.path];
+                viewController.page.pageStackName = causingOutcome.pageStackName;
                 
-                // The default way since MOBBL 0.0.23 to load a ViewController from a xib. This is ARC compatible, the older createPage: method is not.
-                UIViewController<MBViewControllerProtocol>* viewController = [[MBApplicationController currentInstance].applicationFactory viewControllerForPageWithName:pageDefinition.name]; // hopefully this is auto-released by ARC
-                
-                MBPage *page = nil;
-                
-                if (viewController) {
-                    page = [[[MBPage alloc] initWithDefinition:pageDefinition
-                                                      document:document
-                                                      rootPath:causingOutcome.path
-                                                     viewState:viewState
-                                                 withMaxBounds:bounds] autorelease];
-                    viewController.page = page;
-                    page.viewController = viewController; // For backwards compatibility
-                } else {
-                    // For backwards compatibility with ViewBuilders
-                    page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition document:document rootPath:causingOutcome.path viewState:viewState withMaxBounds:bounds];
-                    viewController = page.viewController;
-                }
-                
-                viewController.navigationItem.title = page.title;
-                page.applicationController = [MBApplicationController currentInstance];
-                page.pageStackName = causingOutcome.pageStackName;
-                
-                [[MBApplicationController currentInstance].viewManager showViewController:(MBBasicViewController *)viewController displayMode:displayMode transitionStyle:transitionStyle];
+                [[MBApplicationController currentInstance].viewManager showViewController:(MBBasicViewController *)viewController
+                                                                              displayMode:causingOutcome.displayMode
+                                                                          transitionStyle:causingOutcome.transitionStyle];
             }
         }
     });

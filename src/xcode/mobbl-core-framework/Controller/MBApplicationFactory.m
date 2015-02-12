@@ -74,12 +74,35 @@ static MBApplicationFactory *_instance = nil;
 	}
 }
 
--(MBPage *) createPage:(MBPageDefinition *)definition
-			  document:(MBDocument*) document 
-			  rootPath:(NSString*) rootPath 
-			 viewState:(MBViewState) viewState 
-		 withMaxBounds:(CGRect) bounds {
-	return [[[MBPage alloc] initWithDefinition: definition document: document rootPath:(NSString*) rootPath viewState: viewState withMaxBounds: bounds] autorelease];
+- (UIViewController<MBViewControllerProtocol>*)createViewControllerForPageWithDefinition:(MBPageDefinition *)pageDefinition document:(MBDocument *)document rootPath:(NSString *)rootPath
+{
+    // The default way since MOBBL 0.0.23 to load a ViewController from a xib. This is ARC compatible, the older createPage: method is not.
+    UIViewController<MBViewControllerProtocol>* viewController = [self viewControllerForPageWithName:pageDefinition.name]; // hopefully this is auto-released when using ARC
+    
+    MBPage *page = nil;
+    CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
+    MBViewState viewState = [[MBApplicationController currentInstance].viewManager currentViewState];
+    
+    if (viewController) {
+        page = [[[MBPage alloc] initWithDefinition:pageDefinition
+                                withViewController:viewController
+                                          document:document
+                                          rootPath:rootPath
+                                         viewState:viewState] autorelease];
+    } else {
+        // Build the view with view builders (deprecated)
+        page = [[[MBPage alloc] initWithDefinition:pageDefinition
+                                          document:document
+                                          rootPath:rootPath
+                                         viewState:viewState
+                                     withMaxBounds:bounds] autorelease];
+    }
+    
+    viewController = page.viewController;
+    viewController.navigationItem.title = page.title;
+    page.applicationController = [MBApplicationController currentInstance];
+    
+    return viewController;
 }
 
 - (UIViewController <MBViewControllerProtocol>*)viewControllerForPageWithName:(NSString *)pageName

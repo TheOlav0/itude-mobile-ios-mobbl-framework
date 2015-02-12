@@ -52,6 +52,12 @@
 +(MBApplicationFactory *) sharedInstance;
 +(void) setSharedInstance:(MBApplicationFactory *) factory;
 
+/** Creates a view controller and a page given the arguments
+ *
+ *  This is a MOBBL internal method, do not override or call directly!
+ */
+- (UIViewController<MBViewControllerProtocol>*)createViewControllerForPageWithDefinition:(MBPageDefinition *)pageDefinition document:(MBDocument *)document rootPath:(NSString *)rootPath;
+
 /**
  *  Given a page name, this returns the corresponding view controller instance.
  *
@@ -73,13 +79,6 @@
 /** override to create custom MBResultListeners */
 -(id<MBResultListener>) createResultListener:(NSString *)listenerClassName;
 -(id<MBContentViewWrapper>) createContentViewWrapper;
-
-/** override this class to create MBPages, UIViewControllers and bind the two together */
--(MBPage *) createPage:(MBPageDefinition *)definition
-              document:(MBDocument*) document
-              rootPath:(NSString*) rootPath
-             viewState:(MBViewState) viewState
-         withMaxBounds:(CGRect) bounds __deprecated_msg("use viewControllerForPageWithName: instead");
 -(UIViewController *) createViewController:(MBPage*) page __deprecated_msg("only use for backwards compatibility with View Builders");
 
 @end
