@@ -91,7 +91,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    //[self showFontCustomizer:self.zoomable];
+    [self showFontCustomizer:self.zoomable];
 }
 
 -(NSInteger) numberOfSectionsInTableView:(UITableView *)tableView{
