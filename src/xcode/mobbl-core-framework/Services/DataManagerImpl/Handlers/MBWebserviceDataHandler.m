@@ -216,7 +216,7 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     MBHTTPConnectionDelegateImpl *delegate = [MBHTTPConnectionDelegateImpl new];
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:endPoint.timeout target:(delegate) selector:@selector(cancel) userInfo:nil repeats:NO];
+    NSTimer *timer = [NSTimer timerWithTimeInterval:endPoint.timeout target:(delegate) selector:@selector(cancel) userInfo:nil repeats:NO];
     @try {
         delegate.err = nil;
         delegate.response = nil;
@@ -225,6 +225,7 @@
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
 
         id<MBHTTPConnection> connection = self.connectionBuilder(request, delegate);
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:connection.runMode];
         if ((delegate.connection = connection)){
             while (!delegate.finished) {
                 [self checkForConnectionErrorsInDelegate:delegate withDocumentName:documentName andEndPoint:endPoint];
