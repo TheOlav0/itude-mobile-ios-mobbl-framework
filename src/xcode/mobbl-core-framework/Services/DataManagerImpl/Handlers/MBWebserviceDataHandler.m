@@ -229,7 +229,7 @@
             while (!delegate.finished) {
                 [self checkForConnectionErrorsInDelegate:delegate withDocumentName:documentName andEndPoint:endPoint];
                 // Wait for async http request to finish, but make sure delegate methods are called, since this is executed in an NSOperation
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+                [[NSRunLoop currentRunLoop] runMode:connection.runMode beforeDate:[NSDate distantFuture]];
             }
             [timer invalidate];
             if (delegate.err != nil) {
