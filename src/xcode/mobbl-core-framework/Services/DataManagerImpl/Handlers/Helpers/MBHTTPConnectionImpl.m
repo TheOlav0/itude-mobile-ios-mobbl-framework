@@ -67,7 +67,7 @@
     
     self.connection = connection;
     
-    [self.connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:self.runMode];
+    [self.connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:self.runLoopMode];
     
     [self.connection start];
     
@@ -132,7 +132,7 @@
     }
 }
 
--(NSString*) runMode {
+-(NSString*) runLoopMode {
     return @"MBHTTPConnectionRunMode";
 }
 

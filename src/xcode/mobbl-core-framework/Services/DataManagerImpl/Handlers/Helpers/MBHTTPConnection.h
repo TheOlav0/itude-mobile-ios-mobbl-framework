@@ -26,7 +26,7 @@
 @protocol MBHTTPConnection <NSObject>
 
 @property (nonatomic, readonly) id<MBHTTPConnectionDelegate> delegate;
-@property (nonatomic, readonly) NSString *runMode;
+@property (nonatomic, readonly) NSString *runLoopMode;
 
 - (NSURLRequest *)originalRequest;
 - (NSURLRequest *)currentRequest;

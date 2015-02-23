@@ -225,12 +225,12 @@
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
 
         id<MBHTTPConnection> connection = self.connectionBuilder(request, delegate);
-        [[NSRunLoop currentRunLoop] addTimer:timer forMode:connection.runMode];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:connection.runLoopMode];
         if ((delegate.connection = connection)){
             while (!delegate.finished) {
                 [self checkForConnectionErrorsInDelegate:delegate withDocumentName:documentName andEndPoint:endPoint];
                 // Wait for async http request to finish, but make sure delegate methods are called, since this is executed in an NSOperation
-                [[NSRunLoop currentRunLoop] runMode:connection.runMode beforeDate:[NSDate distantFuture]];
+                [[NSRunLoop currentRunLoop] runMode:connection.runLoopMode beforeDate:[NSDate distantFuture]];
             }
             [timer invalidate];
             if (delegate.err != nil) {
