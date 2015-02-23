@@ -20,6 +20,7 @@
 
 @class MBPage;
 @class MBAlert;
+@class MBBasicViewController;
 
 @interface MBViewManager : NSObject<UITabBarControllerDelegate, UINavigationControllerDelegate, MBDialogManagerDelegate>
 @property (nonatomic, readonly) UIWindow *window;
@@ -29,8 +30,8 @@
 @property (nonatomic, retain) id<MBContentViewWrapper> contentViewWrapper;
 
 - (id) init;
-- (void) showPage:(MBPage*) page displayMode:(NSString*) displayMode;
-- (void) showPage:(MBPage*) page displayMode:(NSString*) displayMode transitionStyle:(NSString *) style;
+- (void)showViewController:(MBBasicViewController*)viewController displayMode:(NSString*)displayMode;
+- (void)showViewController:(MBBasicViewController *)viewController displayMode:(NSString*)displayMode transitionStyle:(NSString *)style;
 - (void) showAlert:(MBAlert *) alert;
 
 /**

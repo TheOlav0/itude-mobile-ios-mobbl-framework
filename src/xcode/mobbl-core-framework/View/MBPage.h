@@ -39,40 +39,44 @@
 @property (nonatomic, retain) NSString *dialogName;
 @property (nonatomic, retain) MBDocument *document;
 @property (nonatomic, assign) MBApplicationController *applicationController;
-@property (nonatomic, assign) UIViewController <MBViewControllerProtocol>*viewController;
-@property (nonatomic, retain) NSMutableArray *childViewControllers; // Contains the ViewControllers of potential child views (like UITableViewControllers)
 @property (nonatomic, retain) MBDocumentDiff *documentDiff;
 @property (nonatomic, assign) MBPageType pageType;
 @property (nonatomic, retain) NSString *transitionStyle;
+@property (nonatomic, assign) CGRect maxBounds;
+@property (nonatomic, assign) MBViewState viewState;
+
+// Deprecated properties
+@property (nonatomic, assign) UIViewController<MBViewControllerProtocol> *viewController __deprecated; // Deprecated since 29-01-2015
+@property (nonatomic, retain) NSMutableArray *childViewControllers __deprecated; // Contains the ViewControllers of potential child views (like UITableViewControllers). Deprecated since 29-01-2015.
 
 // for loading interface builder files:
-- (id) initWithDefinition:(MBPageDefinition*) definition
-	   withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
-				 document:(MBDocument*) document
-				 rootPath:(NSString*) rootPath
-				viewState:(MBViewState) viewState;
+- (instancetype)initWithDefinition:(MBPageDefinition*) definition
+                withViewController:(UIViewController<MBViewControllerProtocol>*) viewController
+                          document:(MBDocument*) document
+                          rootPath:(NSString*) rootPath
+                         viewState:(MBViewState) viewState;
 
+// Deprecated since 29-01-2015
 // for initialising a generic page:
-- (id) initWithDefinition:(id)definition
-				 document:(MBDocument*) document
-				 rootPath:(NSString*) rootPath
-				viewState:(MBViewState) viewState
-			withMaxBounds:(CGRect) bounds;
+- (instancetype)initWithDefinition:(id)definition
+                          document:(MBDocument*)document
+                          rootPath:(NSString*)rootPath
+                         viewState:(MBViewState)viewState
+                     withMaxBounds:(CGRect)bounds __deprecated;
 
 // Outcome handling
-- (void) handleOutcome:(NSString *)outcomeName;
-- (void) handleOutcome:(NSString *)outcomeName withPathArgument:(NSString*) path;
-- (void) handleException:(NSException *)exception;
+- (void)handleOutcome:(NSString *)outcomeName;
+- (void)handleOutcome:(NSString *)outcomeName withPathArgument:(NSString*) path;
+- (void)handleException:(NSException *)exception;
 
 // View
-- (UIView*) view;
 - (void)rebuild;
-- (void) rebuildView;
-- (MBViewState) currentViewState;
-- (void) unregisterAllViewControllers;
-- (id) viewControllerOfType:(Class) clazz;
+- (MBViewState)currentViewState;
 - (void)hideKeyboard:(id)sender;
 
-- (MBDocumentDiff*) diffDocument:(MBDocument*) other;
+- (MBDocumentDiff*)diffDocument:(MBDocument*)other;
+
+- (void)unregisterAllViewControllers __deprecated;
+- (id)viewControllerOfType:(Class) clazz __deprecated;
 
 @end

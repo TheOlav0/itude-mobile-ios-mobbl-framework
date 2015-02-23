@@ -31,6 +31,8 @@
 @class MBDocument;
 @class MBDialogController;
 
+@protocol MBViewControllerProtocol;
+
 /** Factory class for creating custom UIViewControllers, MBResultListeners and MBActions 
  * In short there are three steps to using custom code with MOBBL framework:
 
@@ -49,24 +51,34 @@
 /** the shared instance */
 +(MBApplicationFactory *) sharedInstance;
 +(void) setSharedInstance:(MBApplicationFactory *) factory;
-/** override this class to create MBPages, UIViewControllers and bind the two together */
--(MBPage *) createPage:(MBPageDefinition *)definition 
-			  document:(MBDocument*) document 
-			  rootPath:(NSString*) rootPath 
-			 viewState:(MBViewState) viewState
-		 withMaxBounds:(CGRect) bounds;
+
+/** Creates a view controller and a page given the arguments
+ *
+ *  This is a MOBBL internal method, do not override or call directly!
+ */
+- (UIViewController<MBViewControllerProtocol>*)createViewControllerForPageWithDefinition:(MBPageDefinition *)pageDefinition document:(MBDocument *)document rootPath:(NSString *)rootPath;
+
+/**
+ *  Given a page name, this returns the corresponding view controller instance.
+ *
+ *  The default implementation for this method returns nil. It should be overwritten by subclass (i.e. a custom ApplicationFactory). After this method is called, the MBPage gets bound to the instance.
+ *
+ *  @param pageName The name of the page
+ *
+ *  @return A view controller instance
+ */
+- (UIViewController <MBViewControllerProtocol>*)viewControllerForPageWithName:(NSString *)pageName;
+
 -(MBAlert *)createAlert:(MBAlertDefinition *)definition
                document:(MBDocument *) document
                rootPath:(NSString *)rootPath
                delegate:(id<UIAlertViewDelegate>)alertViewDelegate;
 /** override to create MBAction conforming custom actions */
 -(id<MBAction>) createAction:(NSString *)actionClassName;
-
 -(MBDialogController *)createDialogController:(MBDialogDefinition *)definition;
-
 /** override to create custom MBResultListeners */
 -(id<MBResultListener>) createResultListener:(NSString *)listenerClassName;
--(UIViewController *) createViewController:(MBPage*) page;
-
 -(id<MBContentViewWrapper>) createContentViewWrapper;
+-(UIViewController *) createViewController:(MBPage*) page __deprecated_msg("only use for backwards compatibility with View Builders");
+
 @end
