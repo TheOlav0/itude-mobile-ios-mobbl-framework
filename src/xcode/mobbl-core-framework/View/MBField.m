@@ -209,10 +209,6 @@
 	return _attributeDefinition;
 }
 
--(UIView*) buildViewWithMaxBounds:(CGRect) bounds forParent:(UIView*) parent  viewState:(MBViewState) viewState {
-	return [[[MBViewBuilderFactory sharedInstance] fieldViewBuilderFactory] buildFieldView: self forParent: parent withMaxBounds: bounds];
-}
-
 // This will translate any expression that are part of the path to their actual values
 - (void) translatePath {
 	_translatedPath =  [[self substituteExpressions:[self absoluteDataPath]] retain];

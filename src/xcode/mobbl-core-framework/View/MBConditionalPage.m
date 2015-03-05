@@ -22,57 +22,56 @@
 @synthesize definitionWhenTrue = _definitionWhenTrue;
 @synthesize definitionWhenFalse = _definitionWhenFalse;
 
-- (id) initWithDefinitionWhenTrue:(MBPageDefinition*) definitionWhenTrue 
-		  WithDefinitionWhenFalse:(MBPageDefinition*) definitionWhenFalse 
-			   withViewController:(UIViewController<MBViewControllerProtocol>*) viewController 
-						 document:(MBDocument*) document 
-						 rootPath:(NSString*) rootPath
-						viewState:(MBViewState) viewState {
-	
-	MBPageDefinition *def = ([[MBSession sharedInstance] loggedOn])?definitionWhenTrue:definitionWhenFalse;
-	
-	if(self = [super initWithDefinition:def 
-				  withViewController:viewController 
-							document:document
-							rootPath:rootPath
-							  viewState:viewState]) {
-		self.definitionWhenTrue = definitionWhenTrue;
-		self.definitionWhenFalse = definitionWhenFalse;
-        self.pageName = definitionWhenTrue.name;
-	}
-	return self;
-}
-
-- (id) initWithDefinitionWhenTrue:(MBPageDefinition*) definitionWhenTrue 
-		   WithDefinitionWhenFalse:(MBPageDefinition*) definitionWhenFalse 
-				 document:(MBDocument*) document 
-				 rootPath:(NSString*) rootPath
-				viewState:(MBViewState) viewState 
-			withMaxBounds:(CGRect) bounds {
-
-	MBPageDefinition *def = ([[MBSession sharedInstance] loggedOn])?definitionWhenTrue:definitionWhenFalse;
-	if(self = [super initWithDefinition:def
-							document:document
-							rootPath:rootPath
-						   viewState:viewState
-						  withMaxBounds:bounds])  {
-		self.definitionWhenTrue = definitionWhenTrue;
-		self.definitionWhenFalse = definitionWhenFalse;
-        self.pageName = definitionWhenTrue.name;
-	}
-	return self;
-}
-
-- (void) dealloc
+- (instancetype)initWithDefinitionWhenTrue:(MBPageDefinition*)definitionWhenTrue
+                   WithDefinitionWhenFalse:(MBPageDefinition*)definitionWhenFalse
+                        withViewController:(UIViewController<MBViewControllerProtocol>*)viewController
+                                  document:(MBDocument*)document
+                                  rootPath:(NSString*)rootPath
+                                 viewState:(MBViewState)viewState
 {
-	[_definitionWhenTrue release];
-	[_definitionWhenFalse release];
+	MBPageDefinition *def = ([MBSession sharedInstance].loggedOn) ? definitionWhenTrue
+                                                                  : definitionWhenFalse;
+	
+    self = [super initWithDefinition:def withViewController:viewController document:document rootPath:rootPath viewState:viewState];
+	if (self) {
+		self.definitionWhenTrue = definitionWhenTrue;
+		self.definitionWhenFalse = definitionWhenFalse;
+        self.pageName = definitionWhenTrue.name;
+	}
+	return self;
+}
+
+- (instancetype)initWithDefinitionWhenTrue:(MBPageDefinition*)definitionWhenTrue
+                   WithDefinitionWhenFalse:(MBPageDefinition*)definitionWhenFalse
+                                  document:(MBDocument*)document
+                                  rootPath:(NSString*)rootPath
+                                 viewState:(MBViewState)viewState
+                             withMaxBounds:(CGRect)bounds
+{
+	MBPageDefinition *def = ([MBSession sharedInstance].loggedOn) ? definitionWhenTrue
+                                                                  : definitionWhenFalse;
+    
+    self = [super initWithDefinition:def document:document rootPath:rootPath viewState:viewState withMaxBounds:bounds];
+    if (self)  {
+		self.definitionWhenTrue = definitionWhenTrue;
+		self.definitionWhenFalse = definitionWhenFalse;
+        self.pageName = definitionWhenTrue.name;
+	}
+	return self;
+}
+
+- (void)dealloc
+{
+    self.definitionWhenTrue = nil;
+    self.definitionWhenFalse = nil;
 	[super dealloc];
 }
 
--(void) rebuildView {
-	self.definition = ([[MBSession sharedInstance] loggedOn])?self.definitionWhenTrue:self.definitionWhenFalse;
-	[super rebuildView];
+- (void)rebuild
+{
+	self.definition = ([MBSession sharedInstance].loggedOn) ? self.definitionWhenTrue
+                                                            : self.definitionWhenFalse;
+	[super rebuild];
 }
 
 @end

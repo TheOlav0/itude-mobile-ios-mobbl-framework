@@ -110,32 +110,20 @@
 	return self;
 }
 
--(id) initWithDefinition:(MBPageStackDefinition*)definition page:(MBPage*) page bounds:(CGRect) bounds {
-	if(self = [self initWithDefinition:definition]) {
-        MBBasicViewController *controller = (MBBasicViewController*)page.viewController;
-        controller.pageStackController = self;
-        [self.navigationController setRootViewController:page.viewController];
-        _bounds = bounds;
-	}
-	return self;
-}
-
-
-
--(void)showPage:(MBPage *)page displayMode:(NSString *)displayMode transitionStyle:(NSString *)transitionStyle {
+-(void)showViewController:(MBBasicViewController *)viewController displayMode:(NSString *)displayMode transitionStyle:(NSString *)transitionStyle {
     
-    if(displayMode != nil){
+    [viewController retain];
+    
+    MBPage *page = viewController.page;
+    page.transitionStyle = transitionStyle;
+    UINavigationController *nav = self.navigationController;
+    viewController.pageStackController = self;
+
+    if (displayMode) {
         DLog(@"PageStackController: showPage name=%@ pageStack=%@ mode=%@", page.pageName, _name, displayMode);
 	}
-
-    page.transitionStyle = transitionStyle;
-
-	UINavigationController *nav = self.navigationController;
-	MBBasicViewController *viewController = (MBBasicViewController*)[page.viewController retain];
-
-	viewController.pageStackController = self;
-
-    void (^actuallyShowPage)(void) =^{
+    
+    void (^actuallyShowPage)(void) = ^{
        
 		// Apply transitionStyle for a regular page navigation
 		id<MBTransitionStyle> style = [[[MBApplicationFactory sharedInstance] transitionStyleFactory] transitionForStyle:transitionStyle];
@@ -143,13 +131,10 @@
 
 		[viewController autorelease];
 
-
 		if (self.markedForReset) {
 			self.navigationController.viewControllers = [NSArray arrayWithObject:viewController];
 			self.markedForReset = false;
 		} else {
-
-
 			// Replace the last page on the stack
 			if([displayMode isEqualToString:@"REPLACE"]) {
 				[nav replaceLastViewController:viewController];
@@ -161,17 +146,12 @@
 				[nav pushViewController:viewController animated:[style animated]];
 			}
 		}
-
 		// This needs to be done after the page (viewController) is visible, because before that we have nothing to set the close button to
-		[self setupCloseButtonForPage:page];
-        
-
+		[self setupCloseButtonForViewController:viewController];
         // page is ready for display; make sure we actually show the dialog
-
-        MBDialogManager * manager = [[[MBApplicationController currentInstance] viewManager] dialogManager];
-        if (![[manager activeDialogName] isEqualToString:[self dialogController].name]) {
-
-            [[[MBViewBuilderFactory sharedInstance] dialogDecoratorFactory] presentDialog:[self dialogController] withTransitionStyle:transitionStyle];
+        MBDialogManager * manager = [MBApplicationController currentInstance].viewManager.dialogManager;
+        if (![manager.activeDialogName isEqualToString:self.dialogController.name]) {
+            [[MBViewBuilderFactory sharedInstance].dialogDecoratorFactory presentDialog:self.dialogController withTransitionStyle:transitionStyle];
         }
         if (![page.pageStackName isEqualToString:manager.activePageStackName]) {
             [manager activatePageStackWithName:page.pageStackName];
@@ -341,11 +321,11 @@
 }
 
 // This needs to be done after the page (viewController) is visible, because before that we have nothing to set the close button to
-- (void)setupCloseButtonForPage:(MBPage *)page {
+- (void)setupCloseButtonForViewController:(MBBasicViewController *)viewController {
     if (self.dialogController.closable) {
         NSString *closeButtonTitle = MBLocalizedString(@"closeButtonTitle");
         UIBarButtonItem *closeButton = [[[UIBarButtonItem alloc] initWithTitle:closeButtonTitle style:UIBarButtonItemStyleBordered target:self action:@selector(closeButtonPressed:)] autorelease];
-        [page.viewController.navigationItem setRightBarButtonItem:closeButton animated:YES];
+        [viewController.navigationItem setRightBarButtonItem:closeButton animated:YES];
     }
 }
 

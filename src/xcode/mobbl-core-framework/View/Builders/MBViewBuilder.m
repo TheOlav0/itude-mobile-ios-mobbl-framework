@@ -19,6 +19,9 @@
 #import "MBComponent.h"
 #import "MBStyleHandler.h"
 
+#import "MBPanel.h"
+#import "MBForEach.h"
+
 @implementation MBViewBuilder
 
 -(MBStyleHandler*) styleHandler {
@@ -48,8 +51,13 @@
 		CGRect maxChildBounds = maxBounds;
 		maxChildBounds.size.width -= insetLeft + insetRight;
 		maxChildBounds.size.height -= insetTop + insetBottom;
-		UIView *childView = [child buildViewWithMaxBounds:maxChildBounds forParent: view viewState: viewState];
-		
+        
+        UIView *childView = nil;
+        
+        if ([child isKindOfClass:[MBPanel class]]) {
+            childView = [[MBViewBuilderFactory sharedInstance].panelViewBuilderFactory buildPanelView:(MBPanel *)child forParent:view withMaxBounds:maxChildBounds viewState:viewState];
+        }
+            
 		if(childView)
 		{
 			xOffset += insetLeft;

@@ -408,7 +408,8 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
 }
 
 
--(void) showPages:(OutcomeState) state {
+-(void) showPages:(OutcomeState) state
+{
     dispatchOutcomePhase(dispatch_get_main_queue(), state, ^(OutcomeState *state) {
         for (int i=0; i < [state->outcomesToProcess count]; ++i) {
             MBOutcome *causingOutcome = [state->outcomesToProcess objectAtIndex:i];
@@ -418,21 +419,13 @@ void dispatchOutcomePhase(dispatch_queue_t queue, OutcomeState inState, void (^b
             if (pageDefinition != [NSNull null]) {
             
                 [[MBApplicationController currentInstance].viewManager hideActivityIndicator];
-                NSString *displayMode = causingOutcome.displayMode;
-                NSString *transitionStyle = causingOutcome.transitionStyle;
-                MBViewState viewState = [[MBApplicationController currentInstance].viewManager currentViewState];
                 
-                CGRect bounds = [MBApplicationController currentInstance].viewManager.bounds;
+                UIViewController<MBViewControllerProtocol>* viewController = [[MBApplicationController currentInstance].applicationFactory createViewControllerForPageWithDefinition:pageDefinition document:document rootPath:causingOutcome.path];
+                viewController.page.pageStackName = causingOutcome.pageStackName;
                 
-                MBPage *page = [[MBApplicationController currentInstance].applicationFactory createPage:pageDefinition
-                                                                                               document: document
-                                                                                               rootPath: causingOutcome.path
-                                                                                              viewState: viewState
-                                                                                          withMaxBounds: bounds];
-                page.applicationController = [MBApplicationController currentInstance];
-                page.pageStackName = causingOutcome.pageStackName;
-                
-                [[MBApplicationController currentInstance].viewManager showPage: page displayMode: displayMode transitionStyle: transitionStyle];
+                [[MBApplicationController currentInstance].viewManager showViewController:(MBBasicViewController *)viewController
+                                                                              displayMode:causingOutcome.displayMode
+                                                                          transitionStyle:causingOutcome.transitionStyle];
             }
         }
     });
