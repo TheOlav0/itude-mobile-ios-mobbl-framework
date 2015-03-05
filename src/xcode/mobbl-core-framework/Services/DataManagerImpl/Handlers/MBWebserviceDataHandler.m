@@ -216,7 +216,7 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     
     MBHTTPConnectionDelegateImpl *delegate = [MBHTTPConnectionDelegateImpl new];
-    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:endPoint.timeout target:(delegate) selector:@selector(cancel) userInfo:nil repeats:NO];
+    NSTimer *timer = [NSTimer timerWithTimeInterval:endPoint.timeout target:(delegate) selector:@selector(cancel) userInfo:nil repeats:NO];
     @try {
         delegate.err = nil;
         delegate.response = nil;
@@ -225,11 +225,12 @@
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
 
         id<MBHTTPConnection> connection = self.connectionBuilder(request, delegate);
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:connection.runLoopMode];
         if ((delegate.connection = connection)){
             while (!delegate.finished) {
                 [self checkForConnectionErrorsInDelegate:delegate withDocumentName:documentName andEndPoint:endPoint];
                 // Wait for async http request to finish, but make sure delegate methods are called, since this is executed in an NSOperation
-                [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+                [[NSRunLoop currentRunLoop] runMode:connection.runLoopMode beforeDate:[NSDate distantFuture]];
             }
             [timer invalidate];
             if (delegate.err != nil) {
