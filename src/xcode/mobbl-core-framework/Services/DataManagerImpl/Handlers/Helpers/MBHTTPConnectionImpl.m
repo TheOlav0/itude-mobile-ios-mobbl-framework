@@ -63,9 +63,13 @@
 #pragma mark - Private methods
 
 - (void)startWithRequest:(NSURLRequest *)request {
-    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
     
     self.connection = connection;
+    
+    [self.connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:self.runLoopMode];
+    
+    [self.connection start];
     
     [connection release];
 }
@@ -126,6 +130,10 @@
     if ([self.delegate respondsToSelector:@selector(connection:didReceiveAuthenticationChallenge:)]) {
         return [self.delegate connection:self didReceiveAuthenticationChallenge:challenge];
     }
+}
+
+-(NSString*) runLoopMode {
+    return @"MBHTTPConnectionRunMode";
 }
 
 @end

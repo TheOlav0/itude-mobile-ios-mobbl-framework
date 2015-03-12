@@ -110,18 +110,6 @@
 	return self;
 }
 
-/*-(id) initWithDefinition:(MBPageStackDefinition*)definition page:(MBPage*) page bounds:(CGRect) bounds {
-	if(self = [self initWithDefinition:definition]) {
-        MBBasicViewController *controller = (MBBasicViewController*)page.viewController;
-        controller.pageStackController = self;
-        [self.navigationController setRootViewController:page.viewController];
-        _bounds = bounds;
-	}
-	return self;
-}*/
-
-
-
 -(void)showViewController:(MBBasicViewController *)viewController displayMode:(NSString *)displayMode transitionStyle:(NSString *)transitionStyle {
     
     [viewController retain];
@@ -150,10 +138,12 @@
 			// Replace the last page on the stack
 			if([displayMode isEqualToString:@"REPLACE"]) {
 				[nav replaceLastViewController:viewController];
-				return;
-			} else {
-                // Regular navigation to new page
-				[nav pushViewController:viewController animated:style.animated];
+			}
+
+			// Regular navigation to new page
+			else {
+                
+				[nav pushViewController:viewController animated:[style animated]];
 			}
 		}
 		// This needs to be done after the page (viewController) is visible, because before that we have nothing to set the close button to

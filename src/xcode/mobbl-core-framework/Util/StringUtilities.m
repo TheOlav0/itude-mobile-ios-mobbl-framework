@@ -336,25 +336,17 @@
         char c = *ptr++;
         NSString *replaceWithStr = nil;
         
-        if (c == '\"')
+        
+        if (c < 0) {
+            // UTF-8 character; advance ptr
+            while (*++ptr < 0);
+        } else switch (c)
         {
-            replaceWithStr = @"&quot;";
-        }
-        else if (c == '\'')
-        {
-            replaceWithStr = @"&#x27;";
-        }
-        else if (c == '<')
-        {
-            replaceWithStr = @"&lt;";
-        }
-        else if (c == '>')
-        {
-            replaceWithStr = @"&gt;";
-        }
-        else if (c == '&')
-        {
-            replaceWithStr = @"&amp;";
+            case '\"':  replaceWithStr = @"&quot;"; break;
+            case '\'':  replaceWithStr = @"&#x27;"; break;
+            case '<':   replaceWithStr = @"&lt;";   break;
+            case '>':   replaceWithStr = @"&gt;";   break;
+            case '&':   replaceWithStr = @"&amp;";  break;
         }
         
         if (replaceWithStr == nil) {
