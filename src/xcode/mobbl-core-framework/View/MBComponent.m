@@ -65,10 +65,6 @@
   // No children so nothing to build here    
 }
 
--(UIView*) buildViewWithMaxBounds:(CGRect) bounds forParent:(UIView*) parent viewState:(MBViewState) viewState {
-	return nil;	
-}
-
 -(void) handleOutcome:(MBOutcome *)outcomeName {
 	[_parent handleOutcome:outcomeName];
 }

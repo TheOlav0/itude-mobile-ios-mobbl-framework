@@ -30,9 +30,9 @@
 @property (nonatomic, assign) CGRect bounds;
 
 - (id) initWithDefinition:(MBPageStackDefinition *)definition withDialogController:(MBDialogController *)parent;
-- (id) initWithDefinition:(MBPageStackDefinition *)definition page:(MBPage*) page bounds:(CGRect) bounds;
+//- (id) initWithDefinition:(MBPageStackDefinition *)definition page:(MBPage*) page bounds:(CGRect) bounds;
 
-- (void) showPage:(MBPage*) page displayMode:(NSString*) displayMode transitionStyle:(NSString *) style;
+- (void) showViewController:(MBBasicViewController*) page displayMode:(NSString*) displayMode transitionStyle:(NSString *) style;
 - (void) popPageWithTransitionStyle:(NSString *)transitionStyle animated:(BOOL) animated;
 
 

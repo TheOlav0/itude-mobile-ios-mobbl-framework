@@ -16,26 +16,23 @@
 
 #import "MBPage.h"
 
-@interface MBConditionalPage : MBPage {
-	MBPageDefinition *_definitionWhenFalse;
-	MBPageDefinition *_definitionWhenTrue;
-}
+@interface MBConditionalPage : MBPage
 
-@property (nonatomic, retain)MBPageDefinition *definitionWhenFalse;
-@property (nonatomic, retain)MBPageDefinition *definitionWhenTrue;
+@property (nonatomic, retain) MBPageDefinition *definitionWhenFalse;
+@property (nonatomic, retain) MBPageDefinition *definitionWhenTrue;
 
-- (id) initWithDefinitionWhenTrue:(MBPageDefinition*) definitionWhenTrue 
-		  WithDefinitionWhenFalse:(MBPageDefinition*) definitionWhenFalse 
-			   withViewController:(UIViewController<MBViewControllerProtocol>*) viewController 
-						 document:(MBDocument*) document 
-						 rootPath:(NSString*) rootPath
-						viewState:(MBViewState) viewState;
+- (instancetype)initWithDefinitionWhenTrue:(MBPageDefinition*)definitionWhenTrue
+                   WithDefinitionWhenFalse:(MBPageDefinition*)definitionWhenFalse
+                        withViewController:(UIViewController<MBViewControllerProtocol>*)viewController
+                                  document:(MBDocument*)document
+                                  rootPath:(NSString*)rootPath
+                                 viewState:(MBViewState)viewState;
 	
-- (id) initWithDefinitionWhenTrue:(MBPageDefinition*) definitionWhenTrue 
-		   WithDefinitionWhenFalse:(MBPageDefinition*) definitionWhenFalse 
-						  document:(MBDocument*) document 
-						  rootPath:(NSString*) rootPath
-						 viewState:(MBViewState) viewState 
-					 withMaxBounds:(CGRect) bounds;
-	
+- (instancetype)initWithDefinitionWhenTrue:(MBPageDefinition*)definitionWhenTrue
+                   WithDefinitionWhenFalse:(MBPageDefinition*)definitionWhenFalse
+                                  document:(MBDocument*)document
+                                  rootPath:(NSString*)rootPath
+                                 viewState:(MBViewState)viewState
+                             withMaxBounds:(CGRect)bounds;
+
 @end

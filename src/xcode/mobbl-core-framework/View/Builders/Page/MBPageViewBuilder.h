@@ -19,12 +19,8 @@
 
 @class MBPage;
 
-@interface MBPageViewBuilder : MBViewBuilder {
+@interface MBPageViewBuilder : MBViewBuilder
 
-}
-
--(UIView*) buildPageView:(MBPage*) page withMaxBounds:(CGRect) bounds viewState:(MBViewState) viewState;
-
--(void) rebuildPageView:(MBPage*) page currentView:(UIView*) view withMaxBounds:(CGRect) bounds viewState:(MBViewState) viewState;
+- (void)rebuildPageView:(MBPage*)page currentView:(UIView*)view withMaxBounds:(CGRect)bounds viewState:(MBViewState)viewState;
 
 @end

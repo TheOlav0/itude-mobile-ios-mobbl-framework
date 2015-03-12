@@ -105,19 +105,19 @@
 	[super dealloc];
 }
 
--(void) showPage:(MBPage*) page displayMode:(NSString*) displayMode {
-    [self showPage:page displayMode:displayMode transitionStyle:nil];
+- (void)showViewController:(MBBasicViewController*)viewController displayMode:(NSString*)displayMode {
+    [self showViewController:viewController displayMode:displayMode transitionStyle:nil];
 }
 
--(void) showPage:(MBPage*) page displayMode:(NSString*) displayMode transitionStyle:(NSString *) transitionStyle  {
+- (void)showViewController:(MBBasicViewController*)viewController displayMode:(NSString*)displayMode transitionStyle:(NSString *)transitionStyle  {
     
-    DLog(@"ViewManager: showPage name=%@ pageStack=%@ mode=%@ type=%i", page.pageName, page.pageStackName, displayMode, page.pageType);
+    MBPage *page = viewController.page;
+    
+    DLog(@"ViewManager: showPage name=%@ pageStack=%@ mode=%@ type=%lu", page.pageName, page.pageStackName, displayMode, (unsigned long)page.pageType);
     
 	if(page.pageType == MBPageTypesErrorPage || [@"POPUP" isEqualToString:displayMode]) {
 		[self showAlertView: page];
-	}
-    else {
-        
+	} else {
         // Backwards compatibility: If the pageStackName of the page is the same as the active one AND there is a displaymode,
         // we can assume that the developer want's to show the dialog in a modal presentation.
         if (displayMode.length > 0 && [page.pageStackName isEqualToString:self.dialogManager.activePageStackName]) {
@@ -151,19 +151,16 @@
             else if([C_DIALOG_DECORATOR_TYPE_MODALPAGESHEET_CLOSABLE isEqualToString:displayMode]) {
                 page.pageStackName = @"PAGESTACK-modalpagesheet-closable";
             }
-        }
-        
-        // The page can get a pageStackName from an outcome but if this is not the case we set the activePageStackName
-        else if (page.pageStackName.length == 0) {
+        } else if (page.pageStackName.length == 0) {
+            // The page can get a pageStackName from an outcome but if this is not the case we set the activePageStackName
             page.pageStackName = self.dialogManager.activePageStackName;
         }
         
         MBDialogController *dialogController = [self.dialogManager dialogForPageStackName:page.pageStackName];
 
-
         // Show page on pageStack; also responsible for activating the dialog
         MBPageStackController *pageStackController = [dialogController pageStackControllerWithName:page.pageStackName];
-        [pageStackController showPage:page displayMode:displayMode transitionStyle:transitionStyle];
+        [pageStackController showViewController:viewController displayMode:displayMode transitionStyle:transitionStyle];
     }
 }
 

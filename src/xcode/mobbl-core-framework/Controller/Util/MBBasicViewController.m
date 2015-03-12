@@ -25,10 +25,7 @@
 #import "UIViewController+Rotation.h"
 #import "UIViewController+Layout.h"
 
-@interface MBBasicViewController () {
-    MBPage *_page;
-    MBPageStackController *_pageStackController;
-}
+@interface MBBasicViewController ()
 
 @property (nonatomic, retain) NSMutableArray *outcomeListeners;
 
@@ -36,97 +33,111 @@
 
 @implementation MBBasicViewController
 
-@synthesize page = _page;
-@synthesize pageStackController = _pageStackController;
-
--(id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-		_outcomeListeners = [[NSMutableArray array] retain];
+- (NSMutableArray *)outcomeListeners
+{
+    if (!_outcomeListeners) {
+        _outcomeListeners = [[NSMutableArray alloc] init];
     }
-    return self;
+    return _outcomeListeners;
 }
 
 - (void) dealloc
 {
-    [_page release];
-    [_pageStackController release];
-	[_outcomeListeners release];
+    self.page = nil;
+    self.pageStackController = nil;
+    self.outcomeListeners = nil;
     [super dealloc];
 }
 
--(void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self setupBackButton];
-    
     [self setupLayoutForIOS7];
 }
 
--(void)didMoveToParentViewController:(UIViewController *)parent {
+- (void)didMoveToParentViewController:(UIViewController *)parent
+{
 	[super didMoveToParentViewController:parent];
 
 	if (!parent) {
         [self unregisterListenersWithOutcomeHandler];
-        
-	self.outcomeListeners = nil;
-}
+        self.outcomeListeners = nil;
+    }
 }
 
--(void) handleException:(NSException *) exception{
+- (void)handleException:(NSException *) exception
+{
 	[self.page handleException:exception];
 }
 
-- (void) rebuildView {
-	[self.page rebuildView];	
+- (void)rebuildView
+{
+    // Make sure we clear the cache of all related documents:
+    [self.page rebuild];
+    if (!self.isViewLoaded) {
+        self.view = [[[UIView alloc] initWithFrame:self.page.maxBounds] autorelease];
+    }
+    [[MBViewBuilderFactory sharedInstance].pageViewBuilder rebuildPageView:self.page currentView:self.view withMaxBounds:self.page.maxBounds viewState:self.page.viewState];
+    [self setupLayoutForIOS7];
 }
 
--(void) showActivityIndicator {
+- (void)showActivityIndicator
+{
 	[[MBApplicationController currentInstance] showActivityIndicator];
 }
 
--(void) hideActivityIndicator {
+- (void)hideActivityIndicator
+{
 	[[MBApplicationController currentInstance] hideActivityIndicator];
 }
 
 // Setup a custom backbutton when a builder is registred
--(void)setupBackButton {
+- (void)setupBackButton
+{
     NSArray *viewControllers = self.navigationController.viewControllers;
-    if ([viewControllers count] > 1) {
-        UIViewController *previousViewController = [viewControllers objectAtIndex:[viewControllers count]-2];
-        UIBarButtonItem *backButton = [[[MBViewBuilderFactory sharedInstance] backButtonBuilderFactory] buildBackButtonWithTitle:previousViewController.navigationItem.title];
+    if (viewControllers.count > 1) {
+        UIViewController *previousViewController = viewControllers[viewControllers.count-2];
+        UIBarButtonItem *backButton = [[MBViewBuilderFactory sharedInstance].backButtonBuilderFactory buildBackButtonWithTitle:previousViewController.navigationItem.title];
         if (backButton) {
             [self.navigationItem setLeftBarButtonItem:backButton animated:NO];
         }
     }
 }
 
-#pragma mark -
-#pragma mark View lifecycle delegate methods
+#pragma mark - View lifecycle delegate methods
 
--(void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
 	for (id childView in [self.view subviews]){
 		if ([childView respondsToSelector:@selector(delegate)]) {
 			id delegate = [childView delegate];
-			if(delegate != self && [delegate respondsToSelector:@selector(viewDidAppear:)]) [delegate viewDidAppear:animated];
+            if (delegate != self && [delegate respondsToSelector:@selector(viewDidAppear:)]) {
+                [delegate viewDidAppear:animated];
+            }
 		}
 	}
 }
 
--(void) viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
 	// register all outcome listeners with the application controller; this view controller just became
 	// visible, so it is interested in outcomes
     [self registerListenersWithOutcomeHandler];
     
-	for (id childView in [self.view subviews]){
+	for (id childView in self.view.subviews){
 		if ([childView respondsToSelector:@selector(delegate)]) {
 			id delegate = [childView delegate];
-			if(delegate != self && [delegate respondsToSelector:@selector(viewWillAppear:)]) [delegate viewWillAppear:animated];
+            if(delegate != self && [delegate respondsToSelector:@selector(viewWillAppear:)]) {
+                [delegate viewWillAppear:animated];
+            }
 		}
 	}
 }
 
--(void) viewDidDisappear:(BOOL)animated {
-	for (id childView in [self.view subviews]){
+- (void)viewDidDisappear:(BOOL)animated
+{
+	for (id childView in self.view.subviews) {
 		if ([childView respondsToSelector:@selector(delegate)]) {
 			id delegate = [childView delegate];
 			if(delegate != self){
@@ -138,12 +149,13 @@
 	}
 }
 
--(void) viewWillDisappear:(BOOL)animated {
+- (void)viewWillDisappear:(BOOL)animated
+{
 	// remove all outcome listeners from the application controller; this view controller
 	// is going to disappear, so it isn't interested in them anumore
     [self unregisterListenersWithOutcomeHandler];
     
-	for (id childView in [self.view subviews]){
+	for (id childView in self.view.subviews){
 		if ([childView respondsToSelector:@selector(delegate)]) {
 			id delegate = [childView delegate];
 			if(delegate != self ){//&& [delegate respondsToSelector:@selector(viewWillDisappear:)]) {
@@ -153,46 +165,45 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Outcome listeners
+#pragma mark - Outcome listeners
 
-- (void) registerOutcomeListener:(id<MBOutcomeListenerProtocol>) listener {
+- (void)registerOutcomeListener:(id<MBOutcomeListenerProtocol>) listener {
     if (listener == (id<MBOutcomeListenerProtocol>)self) {
         NSLog (@"Don't register self as outcomeListener; this is done automatically!");
         return;
     }
     
-	if(![self.outcomeListeners containsObject:listener]) {
+	if (![self.outcomeListeners containsObject:listener]) {
 		[self.outcomeListeners addObject:listener];
 		[[MBApplicationController currentInstance].outcomeManager registerOutcomeListener:listener];
 	}
 }
 
-- (void) unregisterOutcomeListener:(id<MBOutcomeListenerProtocol>) listener {
+- (void)unregisterOutcomeListener:(id<MBOutcomeListenerProtocol>) listener
+{
 	[[MBApplicationController currentInstance].outcomeManager unregisterOutcomeListener:listener];
-	[self.outcomeListeners removeObject: listener];
+	[self.outcomeListeners removeObject:listener];
 }
 
-
-
-- (void) registerListenersWithOutcomeHandler {
+- (void)registerListenersWithOutcomeHandler
+{
     for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
 		[[MBApplicationController currentInstance].outcomeManager registerOutcomeListener:lsnr];
 	}
     
-    if ([self conformsToProtocol:@protocol(MBOutcomeListenerProtocol) ])
+    if ([self conformsToProtocol:@protocol(MBOutcomeListenerProtocol) ]) {
         [[MBApplicationController currentInstance].outcomeManager registerOutcomeListener:(id<MBOutcomeListenerProtocol>)self];
+    }
 }
 
-- (void) unregisterListenersWithOutcomeHandler {
+- (void)unregisterListenersWithOutcomeHandler {
     for(id<MBOutcomeListenerProtocol> lsnr in self.outcomeListeners) {
 		[[MBApplicationController currentInstance].outcomeManager unregisterOutcomeListener:lsnr];
 	}
     
-    if ([self conformsToProtocol:@protocol(MBOutcomeListenerProtocol) ])
+    if ([self conformsToProtocol:@protocol(MBOutcomeListenerProtocol) ]) {
         [[MBApplicationController currentInstance].outcomeManager unregisterOutcomeListener:(id<MBOutcomeListenerProtocol>)self];
+    }
 }
-
-
 
 @end
