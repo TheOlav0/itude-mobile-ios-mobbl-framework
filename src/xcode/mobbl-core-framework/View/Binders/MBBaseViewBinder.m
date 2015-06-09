@@ -31,11 +31,13 @@
     }
     
     for (MBComponent *child in [state.component childrenOfKind:[MBComponent class]]) {
-        state.component = child;
+        MBBuildState *childState = [state copy];
+        childState.component = child;
         id element = [child.document valueForPath:child.absoluteDataPath];
-        state.element = [element isKindOfClass:[MBElement class]] ? element : nil;
-        state.view = (view) ? view : state.view;
-        [state.mainViewBinder bindView:state];
+        childState.element = [element isKindOfClass:[MBElement class]] ? element : nil;
+        childState.view = (view) ? view : childState.view;
+        [childState.mainViewBinder bindView:childState];
+        [childState release];
     }
     
     return view;
