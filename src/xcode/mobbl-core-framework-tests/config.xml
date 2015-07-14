@@ -1,0 +1,317 @@
+<Configuration xmlns="http://itude.com/schemas/MB/1.0">
+    <Model>
+        <Domains>
+            
+            <Domain name="GenderDomain" type="string" maxLength="1">
+                <DomainValidator title="Male" value="m" />
+                <DomainValidator title="Female" value="f" />
+            </Domain>
+            <Domain name="LanguageDomain" type="string" maxLength="1">
+                <DomainValidator title="English" value="uk-english" />
+                <DomainValidator title="Dutch" value="nl-dutch" />
+                <DomainValidator title="German" value="de-german" />
+            </Domain>
+            
+            <Domain name="Percentage" type="int">
+                <DomainValidator lowerBound="0" upperBound="110"/>
+            </Domain>
+            
+        </Domains>
+        
+        <Documents>
+            <Document name="LoginDocument" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="LoginInfo" minOccurs="1">
+                    <Attribute name="Gender" type="GenderDomain"/>
+                    <Attribute name="UserID" type="string"/>
+                    <Attribute name="Password" type="string"/>
+                    <Attribute name="LoginMessage" type="string"/>
+                    <!-- <element> -->
+                </Element>
+            </Document>
+            
+            <Document name="SettingsDocument" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="Settings" minOccurs="1">
+                    <Attribute name="username" type="string" defaultValue="testuser" />
+                    <Attribute name="password" type="string" defaultValue="testpassword" />
+                    <Attribute name="maxTries" type="string" defaultValue="5" />
+                    <Attribute name="fine" type="string" defaultValue="100" />
+                    <Attribute name="language" type="LanguageDomain" defaultValue="nl-dutch" />
+                    <Attribute name="rememberMe" type="string" defaultValue="true"/>
+                </Element>
+            </Document>
+            
+            <Document name="Books" dataManager="MBFileDataHandler" autoCreate="TRUE">
+                <Element name="Author">
+                    <Attribute name="name" type="string"/>
+                    <Element name="Book">
+                        <Attribute name="title" type="string"/>
+                        <Attribute name="isbn" type="string"/>
+                        <Attribute name="summary" type="string"/>
+                        <Attribute name="thumbnail" type="string"/>
+                        <Attribute name="coverImage" type="string"/>
+                        <Attribute name="review" type="string" />
+                        <Attribute name="language" type="LanguageDomain" />
+                    </Element>
+                </Element>
+            </Document>
+            
+            <Document name="TestDocument1" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="LoginInfo" minOccurs="1">
+                    <Attribute name="Gender" type="GenderDomain"/>
+                    <Attribute name="UserID" type="string"/>
+                    <Attribute name="Password" type="string"/>
+                    <Attribute name="LoginMessage" type="string"/>
+                    <!-- <element> -->
+                </Element>
+            </Document>
+            
+            <Document name="WelcomeDocument" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="WelcomeInfo"  minOccurs="1">
+                    <Attribute name="MOTD" type="string"/>
+                </Element>
+            </Document>
+            
+            <Document name="ISBNdb" dataManager="MBRESTServiceDataHandler" autoCreate="TRUE">
+                <Element name="BookList">
+                    <Attribute name="total_results" type="integer"/>
+                    <Attribute name="page_size" type="integer"/>
+                    <Attribute name="page_number" type="integer"/>
+                    <Attribute name="shown_results" type="integer"/>
+                    <Element name="BookData">
+                        <Attribute name="book_id" type="string"/>
+                        <Attribute name="isbn" type="string"/>
+                        <Attribute name="isbn13" type="string"/>
+                        <Element name="Title">
+                            <Attribute name="text()" type="string"/>
+                        </Element>
+                        <Element name="TitleLong">
+                            <Attribute name="text()" type="string"/>
+                        </Element>
+                        <Element name="AuthorsText">
+                            <Attribute name="text()" type="string"/>
+                        </Element>
+                        <Element name="PublisherText">
+                            <Attribute name="publisher_id" type="string"/>
+                            <Attribute name="text()" type="string"/>
+                        </Element>
+                    </Element>
+                </Element>
+            </Document>
+            
+            <!-- special documents: deploy to all clients -->
+            <Document name="MBMobbl1Request" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="StrayClient" minOccurs="1">
+                    <Attribute name="xmlns" type="string"/>
+                    <Attribute name="command" type="string"/>
+                    <Attribute name="universeID" type="string"/>
+                    <Attribute name="applicationID" type="string"/>
+                    <Attribute name="uniqueDeviceID" type="string"/>
+                    <Attribute name="dateTime" type="date"/>
+                    <Attribute name="messageID" type="string"/>
+                    <Element name="SendDataDetails" minOccurs="1">
+                        <Element name="request" minOccurs="1">
+                            <Element name="parameter">
+                                <Attribute name="key" type="string"/>
+                                <Attribute name="value" type="string"/>
+                            </Element>
+                        </Element>
+                    </Element>
+                    <Element name="Operation" minOccurs="1">
+                        <Attribute name="httpMethod" type="string" defaultValue="POST"/>
+                    </Element>
+                </Element>
+            </Document>
+            
+            <Document name="MBGenericRestRequest" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="Operation" minOccurs="1">
+                    <Attribute name="name" type="string" />
+                    <Attribute name="httpMethod" type="string" />
+                    <Element name="Parameter">
+                        <Attribute name="key" type="string"/>
+                        <Attribute name="value" type="string"/>
+                    </Element>
+                </Element>
+            </Document>
+            
+            <Document name="MBEmptyDoc" dataManager="MBMemoryDataHandler" autoCreate="TRUE">
+                <Element name="Parameters" minOccurs="1">
+                    <Attribute name="name" type="string" />
+                    <Element name="Parameter">
+                        <Attribute name="key" type="string"/>
+                        <Attribute name="value" type="string"/>
+                    </Element>
+                </Element>
+                
+            </Document>
+            
+            <Document name="WebCallResult" dataManager="MBMockWebServiceDataHandler" >
+                <Element name="Result" minOccurs="1">
+                    <Attribute name="text()" type="string" />
+                </Element>
+            </Document>
+        </Documents>
+        
+    </Model>
+    
+    <Controller>
+        
+        <Actions>
+        </Actions>
+        
+        <Wiring>
+            <!-- The (required) initial outcome Controller/init -->
+            <Outcome origin="Controller" name="init" action="HOME" dialog="dialog1"/>
+            <Outcome origin="Controller" name="init" action="SETTINGS" dialog="dialog2"/>
+            <Outcome origin="Controller" name="init" action="LISTWITHSECTIONS" dialog="dialog3"/>
+            
+            <Outcome origin="HomeAction" name="LOGINOUTCOME" action="LoginAction" persist="TRUE" displayMode="END"/>
+            
+            <Outcome origin="LoginAction" name="FAILED" action="HOME" persist="TRUE" />
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog1"  persist="TRUE"/>
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog2"/>
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog3"/>
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog4"/>
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog5"/>
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog6"/>
+            <Outcome origin="LoginAction" name="OK" action="LISTWITHSECTIONS" dialog="dialog7"/>
+            <Outcome origin="LoginAction" name="OK" action="SETTINGS" dialog="setting"/>
+            
+            <Outcome origin="LISTWITHSECTIONS" name="BOOKDETAILSOUTCOME" action="BOOKDETAILSPAGE"/>
+            
+            
+            <Outcome origin="*" name="exception" action="exception" />
+        </Wiring>
+        
+    </Controller>
+    
+    <View>
+        <Dialogs>
+            <Dialog name="dialog1" mode="STACK" icon="icon1" title="1"/>
+            <Dialog name="dialog2" mode="STACK" icon="icon2" title="2"/>
+            <Dialog name="dialog3" mode="STACK" icon="icon3" title="3"/>
+        </Dialogs>
+        
+        <Page name="HOME" document="Books" title="Boeken">
+            <Panel type="SECTION" style="LIST">
+                <Field label="Userid" path="Author[0]/@name" type="LABEL" />
+            </Panel>
+        </Page>
+        
+        <Page name="SETTINGS" document="SettingsDocument" title="Settings">
+            <Panel type="SECTION" style="LIST">
+                <Field label="Username" type="PASSWORDFIELD" path="/Settings[0]/@username" />
+                <Field label="Password" type="PASSWORDFIELD" path="/Settings[0]/@password" dataType="int" />
+                <Field label="Max Tries" type="INPUTFIELD" path="/Settings[0]/@maxTries" dataType="int" />
+                <Field label="Fine in €" type="INPUTFIELD" path="/Settings[0]/@fine" dataType="float" />
+                <Field label="Language" type="DROPDOWNLIST" path="/Settings[0]/@language" />
+                <Field label="Remember me" type="CHECKBOX" path="/Settings[0]/@rememberMe" />
+                <Field label="Logout" type="BUTTON" outcome="LOGOUT"/>
+            </Panel>
+        </Page>
+        
+        <Page name="LISTWITHSECTIONS" document="Books" title="Books">
+            <Panel type="LIST" height="480">
+                <ForEach value="Author">
+                    <Panel type="SECTION" titlePath="@name">
+                        <ForEach value="Book">
+                            <Panel type="ROW">
+                                <Field type="LABEL" path="@title"/>
+                                <Field type="SUBLABEL" path="../@name"/>
+                                <Field type="BUTTON" label="more..." path="." outcome="BOOKDETAILSOUTCOME"/>
+                            </Panel>
+                        </ForEach>
+                    </Panel>
+                </ForEach>
+            </Panel>
+        </Page>
+        
+        <Page name="BOOKDETAILSPAGE"  document="Books/Author/Book/" titlePath="@title">
+            <Panel type="LIST" style="LIST">
+                <Panel type="ROW">
+                    <Field type="LABEL" path="@title"/>
+                </Panel>
+                <Panel type="ROW">
+                    <Field type="LABEL" path="@isbn"/>
+                </Panel>
+                <Panel type="ROW">
+                    <Field type="TEXTAREA" path="@summary"/>
+                </Panel>
+                <Panel type="ROW">
+                    <Field type="LABEL" label="Review"/>
+                    <Field type="INPUTFIELD" path="@review"/>
+                </Panel>
+            </Panel>
+        </Page>
+        
+        <!-- example Panel and Field types below -->
+        
+        <Page name="MAPPAGE" document="MapData" title="My Map">
+            <Panel type="PLAIN">
+                <Field type="MAP" path="MapData" outcome="POI_CLICKED"/>
+            </Panel>
+        </Page>
+        
+        <Page name="LISTWITHSECTIONS2" document="Books" title="Books">
+            <Panel type="LIST|ROW|PLAIN|SECTION|TABBAR|SUBTABBAR|SCROLL" style="myStyle" title="List2">
+                <ForEach value="Author">
+                    <Panel type="SECTION" title="@title">
+                        <ForEach value="Book">
+                            <Panel type="ROW">
+                                <Field type="LABEL|SUBLABEL|BUTTON|MAP|SEARCHBOX|TEXTAREA|INPUTFIELD|DROPDOWNLIST|CHECKBOX|AUDIO|VIDEO|IMAGE|ICON" path="@title"/>
+                                <Field type="SUBLABEL" path="../@name"/>
+                                <Field type="BUTTON" label="more..." path="." outcome="BOOKDETAILSOUTCOME"/>
+                            </Panel>
+                        </ForEach>
+                    </Panel>
+                </ForEach>
+            </Panel>
+        </Page>
+        
+        <!-- ********************* -->
+        
+        <Page name="LOGGEDINPAGE" document="WelcomeDocument" title="Welcome">
+            <Panel type="SECTION" title="Some title">
+                <Field type="LABEL">Hello there; welcome to this application</Field>  
+                <Field path="WelcomeInfo/MOTD" type="LABEL" required="TRUE" />
+                <Field outcome="ChangePassword"/>
+            </Panel>
+        </Page>
+        
+        <!--  Error messages page -->
+        <Page name="exception" type="error" document="MBException" title="Fout opgetreden">
+            <Panel type="LIST">
+                <Panel type="SECTION" title="Fout details">
+                    <Panel type="ROW">
+                        <Field type="TEXT" path="/Exception[0]/@description"/>
+                    </Panel>
+                </Panel>
+                <Panel type="SECTION" title="Technical details">
+                    <Panel type="ROW">
+                        <Field type="LABEL" label="Name"/>
+                        <Field type="SUBLABEL" path="/Exception[0]/@name"/>
+                    </Panel>
+                    <Panel type="ROW">
+                        <Field type="LABEL" label="Description"/>
+                        <Field type="SUBLABEL" path="/Exception[0]/@description"/>
+                    </Panel>
+                    <Panel type="ROW">
+                        <Field type="LABEL" label="Origin"/>
+                        <Field type="SUBLABEL" path="/Exception[0]/@origin"/>
+                    </Panel>
+                    <Panel type="ROW">
+                        <Field type="LABEL" label="Outcome"/>
+                        <Field type="SUBLABEL" path="/Exception[0]/@outcome"/>
+                    </Panel>
+                </Panel>
+                <Panel type="SECTION" title="Stack">
+                    <ForEach value="/Exception[0]/Stackline" suppressRowComponent="TRUE">
+                        <Panel type="ROW">
+                            <Field type="SUBLABEL" path="./@line"/>
+                        </Panel>
+                    </ForEach>
+                </Panel>
+            </Panel>
+        </Page>
+        
+    </View>  
+</Configuration>

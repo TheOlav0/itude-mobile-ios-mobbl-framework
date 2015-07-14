@@ -676,6 +676,22 @@
 		C76351DD188EAC10006808DE /* MBJsonDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */; };
 		C76351DE188EAC10006808DE /* MBXmlDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DF188EAC10006808DE /* MBXmlDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351DB188EAC10006808DE /* MBXmlDocumentParser.m */; };
+		ED26D57A1B5525420041D28A /* MBDocumentFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D5791B5525420041D28A /* MBDocumentFactoryTest.m */; };
+		ED26D57C1B55272D0041D28A /* MBExpressionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D57B1B55272D0041D28A /* MBExpressionTest.m */; };
+		ED26D57F1B552A140041D28A /* TestElementContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D57E1B552A140041D28A /* TestElementContainer.m */; };
+		ED26D5821B552FBC0041D28A /* MBJsonDocumentParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */; };
+		ED424D671B555B7F0073BD2D /* MBApplicationControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */; };
+		ED45C1D71B54F9B600C8D7E3 /* endpoints.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */; };
+		ED45C1DB1B55138C00C8D7E3 /* Books.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED45C1DA1B55138C00C8D7E3 /* Books.xml */; };
+		ED45C1DD1B55180100C8D7E3 /* MBElementTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */; };
+		EDC8AA3F1B53F1B800572DAF /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA3E1B53F1B800572DAF /* config.xml */; };
+		EDC8AA451B53F26900572DAF /* config_unittests.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA411B53F26900572DAF /* config_unittests.xml */; };
+		EDC8AA461B53F26900572DAF /* testdocument.txt in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA421B53F26900572DAF /* testdocument.txt */; };
+		EDC8AA471B53F26900572DAF /* testdocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA431B53F26900572DAF /* testdocument.xml */; };
+		EDC8AA481B53F26900572DAF /* testresources.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA441B53F26900572DAF /* testresources.xml */; };
+		EDC8AA4B1B5403BF00572DAF /* MBDocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AA4A1B5403BF00572DAF /* MBDocumentTest.m */; };
+		EDC8AA4C1B54076600572DAF /* MBDocumentAbstractTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */; };
+		EDC8AA501B54172D00572DAF /* MockDataManagerService.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AA4F1B54172D00572DAF /* MockDataManagerService.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1168,6 +1184,25 @@
 		C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParser.m; sourceTree = "<group>"; };
 		C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXmlDocumentParser.h; sourceTree = "<group>"; };
 		C76351DB188EAC10006808DE /* MBXmlDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBXmlDocumentParser.m; sourceTree = "<group>"; };
+		ED26D5791B5525420041D28A /* MBDocumentFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentFactoryTest.m; sourceTree = "<group>"; };
+		ED26D57B1B55272D0041D28A /* MBExpressionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBExpressionTest.m; sourceTree = "<group>"; };
+		ED26D57D1B552A140041D28A /* TestElementContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestElementContainer.h; sourceTree = "<group>"; };
+		ED26D57E1B552A140041D28A /* TestElementContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestElementContainer.m; sourceTree = "<group>"; };
+		ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParserTest.m; sourceTree = "<group>"; };
+		ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBApplicationControllerTest.m; sourceTree = "<group>"; };
+		ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = endpoints.xml; sourceTree = "<group>"; };
+		ED45C1DA1B55138C00C8D7E3 /* Books.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Books.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/documents/Books.xml"; sourceTree = "<group>"; };
+		ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBElementTest.m; sourceTree = "<group>"; };
+		EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentAbstractTest.m; sourceTree = "<group>"; };
+		EDC8AA3E1B53F1B800572DAF /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		EDC8AA411B53F26900572DAF /* config_unittests.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config_unittests.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/config_unittests.xml"; sourceTree = "<group>"; };
+		EDC8AA421B53F26900572DAF /* testdocument.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = testdocument.txt; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testdocument.txt"; sourceTree = "<group>"; };
+		EDC8AA431B53F26900572DAF /* testdocument.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = testdocument.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testdocument.xml"; sourceTree = "<group>"; };
+		EDC8AA441B53F26900572DAF /* testresources.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = testresources.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testresources.xml"; sourceTree = "<group>"; };
+		EDC8AA4A1B5403BF00572DAF /* MBDocumentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentTest.m; sourceTree = "<group>"; };
+		EDC8AA4D1B5407F000572DAF /* MBDocumentAbstractTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBDocumentAbstractTest.h; sourceTree = "<group>"; };
+		EDC8AA4E1B54172D00572DAF /* MockDataManagerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockDataManagerService.h; sourceTree = "<group>"; };
+		EDC8AA4F1B54172D00572DAF /* MockDataManagerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockDataManagerService.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2046,6 +2081,8 @@
 		266481A41973CE30003B1CD2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EDC8AA401B53F21600572DAF /* Model */,
+				EDC8AA3D1B53F16F00572DAF /* Config */,
 				2611176A197E6BE200C08108 /* Default */,
 				26AC088C197953EE000384EF /* Services */,
 			);
@@ -2112,6 +2149,8 @@
 		26B09624197564EA0014D93A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				ED424D651B555B620073BD2D /* Controller */,
+				EDC8AA3A1B53E9C000572DAF /* Model */,
 				26B09625197564EA0014D93A /* Services */,
 			);
 			path = Tests;
@@ -2147,6 +2186,61 @@
 				C76351DB188EAC10006808DE /* MBXmlDocumentParser.m */,
 			);
 			path = Parser;
+			sourceTree = "<group>";
+		};
+		ED26D5801B552FA50041D28A /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */,
+			);
+			name = Parser;
+			sourceTree = "<group>";
+		};
+		ED424D651B555B620073BD2D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		EDC8AA3A1B53E9C000572DAF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ED26D5801B552FA50041D28A /* Parser */,
+				EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */,
+				EDC8AA4A1B5403BF00572DAF /* MBDocumentTest.m */,
+				EDC8AA4D1B5407F000572DAF /* MBDocumentAbstractTest.h */,
+				EDC8AA4E1B54172D00572DAF /* MockDataManagerService.h */,
+				EDC8AA4F1B54172D00572DAF /* MockDataManagerService.m */,
+				ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */,
+				ED26D5791B5525420041D28A /* MBDocumentFactoryTest.m */,
+				ED26D57B1B55272D0041D28A /* MBExpressionTest.m */,
+				ED26D57D1B552A140041D28A /* TestElementContainer.h */,
+				ED26D57E1B552A140041D28A /* TestElementContainer.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		EDC8AA3D1B53F16F00572DAF /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				EDC8AA3E1B53F1B800572DAF /* config.xml */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		EDC8AA401B53F21600572DAF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ED45C1DA1B55138C00C8D7E3 /* Books.xml */,
+				EDC8AA411B53F26900572DAF /* config_unittests.xml */,
+				EDC8AA421B53F26900572DAF /* testdocument.txt */,
+				EDC8AA431B53F26900572DAF /* testdocument.xml */,
+				EDC8AA441B53F26900572DAF /* testresources.xml */,
+				ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2500,11 +2594,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED45C1D71B54F9B600C8D7E3 /* endpoints.xml in Resources */,
+				EDC8AA471B53F26900572DAF /* testdocument.xml in Resources */,
 				266075681959B05E008131A6 /* InfoPlist.strings in Resources */,
 				2611176C197E6BFB00C08108 /* resources.xml in Resources */,
 				26AC089C197D76C7000384EF /* MBWebServiceDataHandlerTest_endpoints.xml in Resources */,
+				EDC8AA3F1B53F1B800572DAF /* config.xml in Resources */,
+				ED45C1DB1B55138C00C8D7E3 /* Books.xml in Resources */,
+				EDC8AA481B53F26900572DAF /* testresources.xml in Resources */,
 				26AC0890197953EE000384EF /* MBFileManagerTest_read.xml in Resources */,
+				EDC8AA461B53F26900572DAF /* testdocument.txt in Resources */,
 				26AC0897197D0D1C000384EF /* MBWebServiceDataHandlerTest_config.xml in Resources */,
+				EDC8AA451B53F26900572DAF /* config_unittests.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2790,12 +2891,14 @@
 				266481B21973D42E003B1CD2 /* MBWebservicesConfiguration.m in Sources */,
 				266481B31973D42E003B1CD2 /* MBWebservicesConfigurationParser.m in Sources */,
 				266481B41973D42E003B1CD2 /* MBEmptyContentViewWrapper.m in Sources */,
+				ED424D671B555B7F0073BD2D /* MBApplicationControllerTest.m in Sources */,
 				266481B51973D42E003B1CD2 /* MBSlidingMenuContentViewWrapper.m in Sources */,
 				266481B61973D42E003B1CD2 /* MBAlertController.m in Sources */,
 				1724FC391A7289B3000ACDA2 /* MBSwitchBinder.m in Sources */,
 				266481B71973D42E003B1CD2 /* MBApplicationController.m in Sources */,
 				266481B81973D42E003B1CD2 /* MBApplicationFactory.m in Sources */,
 				266481B91973D42E003B1CD2 /* MBDialogController.m in Sources */,
+				EDC8AA501B54172D00572DAF /* MockDataManagerService.m in Sources */,
 				266481BA1973D42E003B1CD2 /* MBDialogManager.m in Sources */,
 				266481BB1973D42E003B1CD2 /* MBOutcome.m in Sources */,
 				266481BC1973D42E003B1CD2 /* MBOutcomeManager.m in Sources */,
@@ -2819,6 +2922,7 @@
 				266481CC1973D42E003B1CD2 /* FMDatabaseQueue.m in Sources */,
 				266481CD1973D42E003B1CD2 /* FMResultSet.m in Sources */,
 				266481CE1973D42E003B1CD2 /* GTMObjC2Runtime.m in Sources */,
+				ED26D57C1B55272D0041D28A /* MBExpressionTest.m in Sources */,
 				266481CF1973D42E003B1CD2 /* MGSplitCornersView.m in Sources */,
 				26AC089A197D3419000384EF /* MBMockHTTPConnection.m in Sources */,
 				266481D01973D42E003B1CD2 /* MGSplitDividerView.m in Sources */,
@@ -2845,6 +2949,7 @@
 				266481E31973D42E003B1CD2 /* MBDataManagerService.m in Sources */,
 				266481E41973D42E003B1CD2 /* MBLocalizationService.m in Sources */,
 				26AC087D1977F17F000384EF /* MBWebServiceDataHandlerTest.m in Sources */,
+				EDC8AA4C1B54076600572DAF /* MBDocumentAbstractTest.m in Sources */,
 				266481E51973D42E003B1CD2 /* MBMetadataService.m in Sources */,
 				266481E61973D42E003B1CD2 /* MBResourceService.m in Sources */,
 				266481E71973D42E003B1CD2 /* MBScriptService.m in Sources */,
@@ -2867,6 +2972,7 @@
 				266481F71973D42E003B1CD2 /* MBOrderedMutableDictionary.m in Sources */,
 				266481F81973D42E003B1CD2 /* MBOrientationManager.m in Sources */,
 				266481F91973D42E003B1CD2 /* MBProperties.m in Sources */,
+				ED45C1DD1B55180100C8D7E3 /* MBElementTest.m in Sources */,
 				1724FC361A7289B3000ACDA2 /* MBStandardStyleTableViewBinder.m in Sources */,
 				266481FA1973D42E003B1CD2 /* MBServerException.m in Sources */,
 				266481FB1973D42E003B1CD2 /* MBWebView.m in Sources */,
@@ -2893,6 +2999,7 @@
 				2664820D1973D42E003B1CD2 /* MBModalFormSheetDialogDecorator.m in Sources */,
 				2664820E1973D42E003B1CD2 /* MBModalFullScreenDialogDecorator.m in Sources */,
 				2664820F1973D42E003B1CD2 /* MBModalPageSheetDialogDecorator.m in Sources */,
+				ED26D57A1B5525420041D28A /* MBDocumentFactoryTest.m in Sources */,
 				266482101973D42E003B1CD2 /* MBSingleDialogContentBuilder.m in Sources */,
 				266482111973D42E003B1CD2 /* MBSplitDialogContentBuilder.m in Sources */,
 				266482121973D42E003B1CD2 /* MBButtonBuilder.m in Sources */,
@@ -2913,6 +3020,7 @@
 				266482201973D42E003B1CD2 /* MBRowViewBuilderFactory.m in Sources */,
 				266482211973D42E003B1CD2 /* MBStyleHandler.m in Sources */,
 				266482221973D42E003B1CD2 /* MBViewBuilder.m in Sources */,
+				ED26D5821B552FBC0041D28A /* MBJsonDocumentParserTest.m in Sources */,
 				1724FC3C1A7289B3000ACDA2 /* MBTextFieldBinder.m in Sources */,
 				266482231973D42E003B1CD2 /* MBViewBuilderFactory.m in Sources */,
 				266482241973D42E003B1CD2 /* MBPageViewBuilder.m in Sources */,
@@ -2928,6 +3036,7 @@
 				2664822E1973D42E003B1CD2 /* MBTransitionStyleFactory.m in Sources */,
 				1724FC1C1A7289B3000ACDA2 /* MBBuildState.m in Sources */,
 				2664822F1973D42E003B1CD2 /* MBCurlTransitionStyle.m in Sources */,
+				EDC8AA4B1B5403BF00572DAF /* MBDocumentTest.m in Sources */,
 				266482301973D42E003B1CD2 /* MBDefaultTransitionStyle.m in Sources */,
 				266482311973D42E003B1CD2 /* MBFadeTransitionStyle.m in Sources */,
 				266482321973D42E003B1CD2 /* MBFlipTransitionStyle.m in Sources */,
@@ -2952,6 +3061,7 @@
 				266482441973D42E003B1CD2 /* MBDialogDecoratorFactory.m in Sources */,
 				266482451973D42E003B1CD2 /* MBField.m in Sources */,
 				266482461973D42E003B1CD2 /* MBForEach.m in Sources */,
+				ED26D57F1B552A140041D28A /* TestElementContainer.m in Sources */,
 				266482471973D42E003B1CD2 /* MBForEachItem.m in Sources */,
 				266482481973D42E003B1CD2 /* MBPage.m in Sources */,
 				1724FC191A7289B3000ACDA2 /* MBBaseViewBinder.m in Sources */,
