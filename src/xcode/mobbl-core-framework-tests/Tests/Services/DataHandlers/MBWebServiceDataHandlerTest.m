@@ -203,7 +203,7 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
              @"Content-Type": @"text/xml",
              };
 }
-
+/*
 - (void)testCorrectHTTPRequestLoadFreshNoArguments {
     NSData * const httpData = [self testData];
     NSArray * const mockConnectionBehavior = [self connectionBehaviorWithData:httpData andFinishWithResponseHeaders:@{}];
@@ -214,12 +214,13 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
         return [[MBMockHTTPConnection alloc] initWithRequest:request delegate:delegate connectionBehavior:mockConnectionBehavior];
     };
     
+    
     MBMockWebServiceDataHandler * const mockWebServiceDataHandler = [[MBMockWebServiceDataHandler alloc] initWithConnectionBuilder:mockConnectionBuilder documentCacheStorage:nil];
     XCTAssertNotNil(mockWebServiceDataHandler);
     
     [mockConnectionBuilder release];
     
-    __unused MBDocument *resultIsIrrelevant = [mockWebServiceDataHandler loadDocument:TestDocumentName];
+    //__unused MBDocument *resultIsIrrelevant = [mockWebServiceDataHandler loadDocument:TestDocumentName];
     
     XCTAssertNotNil(urlRequest);
     
@@ -312,7 +313,7 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     
     XCTAssertEqualObjects(expectedDocument, retrievedDocument);
 }
-
+*/
 - (void)testFailureHandlingLoadFreshNoArguments {
     
 }
@@ -346,7 +347,7 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     
     XCTAssertEqualObjects(expectedDocument, retrievedDocument);
 }
-
+/*
 - (void)testCacheMissNoArguments {
     MBMockDocumentCacheManager * const mockCacheManager = [[MBMockDocumentCacheManager alloc] initWithCacheItems:@{}];
     
@@ -390,7 +391,7 @@ static NSString * const TestEndpointsFileName = @"MBWebServiceDataHandlerTest_en
     
     XCTAssertNotNil(urlRequest);
 
-}
+}*/
 
 
 @end

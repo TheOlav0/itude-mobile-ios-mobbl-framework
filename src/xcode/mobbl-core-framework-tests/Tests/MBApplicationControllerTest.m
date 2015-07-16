@@ -20,14 +20,23 @@
 
 - (void)setUp {
     [super setUp];
-    _app = [[MBApplicationController alloc] init];
+    self.app = [[MBApplicationController alloc] init];
 }
 
 //Test instanciate of MBApllicationController
 - (void)testGetInstance
 {
-    XCTAssertNotNil(_app);
+    XCTAssertNotNil(self.app);
 }
+
+//Test get currentInstance
+-(void)testCurrentInstance
+{
+    MBApplicationController *curInstance = [MBApplicationController currentInstance];
+    XCTAssertEqual(curInstance, self.app);
+}
+
+
 
 
 @end

@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "MBDefinition.h"
 
 @interface MBDefinitionTest : XCTestCase
+
+@property(nonatomic, retain) MBDefinition *definition;
 
 @end
 
@@ -17,6 +20,7 @@
 
 - (void)setUp {
     [super setUp];
+    self.definition = [[MBDefinition alloc] init];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -25,16 +29,38 @@
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+//Test return "name=value" as xml attribute (NSString)
+- (void)testAttributeAsXML
+{
+    NSString *target = @" Test='Value'";
+    NSString *result = [self.definition attributeAsXml:@"Test" withValue: @"Value"];
+    XCTAssertTrue([target isEqualToString:result]);
+    
+    NSString *target2 = @"";
+    NSString *result2 = [self.definition attributeAsXml:@"Test" withValue:nil];
+    XCTAssertTrue([target2 isEqualToString:result2]);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+//Test return "name=bool" as xml attribute (NSString)
+-(void)testbooleanAsXml
+{
+    NSString *target = @" Test='TRUE'";
+    NSString *result = [self.definition booleanAsXml:@"Test" withValue:true];
+    XCTAssertTrue([target isEqualToString: result]);
 }
+
+//Test AsXmlWithLevel function, always returns empty string?
+-(void)testAsXmlWithLevel
+{
+    XCTAssertEqual(@"", [self.definition asXmlWithLevel:0]);
+}
+
+//Test description, returns AsXmlWithLevel:0 so also always empty string
+-(void)testDescription
+{
+    XCTAssertEqual(@"", [self.definition description]);
+}
+
+
 
 @end

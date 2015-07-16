@@ -8,33 +8,57 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
+#import "MBConditionalDefinition.h"
+#import "MockDataManagerService.h"
+#import "MBDataManagerService.h"
 
 @interface MBConditionalDefinitionTest : XCTestCase
-
+@property(nonatomic, retain) MBConditionalDefinition *definition;
+@property(nonatomic, retain) MBDocument *document;
 @end
 
 @implementation MBConditionalDefinitionTest
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.definition = [[MBConditionalDefinition alloc] init];
+    self.document = [[MBDataManagerService sharedInstance] loadDocument:@"MBEmpty"];
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    XCTAssert(YES, @"Pass");
+//Test if Precondition is valid/unvalid/exception.
+- (void)testIsPreConditionValid
+{
+    XCTAssertTrue([_definition isPreConditionValid]);
+    
+    self.definition.preCondition =@"'test1'=='test1'";
+    XCTAssertTrue([self.definition isPreConditionValid]);
+    
+    self.definition.preCondition =@"1==0";
+    XCTAssertFalse([self.definition isPreConditionValid]);
+
+    
+    self.definition.preCondition = @"NotValidPrecondition";
+    XCTAssertThrows([self.definition isPreConditionValid]);
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+
+//Test if precondition is valid/unvalid/exception on document (not sure if it does something).
+-(void)testIsPreConditionValidOfDocument
+{
+   self.definition.preCondition=@"1==1";
+    XCTAssertTrue([self.definition isPreConditionValid:self.document currentPath:nil]);
+    
+    self.definition.preCondition =@"1==0";
+    XCTAssertFalse([self.definition isPreConditionValid:self.document currentPath:@""]);
+    
+    self.definition.preCondition = @"NotValidPrecondition";
+    XCTAssertThrows([self.definition isPreConditionValid:self.document currentPath:@""]);
+
+    
 }
 
 @end

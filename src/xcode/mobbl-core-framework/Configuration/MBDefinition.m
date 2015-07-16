@@ -51,7 +51,7 @@
 - (NSMethodSignature *)methodSignatureForSelector:(SEL)sel
 {
 	id	stringSelector = NSStringFromSelector(sel);
-	int	parameterCount = [[stringSelector componentsSeparatedByString:@":"] count]-1;
+	int	parameterCount = [[stringSelector componentsSeparatedByString:@":"] count]-1i;
 	
 	// Zero argument, forward to valueForKey:
 	if (parameterCount == 0)
@@ -69,7 +69,7 @@
 - (void)forwardInvocation:(NSInvocation *)invocation
 {
 	id	stringSelector = NSStringFromSelector([invocation selector]);
-	int	parameterCount = [[stringSelector componentsSeparatedByString:@":"] count]-1;
+	int	parameterCount = [[stringSelector componentsSeparatedByString:@":"] count]-1i;
 	
 	// Forwarding to setValue:forKey:
 	if (parameterCount == 1)

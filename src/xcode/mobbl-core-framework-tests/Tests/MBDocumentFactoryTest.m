@@ -11,19 +11,24 @@
 #import "MBDocumentAbstractTest.h"
 
 @interface MBDocumentFactoryTest : MBDocumentAbstractTest
-
+@property(nonatomic, retain) MBDocumentFactory *docFactory;
 @end
 
 @implementation MBDocumentFactoryTest
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    self.docFactory = [[MBDocumentFactory alloc] init];
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+//Test RegisterDocumentParser to set new parsers, and getter ParseForType who gets the DocumentParser.
+-(void)testParserForType
+{
+    [self.docFactory registerDocumentParser:[[MBXmlDocumentParser new] autorelease] withName:@"Test"];
+    MBDocumentDefinition *docDef = [self.config definitionForDocumentName:@"Books"];
+    XCTAssertNotNil(docDef);
+    MBDocument *doc = [self.docFactory documentWithData:self.xmlDocumentData withType:@"Test" andDefinition:docDef];
+    XCTAssertNotNil(doc);
 }
 
 - (void)testJsonParsing
@@ -55,13 +60,6 @@
     MBDocument *document = [documentFactory documentWithData:self.xmlDocumentData withType:PARSER_XML andDefinition:docDef];
     XCTAssertNotNil(document);
     
-}
-
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
 }
 
 @end
