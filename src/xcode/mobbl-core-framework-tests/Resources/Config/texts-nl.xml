@@ -1,0 +1,5 @@
+<MBBundle>
+    <!-- Unit test entries  -->
+    <Text key="normal" value="Normaal"/>
+    <Text key="substitution" value="Er zijn %@ variabelen"/>
+</MBBundle>

@@ -687,11 +687,16 @@
 		ED26D57C1B55272D0041D28A /* MBExpressionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D57B1B55272D0041D28A /* MBExpressionTest.m */; };
 		ED26D57F1B552A140041D28A /* TestElementContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D57E1B552A140041D28A /* TestElementContainer.m */; };
 		ED26D5821B552FBC0041D28A /* MBJsonDocumentParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */; };
+		ED33D47D1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D47C1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m */; };
+		ED33D4821B5CE9BF00AF17B6 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED33D4801B5CE9BF00AF17B6 /* config.xml */; };
+		ED33D4831B5CE9BF00AF17B6 /* texts-nl.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED33D4811B5CE9BF00AF17B6 /* texts-nl.xml */; };
+		ED33D4861B5CF2CD00AF17B6 /* MBCacheManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D4851B5CF2CD00AF17B6 /* MBCacheManagerTest.m */; };
+		ED33D4881B5D1DBC00AF17B6 /* MBCacheWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D4871B5D1DBC00AF17B6 /* MBCacheWriterTest.m */; };
+		ED33D48A1B5D227E00AF17B6 /* StringUtilitiesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D4891B5D227E00AF17B6 /* StringUtilitiesTest.m */; };
 		ED424D671B555B7F0073BD2D /* MBApplicationControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */; };
 		ED45C1D71B54F9B600C8D7E3 /* endpoints.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */; };
 		ED45C1DB1B55138C00C8D7E3 /* Books.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED45C1DA1B55138C00C8D7E3 /* Books.xml */; };
 		ED45C1DD1B55180100C8D7E3 /* MBElementTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */; };
-		EDC8AA3F1B53F1B800572DAF /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA3E1B53F1B800572DAF /* config.xml */; };
 		EDC8AA451B53F26900572DAF /* config_unittests.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA411B53F26900572DAF /* config_unittests.xml */; };
 		EDC8AA461B53F26900572DAF /* testdocument.txt in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA421B53F26900572DAF /* testdocument.txt */; };
 		EDC8AA471B53F26900572DAF /* testdocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA431B53F26900572DAF /* testdocument.xml */; };
@@ -1203,12 +1208,17 @@
 		ED26D57D1B552A140041D28A /* TestElementContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestElementContainer.h; sourceTree = "<group>"; };
 		ED26D57E1B552A140041D28A /* TestElementContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestElementContainer.m; sourceTree = "<group>"; };
 		ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParserTest.m; sourceTree = "<group>"; };
+		ED33D47C1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBLocalizationServiceTest.m; sourceTree = "<group>"; };
+		ED33D4801B5CE9BF00AF17B6 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = Resources/Config/config.xml; sourceTree = "<group>"; };
+		ED33D4811B5CE9BF00AF17B6 /* texts-nl.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "texts-nl.xml"; path = "Resources/Config/texts-nl.xml"; sourceTree = "<group>"; };
+		ED33D4851B5CF2CD00AF17B6 /* MBCacheManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCacheManagerTest.m; sourceTree = "<group>"; };
+		ED33D4871B5D1DBC00AF17B6 /* MBCacheWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCacheWriterTest.m; sourceTree = "<group>"; };
+		ED33D4891B5D227E00AF17B6 /* StringUtilitiesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtilitiesTest.m; sourceTree = "<group>"; };
 		ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBApplicationControllerTest.m; sourceTree = "<group>"; };
 		ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = endpoints.xml; sourceTree = "<group>"; };
 		ED45C1DA1B55138C00C8D7E3 /* Books.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Books.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/documents/Books.xml"; sourceTree = "<group>"; };
 		ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBElementTest.m; sourceTree = "<group>"; };
 		EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentAbstractTest.m; sourceTree = "<group>"; };
-		EDC8AA3E1B53F1B800572DAF /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		EDC8AA411B53F26900572DAF /* config_unittests.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config_unittests.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/config_unittests.xml"; sourceTree = "<group>"; };
 		EDC8AA421B53F26900572DAF /* testdocument.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = testdocument.txt; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testdocument.txt"; sourceTree = "<group>"; };
 		EDC8AA431B53F26900572DAF /* testdocument.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = testdocument.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testdocument.xml"; sourceTree = "<group>"; };
@@ -2165,6 +2175,7 @@
 		26B09624197564EA0014D93A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				ED33D4841B5CF2AF00AF17B6 /* Util */,
 				ED0807701B5657D300BA8518 /* Configuration */,
 				ED424D651B555B620073BD2D /* Controller */,
 				EDC8AA3A1B53E9C000572DAF /* Model */,
@@ -2178,6 +2189,7 @@
 			children = (
 				26AC087B1977F11F000384EF /* DataHandlers */,
 				26B09626197564EA0014D93A /* MBFileManagerTest.m */,
+				ED33D47C1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2223,6 +2235,17 @@
 			name = Parser;
 			sourceTree = "<group>";
 		};
+		ED33D4841B5CF2AF00AF17B6 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				ED33D4851B5CF2CD00AF17B6 /* MBCacheManagerTest.m */,
+				ED33D4871B5D1DBC00AF17B6 /* MBCacheWriterTest.m */,
+				ED33D4891B5D227E00AF17B6 /* StringUtilitiesTest.m */,
+			);
+			name = Util;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		ED424D651B555B620073BD2D /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -2254,7 +2277,8 @@
 		EDC8AA3D1B53F16F00572DAF /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				EDC8AA3E1B53F1B800572DAF /* config.xml */,
+				ED33D4801B5CE9BF00AF17B6 /* config.xml */,
+				ED33D4811B5CE9BF00AF17B6 /* texts-nl.xml */,
 			);
 			name = Config;
 			sourceTree = "<group>";
@@ -2626,9 +2650,10 @@
 				ED45C1D71B54F9B600C8D7E3 /* endpoints.xml in Resources */,
 				EDC8AA471B53F26900572DAF /* testdocument.xml in Resources */,
 				266075681959B05E008131A6 /* InfoPlist.strings in Resources */,
+				ED33D4821B5CE9BF00AF17B6 /* config.xml in Resources */,
 				2611176C197E6BFB00C08108 /* resources.xml in Resources */,
 				26AC089C197D76C7000384EF /* MBWebServiceDataHandlerTest_endpoints.xml in Resources */,
-				EDC8AA3F1B53F1B800572DAF /* config.xml in Resources */,
+				ED33D4831B5CE9BF00AF17B6 /* texts-nl.xml in Resources */,
 				ED45C1DB1B55138C00C8D7E3 /* Books.xml in Resources */,
 				EDC8AA481B53F26900572DAF /* testresources.xml in Resources */,
 				26AC0890197953EE000384EF /* MBFileManagerTest_read.xml in Resources */,
@@ -2903,12 +2928,14 @@
 				266482561973D446003B1CD2 /* MBFieldDefinition.m in Sources */,
 				266482571973D446003B1CD2 /* MBForEachDefinition.m in Sources */,
 				266482581973D446003B1CD2 /* MBMvcConfigurationParser.m in Sources */,
+				ED33D4861B5CF2CD00AF17B6 /* MBCacheManagerTest.m in Sources */,
 				266482591973D446003B1CD2 /* MBOutcomeDefinition.m in Sources */,
 				2664825A1973D446003B1CD2 /* MBPageDefinition.m in Sources */,
 				2664825B1973D446003B1CD2 /* MBPageStackDefinition.m in Sources */,
 				2664825C1973D446003B1CD2 /* MBPanelDefinition.m in Sources */,
 				2664825D1973D446003B1CD2 /* MBVariableDefinition.m in Sources */,
 				266481A81973D42E003B1CD2 /* MBFireInitialOutcomes.m in Sources */,
+				ED33D47D1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m in Sources */,
 				266481A91973D42E003B1CD2 /* MBConditionalDefinition.m in Sources */,
 				266481AA1973D42E003B1CD2 /* MBConfigurationParser.m in Sources */,
 				266481AB1973D42E003B1CD2 /* MBDefinition.m in Sources */,
@@ -2953,6 +2980,7 @@
 				266481CB1973D42E003B1CD2 /* FMDatabasePool.m in Sources */,
 				266481CC1973D42E003B1CD2 /* FMDatabaseQueue.m in Sources */,
 				266481CD1973D42E003B1CD2 /* FMResultSet.m in Sources */,
+				ED33D48A1B5D227E00AF17B6 /* StringUtilitiesTest.m in Sources */,
 				266481CE1973D42E003B1CD2 /* GTMObjC2Runtime.m in Sources */,
 				ED0807781B56966500BA8518 /* MBOutcomeTest.m in Sources */,
 				ED26D57C1B55272D0041D28A /* MBExpressionTest.m in Sources */,
@@ -3016,6 +3044,7 @@
 				266481FE1973D42E003B1CD2 /* StringUtilities.m in Sources */,
 				26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */,
 				266481FF1973D42E003B1CD2 /* StringUtilitiesHelper.m in Sources */,
+				ED33D4881B5D1DBC00AF17B6 /* MBCacheWriterTest.m in Sources */,
 				266482001973D42E003B1CD2 /* UIButton+ResizableBackgroundImage.m in Sources */,
 				1724FC201A7289B3000ACDA2 /* MBComponentContainer+ViewBinding.m in Sources */,
 				266482011973D42E003B1CD2 /* UITextField+ResizableBackgroundImage.m in Sources */,

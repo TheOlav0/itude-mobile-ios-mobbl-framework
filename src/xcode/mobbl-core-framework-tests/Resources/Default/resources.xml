@@ -1,2 +1,3 @@
 <Resources>
+      <Bundle languageCode="nl" url="file://texts-nl.xml"/>
 </Resources>
