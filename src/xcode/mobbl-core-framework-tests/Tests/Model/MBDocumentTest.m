@@ -13,6 +13,7 @@
 
 @interface MBDocumentTest : MBDocumentAbstractTest
 @property(nonatomic, retain) MBDocument *document;
+@property(nonatomic, retain) MBDocument *emptyDoc;
 @property(nonatomic, retain) MBDataManagerService *dataManagerService;
 @end
 
@@ -24,6 +25,7 @@
     MBDocumentFactory *docFactory = [MBDocumentFactory sharedInstance];
     MBDocumentDefinition *docDef = [self.config definitionForDocumentName:@"Books"];
     self.document = [docFactory documentWithData:self.xmlDocumentData withType:PARSER_XML andDefinition:docDef];
+    self.emptyDoc = [self.dataManagerService createDocument:@"Books"];
 }
 
 // Test the getter and setter of the sharedcontext
@@ -63,17 +65,18 @@
     [self.document clearAllCaches];
     XCTAssertNil(self.document.sharedContext[@"test"]);
 }
-//Reload test and loadFreshCopy test not yet implemented duo MBDataManagerService error, it doesn't take a instance of MockDataManagerService.
-/*-(void)testReload
+
+//Reload test using a mocked dataHandler
+-(void)testReload
 {
-    NSString *name = [self.document name];
-    [self.document reload];
-    XCTAssertEqual([self.document name], name);
+    NSString *name = [self.emptyDoc name];
+    [self.emptyDoc reload];
+    XCTAssertEqual([self.emptyDoc name], name);
     
-    [self.document setArgumentsUsed:self.document];
-    [self.document reload];
-    XCTAssertEqual([[self.document argumentsUsed] name], name);
-}*/
+    [self.emptyDoc setArgumentsUsed:self.emptyDoc];
+    [self.emptyDoc reload];
+    XCTAssertEqual([[self.emptyDoc argumentsUsed] name], name);
+}
 
 
 
@@ -88,7 +91,7 @@
 -(void)testValueForPath
 {
     NSString *target = @"test";
-    NSString *value = [self.document valueForPath:@"Author[0]/@name"];
+    NSString *value = [self.document valueForPath:@"/Author[0]/@name"];
     XCTAssertTrue([target isEqualToString:value]);
 }
 

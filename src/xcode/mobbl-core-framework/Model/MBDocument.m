@@ -37,6 +37,12 @@
 	return self;	
 }
 
+- (id) initWithDocumentDefinition:(MBDocumentDefinition *)definition withDataManagerService:(MBDataManagerService *) dataMangerService
+{
+    _dataManagerService = dataMangerService;
+    return [self initWithDocumentDefinition:definition];
+}
+
 - (void) dealloc
 {
 	[_definition release];
@@ -89,15 +95,15 @@
 
 	MBDocument *fresh;
 	
-	if(_argumentsUsed == nil) fresh = [[MBDataManagerService sharedInstance] loadDocument:_definition.name];
-	else fresh = [[MBDataManagerService sharedInstance] loadFreshDocument:_definition.name withArguments: _argumentsUsed];
+	if(_argumentsUsed == nil) fresh = [[self dataManagerService] loadDocument:_definition.name];
+	else fresh = [ [self dataManagerService] loadFreshDocument:_definition.name withArguments: _argumentsUsed];
 	[_elements release];
 	_elements = [[fresh elements] retain];
 	[_pathCache removeAllObjects];
 }
 
 -(void) loadFreshCopyForDelegate:(id) delegate resultSelector:(SEL) resultSelector errorSelector:(SEL)errorSelector {
-	[[MBDataManagerService sharedInstance] loadFreshDocument:_definition.name withArguments:_argumentsUsed forDelegate:delegate resultSelector:resultSelector errorSelector:errorSelector];
+	[[self dataManagerService] loadFreshDocument:_definition.name withArguments:_argumentsUsed forDelegate:delegate resultSelector:resultSelector errorSelector:errorSelector];
 }
 
 
@@ -152,6 +158,15 @@
 
 -(MBDocument*) document {
 	return self;
+}
+
+-(MBDataManagerService*) dataManagerService
+{
+    if(!_dataManagerService)
+    {
+        _dataManagerService = [MBDataManagerService sharedInstance];
+    }
+    return _dataManagerService;
 }
 
 

@@ -17,6 +17,7 @@
 #import "MBElement.h"
 #import "MBElementContainer.h"
 #import "MBDocumentDefinition.h"
+@class MBDataManagerService;
 
 /** XML-like structure containing application data.
  
@@ -31,6 +32,7 @@
 	MBDocumentDefinition *_definition;
 	NSMutableDictionary *_sharedContext;
 	NSMutableDictionary *_pathCache;
+    MBDataManagerService * _dataManagerService;
 
 @private
 	
@@ -46,6 +48,7 @@
 /// @name Creating a Document
 /** Creates and returns an empty Document conforming to the given MBDocumentDefinition. */
 - (id) initWithDocumentDefinition: (MBDocumentDefinition*) definition;
+- (id) initWithDocumentDefinition:(MBDocumentDefinition *)definition withDataManagerService:(MBDataManagerService *) dataMangerService;
 - (void) assignToDocument:(MBDocument*) target;
 
 - (BOOL)isEqualToDocument:(MBDocument *)document;

@@ -658,52 +658,54 @@
 		2664825C1973D446003B1CD2 /* MBPanelDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB41885E42E00C881C5 /* MBPanelDefinition.m */; };
 		2664825D1973D446003B1CD2 /* MBVariableDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FECDDB61885E42E00C881C5 /* MBVariableDefinition.m */; };
 		2664825E1973E006003B1CD2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FECDA1A1885C27A00C881C5 /* libsqlite3.0.dylib */; };
-		26AC087D1977F17F000384EF /* MBWebServiceDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */; };
-		26AC08821979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */; };
 		26AC0890197953EE000384EF /* MBFileManagerTest_read.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26AC088F197953EE000384EF /* MBFileManagerTest_read.xml */; };
 		26AC0897197D0D1C000384EF /* MBWebServiceDataHandlerTest_config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26AC0896197D0D1C000384EF /* MBWebServiceDataHandlerTest_config.xml */; };
-		26AC089A197D3419000384EF /* MBMockHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 26AC0899197D3419000384EF /* MBMockHTTPConnection.m */; };
 		26AC089C197D76C7000384EF /* MBWebServiceDataHandlerTest_endpoints.xml in Resources */ = {isa = PBXBuildFile; fileRef = 26AC089B197D76C7000384EF /* MBWebServiceDataHandlerTest_endpoints.xml */; };
-		26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B09626197564EA0014D93A /* MBFileManagerTest.m */; };
 		26B0963E197687680014D93A /* MBHTTPConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963A197687680014D93A /* MBHTTPConnection.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		26B0963F197687680014D93A /* MBHTTPConnectionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		26B09640197687680014D93A /* MBHTTPConnectionImpl.h in Headers */ = {isa = PBXBuildFile; fileRef = 26B0963C197687680014D93A /* MBHTTPConnectionImpl.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		26B09641197687680014D93A /* MBHTTPConnectionImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B0963D197687680014D93A /* MBHTTPConnectionImpl.m */; };
 		26B09642197687680014D93A /* MBHTTPConnectionImpl.m in Sources */ = {isa = PBXBuildFile; fileRef = 26B0963D197687680014D93A /* MBHTTPConnectionImpl.m */; };
 		26E908A8197FFDAF00317D3A /* MBCaching.h in Headers */ = {isa = PBXBuildFile; fileRef = 26E908A7197FFDAF00317D3A /* MBCaching.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		26E908AB19804DCE00317D3A /* MBMockDocumentCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 26E908AA19804DCE00317D3A /* MBMockDocumentCacheManager.m */; };
 		C76351DC188EAC10006808DE /* MBJsonDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DD188EAC10006808DE /* MBJsonDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */; };
 		C76351DE188EAC10006808DE /* MBXmlDocumentParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C76351DF188EAC10006808DE /* MBXmlDocumentParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C76351DB188EAC10006808DE /* MBXmlDocumentParser.m */; };
-		ED0807721B56581400BA8518 /* MBDefinitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0807711B56581400BA8518 /* MBDefinitionTest.m */; };
-		ED0807741B5661EA00BA8518 /* MBConditionalDefinitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0807731B5661EA00BA8518 /* MBConditionalDefinitionTest.m */; };
-		ED0807761B56890200BA8518 /* MBConfigurationParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0807751B56890200BA8518 /* MBConfigurationParserTest.m */; };
-		ED0807781B56966500BA8518 /* MBOutcomeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED0807771B56966500BA8518 /* MBOutcomeTest.m */; };
-		ED10ACF11B57AD5000F18190 /* MBDocumentDiffTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED10ACF01B57AD5000F18190 /* MBDocumentDiffTest.m */; };
-		ED10ACF31B57DCC400F18190 /* MBFileDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED10ACF21B57DCC400F18190 /* MBFileDataHandlerTest.m */; };
-		ED10ACF51B57E76300F18190 /* MBMemoryDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED10ACF41B57E76300F18190 /* MBMemoryDataHandlerTest.m */; };
-		ED26D57A1B5525420041D28A /* MBDocumentFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D5791B5525420041D28A /* MBDocumentFactoryTest.m */; };
-		ED26D57C1B55272D0041D28A /* MBExpressionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D57B1B55272D0041D28A /* MBExpressionTest.m */; };
-		ED26D57F1B552A140041D28A /* TestElementContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D57E1B552A140041D28A /* TestElementContainer.m */; };
-		ED26D5821B552FBC0041D28A /* MBJsonDocumentParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */; };
-		ED33D47D1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D47C1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m */; };
 		ED33D4821B5CE9BF00AF17B6 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED33D4801B5CE9BF00AF17B6 /* config.xml */; };
 		ED33D4831B5CE9BF00AF17B6 /* texts-nl.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED33D4811B5CE9BF00AF17B6 /* texts-nl.xml */; };
-		ED33D4861B5CF2CD00AF17B6 /* MBCacheManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D4851B5CF2CD00AF17B6 /* MBCacheManagerTest.m */; };
-		ED33D4881B5D1DBC00AF17B6 /* MBCacheWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D4871B5D1DBC00AF17B6 /* MBCacheWriterTest.m */; };
-		ED33D48A1B5D227E00AF17B6 /* StringUtilitiesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED33D4891B5D227E00AF17B6 /* StringUtilitiesTest.m */; };
-		ED424D671B555B7F0073BD2D /* MBApplicationControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */; };
-		ED45C1D71B54F9B600C8D7E3 /* endpoints.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */; };
 		ED45C1DB1B55138C00C8D7E3 /* Books.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED45C1DA1B55138C00C8D7E3 /* Books.xml */; };
-		ED45C1DD1B55180100C8D7E3 /* MBElementTest.m in Sources */ = {isa = PBXBuildFile; fileRef = ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */; };
+		ED7D24621B720B4100F4CCAE /* endpoints.xml in Resources */ = {isa = PBXBuildFile; fileRef = ED7D24611B720B4100F4CCAE /* endpoints.xml */; };
 		EDC8AA451B53F26900572DAF /* config_unittests.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA411B53F26900572DAF /* config_unittests.xml */; };
 		EDC8AA461B53F26900572DAF /* testdocument.txt in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA421B53F26900572DAF /* testdocument.txt */; };
 		EDC8AA471B53F26900572DAF /* testdocument.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA431B53F26900572DAF /* testdocument.xml */; };
 		EDC8AA481B53F26900572DAF /* testresources.xml in Resources */ = {isa = PBXBuildFile; fileRef = EDC8AA441B53F26900572DAF /* testresources.xml */; };
-		EDC8AA4B1B5403BF00572DAF /* MBDocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AA4A1B5403BF00572DAF /* MBDocumentTest.m */; };
-		EDC8AA4C1B54076600572DAF /* MBDocumentAbstractTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */; };
-		EDC8AA501B54172D00572DAF /* MockDataManagerService.m in Sources */ = {isa = PBXBuildFile; fileRef = EDC8AA4F1B54172D00572DAF /* MockDataManagerService.m */; };
+		EDFA0ACA1B720AE600261D96 /* MBConditionalDefinitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA01B720AE500261D96 /* MBConditionalDefinitionTest.m */; };
+		EDFA0ACB1B720AE600261D96 /* MBConfigurationParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA11B720AE500261D96 /* MBConfigurationParserTest.m */; };
+		EDFA0ACC1B720AE600261D96 /* MBDefinitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA21B720AE500261D96 /* MBDefinitionTest.m */; };
+		EDFA0ACD1B720AE600261D96 /* MBMvcConfigurationParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA41B720AE500261D96 /* MBMvcConfigurationParserTest.m */; };
+		EDFA0ACE1B720AE600261D96 /* REMBResourceConfigurationParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA61B720AE500261D96 /* REMBResourceConfigurationParserTest.m */; };
+		EDFA0ACF1B720AE600261D96 /* MBApplicationControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA81B720AE500261D96 /* MBApplicationControllerTest.m */; };
+		EDFA0AD01B720AE600261D96 /* MBOutcomeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AA91B720AE500261D96 /* MBOutcomeTest.m */; };
+		EDFA0AD11B720AE600261D96 /* MBDocumentAbstractTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AAC1B720AE500261D96 /* MBDocumentAbstractTest.m */; };
+		EDFA0AD21B720AE600261D96 /* MBDocumentDiffTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AAD1B720AE500261D96 /* MBDocumentDiffTest.m */; };
+		EDFA0AD31B720AE600261D96 /* MBDocumentFactoryTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AAE1B720AE500261D96 /* MBDocumentFactoryTest.m */; };
+		EDFA0AD41B720AE600261D96 /* MBDocumentTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AAF1B720AE500261D96 /* MBDocumentTest.m */; };
+		EDFA0AD51B720AE600261D96 /* MBElementTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AB01B720AE500261D96 /* MBElementTest.m */; };
+		EDFA0AD61B720AE600261D96 /* MBExpressionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AB11B720AE500261D96 /* MBExpressionTest.m */; };
+		EDFA0AD71B720AE600261D96 /* MockDataManagerService.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AB31B720AE600261D96 /* MockDataManagerService.m */; };
+		EDFA0AD81B720AE600261D96 /* MBJsonDocumentParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AB51B720AE600261D96 /* MBJsonDocumentParserTest.m */; };
+		EDFA0AD91B720AE600261D96 /* TestElementContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AB71B720AE600261D96 /* TestElementContainer.m */; };
+		EDFA0ADA1B720AE600261D96 /* MBWebServiceDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0ABA1B720AE600261D96 /* MBWebServiceDataHandlerTest.m */; };
+		EDFA0ADB1B720AE600261D96 /* MBMockDocumentCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0ABD1B720AE600261D96 /* MBMockDocumentCacheManager.m */; };
+		EDFA0ADC1B720AE600261D96 /* MBMockHTTPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0ABF1B720AE600261D96 /* MBMockHTTPConnection.m */; };
+		EDFA0ADD1B720AE600261D96 /* MBMockWebServiceDataHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC11B720AE600261D96 /* MBMockWebServiceDataHandler.m */; };
+		EDFA0ADE1B720AE600261D96 /* MBFileDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC21B720AE600261D96 /* MBFileDataHandlerTest.m */; };
+		EDFA0ADF1B720AE600261D96 /* MBFileManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC31B720AE600261D96 /* MBFileManagerTest.m */; };
+		EDFA0AE01B720AE600261D96 /* MBLocalizationServiceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC41B720AE600261D96 /* MBLocalizationServiceTest.m */; };
+		EDFA0AE11B720AE600261D96 /* MBMemoryDataHandlerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC51B720AE600261D96 /* MBMemoryDataHandlerTest.m */; };
+		EDFA0AE21B720AE600261D96 /* MBCacheManagerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC71B720AE600261D96 /* MBCacheManagerTest.m */; };
+		EDFA0AE31B720AE600261D96 /* MBCacheWriterTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC81B720AE600261D96 /* MBCacheWriterTest.m */; };
+		EDFA0AE41B720AE600261D96 /* StringUtilitiesTest.m in Sources */ = {isa = PBXBuildFile; fileRef = EDFA0AC91B720AE600261D96 /* StringUtilitiesTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1176,57 +1178,59 @@
 		266075671959B05E008131A6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		266075691959B05E008131A6 /* mobbl_core_framework_tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mobbl_core_framework_tests.m; sourceTree = "<group>"; };
 		2660756B1959B05E008131A6 /* mobbl-core-framework-tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "mobbl-core-framework-tests-Prefix.pch"; sourceTree = "<group>"; };
-		26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBWebServiceDataHandlerTest.m; path = DataHandlers/MBWebServiceDataHandlerTest.m; sourceTree = "<group>"; };
-		26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBMockWebServiceDataHandler.h; path = DataHandlers/Mocks/MBMockWebServiceDataHandler.h; sourceTree = "<group>"; };
-		26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBMockWebServiceDataHandler.m; path = DataHandlers/Mocks/MBMockWebServiceDataHandler.m; sourceTree = "<group>"; };
 		26AC088F197953EE000384EF /* MBFileManagerTest_read.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MBFileManagerTest_read.xml; sourceTree = "<group>"; };
 		26AC0896197D0D1C000384EF /* MBWebServiceDataHandlerTest_config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBWebServiceDataHandlerTest_config.xml; path = MBWebServiceDataHandler/MBWebServiceDataHandlerTest_config.xml; sourceTree = "<group>"; };
-		26AC0898197D3419000384EF /* MBMockHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBMockHTTPConnection.h; path = DataHandlers/Mocks/MBMockHTTPConnection.h; sourceTree = "<group>"; };
-		26AC0899197D3419000384EF /* MBMockHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBMockHTTPConnection.m; path = DataHandlers/Mocks/MBMockHTTPConnection.m; sourceTree = "<group>"; };
 		26AC089B197D76C7000384EF /* MBWebServiceDataHandlerTest_endpoints.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = MBWebServiceDataHandlerTest_endpoints.xml; path = MBWebServiceDataHandler/MBWebServiceDataHandlerTest_endpoints.xml; sourceTree = "<group>"; };
-		26B09626197564EA0014D93A /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileManagerTest.m; sourceTree = "<group>"; };
 		26B0963A197687680014D93A /* MBHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnection.h; sourceTree = "<group>"; };
 		26B0963B197687680014D93A /* MBHTTPConnectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnectionDelegate.h; sourceTree = "<group>"; };
 		26B0963C197687680014D93A /* MBHTTPConnectionImpl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBHTTPConnectionImpl.h; sourceTree = "<group>"; };
 		26B0963D197687680014D93A /* MBHTTPConnectionImpl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBHTTPConnectionImpl.m; sourceTree = "<group>"; };
 		26E908A7197FFDAF00317D3A /* MBCaching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBCaching.h; sourceTree = "<group>"; };
-		26E908A919804DCE00317D3A /* MBMockDocumentCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBMockDocumentCacheManager.h; path = DataHandlers/Mocks/MBMockDocumentCacheManager.h; sourceTree = "<group>"; };
-		26E908AA19804DCE00317D3A /* MBMockDocumentCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBMockDocumentCacheManager.m; path = DataHandlers/Mocks/MBMockDocumentCacheManager.m; sourceTree = "<group>"; };
 		C76351D8188EAC10006808DE /* MBJsonDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBJsonDocumentParser.h; sourceTree = "<group>"; };
 		C76351D9188EAC10006808DE /* MBJsonDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParser.m; sourceTree = "<group>"; };
 		C76351DA188EAC10006808DE /* MBXmlDocumentParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBXmlDocumentParser.h; sourceTree = "<group>"; };
 		C76351DB188EAC10006808DE /* MBXmlDocumentParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBXmlDocumentParser.m; sourceTree = "<group>"; };
-		ED0807711B56581400BA8518 /* MBDefinitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDefinitionTest.m; sourceTree = "<group>"; };
-		ED0807731B5661EA00BA8518 /* MBConditionalDefinitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConditionalDefinitionTest.m; sourceTree = "<group>"; };
-		ED0807751B56890200BA8518 /* MBConfigurationParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConfigurationParserTest.m; sourceTree = "<group>"; };
-		ED0807771B56966500BA8518 /* MBOutcomeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBOutcomeTest.m; sourceTree = "<group>"; };
-		ED10ACF01B57AD5000F18190 /* MBDocumentDiffTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentDiffTest.m; sourceTree = "<group>"; };
-		ED10ACF21B57DCC400F18190 /* MBFileDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileDataHandlerTest.m; sourceTree = "<group>"; };
-		ED10ACF41B57E76300F18190 /* MBMemoryDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMemoryDataHandlerTest.m; sourceTree = "<group>"; };
-		ED26D5791B5525420041D28A /* MBDocumentFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentFactoryTest.m; sourceTree = "<group>"; };
-		ED26D57B1B55272D0041D28A /* MBExpressionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBExpressionTest.m; sourceTree = "<group>"; };
-		ED26D57D1B552A140041D28A /* TestElementContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestElementContainer.h; sourceTree = "<group>"; };
-		ED26D57E1B552A140041D28A /* TestElementContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestElementContainer.m; sourceTree = "<group>"; };
-		ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParserTest.m; sourceTree = "<group>"; };
-		ED33D47C1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBLocalizationServiceTest.m; sourceTree = "<group>"; };
 		ED33D4801B5CE9BF00AF17B6 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config.xml; path = Resources/Config/config.xml; sourceTree = "<group>"; };
 		ED33D4811B5CE9BF00AF17B6 /* texts-nl.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "texts-nl.xml"; path = "Resources/Config/texts-nl.xml"; sourceTree = "<group>"; };
-		ED33D4851B5CF2CD00AF17B6 /* MBCacheManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCacheManagerTest.m; sourceTree = "<group>"; };
-		ED33D4871B5D1DBC00AF17B6 /* MBCacheWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCacheWriterTest.m; sourceTree = "<group>"; };
-		ED33D4891B5D227E00AF17B6 /* StringUtilitiesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtilitiesTest.m; sourceTree = "<group>"; };
-		ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBApplicationControllerTest.m; sourceTree = "<group>"; };
-		ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = endpoints.xml; sourceTree = "<group>"; };
 		ED45C1DA1B55138C00C8D7E3 /* Books.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Books.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/documents/Books.xml"; sourceTree = "<group>"; };
-		ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBElementTest.m; sourceTree = "<group>"; };
-		EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentAbstractTest.m; sourceTree = "<group>"; };
+		ED7D24611B720B4100F4CCAE /* endpoints.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = endpoints.xml; path = Resources/Model/endpoints.xml; sourceTree = "<group>"; };
 		EDC8AA411B53F26900572DAF /* config_unittests.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = config_unittests.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/config_unittests.xml"; sourceTree = "<group>"; };
 		EDC8AA421B53F26900572DAF /* testdocument.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = testdocument.txt; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testdocument.txt"; sourceTree = "<group>"; };
 		EDC8AA431B53F26900572DAF /* testdocument.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = testdocument.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testdocument.xml"; sourceTree = "<group>"; };
 		EDC8AA441B53F26900572DAF /* testresources.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = testresources.xml; path = "../../../../../Android/itude-mobile-android-mobbl/library/src/androidTest/assets/unittests/testresources.xml"; sourceTree = "<group>"; };
-		EDC8AA4A1B5403BF00572DAF /* MBDocumentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentTest.m; sourceTree = "<group>"; };
-		EDC8AA4D1B5407F000572DAF /* MBDocumentAbstractTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MBDocumentAbstractTest.h; sourceTree = "<group>"; };
-		EDC8AA4E1B54172D00572DAF /* MockDataManagerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockDataManagerService.h; sourceTree = "<group>"; };
-		EDC8AA4F1B54172D00572DAF /* MockDataManagerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockDataManagerService.m; sourceTree = "<group>"; };
+		EDFA0AA01B720AE500261D96 /* MBConditionalDefinitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConditionalDefinitionTest.m; sourceTree = "<group>"; };
+		EDFA0AA11B720AE500261D96 /* MBConfigurationParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBConfigurationParserTest.m; sourceTree = "<group>"; };
+		EDFA0AA21B720AE500261D96 /* MBDefinitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDefinitionTest.m; sourceTree = "<group>"; };
+		EDFA0AA41B720AE500261D96 /* MBMvcConfigurationParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMvcConfigurationParserTest.m; sourceTree = "<group>"; };
+		EDFA0AA61B720AE500261D96 /* REMBResourceConfigurationParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMBResourceConfigurationParserTest.m; sourceTree = "<group>"; };
+		EDFA0AA81B720AE500261D96 /* MBApplicationControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBApplicationControllerTest.m; sourceTree = "<group>"; };
+		EDFA0AA91B720AE500261D96 /* MBOutcomeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBOutcomeTest.m; sourceTree = "<group>"; };
+		EDFA0AAB1B720AE500261D96 /* MBDocumentAbstractTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBDocumentAbstractTest.h; sourceTree = "<group>"; };
+		EDFA0AAC1B720AE500261D96 /* MBDocumentAbstractTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentAbstractTest.m; sourceTree = "<group>"; };
+		EDFA0AAD1B720AE500261D96 /* MBDocumentDiffTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentDiffTest.m; sourceTree = "<group>"; };
+		EDFA0AAE1B720AE500261D96 /* MBDocumentFactoryTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentFactoryTest.m; sourceTree = "<group>"; };
+		EDFA0AAF1B720AE500261D96 /* MBDocumentTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBDocumentTest.m; sourceTree = "<group>"; };
+		EDFA0AB01B720AE500261D96 /* MBElementTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBElementTest.m; sourceTree = "<group>"; };
+		EDFA0AB11B720AE500261D96 /* MBExpressionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBExpressionTest.m; sourceTree = "<group>"; };
+		EDFA0AB21B720AE500261D96 /* MockDataManagerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MockDataManagerService.h; sourceTree = "<group>"; };
+		EDFA0AB31B720AE600261D96 /* MockDataManagerService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MockDataManagerService.m; sourceTree = "<group>"; };
+		EDFA0AB51B720AE600261D96 /* MBJsonDocumentParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBJsonDocumentParserTest.m; sourceTree = "<group>"; };
+		EDFA0AB61B720AE600261D96 /* TestElementContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestElementContainer.h; sourceTree = "<group>"; };
+		EDFA0AB71B720AE600261D96 /* TestElementContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestElementContainer.m; sourceTree = "<group>"; };
+		EDFA0ABA1B720AE600261D96 /* MBWebServiceDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBWebServiceDataHandlerTest.m; sourceTree = "<group>"; };
+		EDFA0ABC1B720AE600261D96 /* MBMockDocumentCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMockDocumentCacheManager.h; sourceTree = "<group>"; };
+		EDFA0ABD1B720AE600261D96 /* MBMockDocumentCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMockDocumentCacheManager.m; sourceTree = "<group>"; };
+		EDFA0ABE1B720AE600261D96 /* MBMockHTTPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMockHTTPConnection.h; sourceTree = "<group>"; };
+		EDFA0ABF1B720AE600261D96 /* MBMockHTTPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMockHTTPConnection.m; sourceTree = "<group>"; };
+		EDFA0AC01B720AE600261D96 /* MBMockWebServiceDataHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMockWebServiceDataHandler.h; sourceTree = "<group>"; };
+		EDFA0AC11B720AE600261D96 /* MBMockWebServiceDataHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMockWebServiceDataHandler.m; sourceTree = "<group>"; };
+		EDFA0AC21B720AE600261D96 /* MBFileDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileDataHandlerTest.m; sourceTree = "<group>"; };
+		EDFA0AC31B720AE600261D96 /* MBFileManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBFileManagerTest.m; sourceTree = "<group>"; };
+		EDFA0AC41B720AE600261D96 /* MBLocalizationServiceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBLocalizationServiceTest.m; sourceTree = "<group>"; };
+		EDFA0AC51B720AE600261D96 /* MBMemoryDataHandlerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBMemoryDataHandlerTest.m; sourceTree = "<group>"; };
+		EDFA0AC71B720AE600261D96 /* MBCacheManagerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCacheManagerTest.m; sourceTree = "<group>"; };
+		EDFA0AC81B720AE600261D96 /* MBCacheWriterTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBCacheWriterTest.m; sourceTree = "<group>"; };
+		EDFA0AC91B720AE600261D96 /* StringUtilitiesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StringUtilitiesTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2113,30 +2117,6 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
-		26AC087B1977F11F000384EF /* DataHandlers */ = {
-			isa = PBXGroup;
-			children = (
-				26AC08831979231F000384EF /* Mocks */,
-				26AC087C1977F17F000384EF /* MBWebServiceDataHandlerTest.m */,
-				ED10ACF21B57DCC400F18190 /* MBFileDataHandlerTest.m */,
-				ED10ACF41B57E76300F18190 /* MBMemoryDataHandlerTest.m */,
-			);
-			name = DataHandlers;
-			sourceTree = "<group>";
-		};
-		26AC08831979231F000384EF /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				26AC087E1979231C000384EF /* MBMockWebServiceDataHandler.h */,
-				26AC087F1979231C000384EF /* MBMockWebServiceDataHandler.m */,
-				26AC0898197D3419000384EF /* MBMockHTTPConnection.h */,
-				26AC0899197D3419000384EF /* MBMockHTTPConnection.m */,
-				26E908A919804DCE00317D3A /* MBMockDocumentCacheManager.h */,
-				26E908AA19804DCE00317D3A /* MBMockDocumentCacheManager.m */,
-			);
-			name = Mocks;
-			sourceTree = "<group>";
-		};
 		26AC088C197953EE000384EF /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -2175,23 +2155,13 @@
 		26B09624197564EA0014D93A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				ED33D4841B5CF2AF00AF17B6 /* Util */,
-				ED0807701B5657D300BA8518 /* Configuration */,
-				ED424D651B555B620073BD2D /* Controller */,
-				EDC8AA3A1B53E9C000572DAF /* Model */,
-				26B09625197564EA0014D93A /* Services */,
+				EDFA0A9F1B720AE500261D96 /* Configuration */,
+				EDFA0AA71B720AE500261D96 /* Controller */,
+				EDFA0AAA1B720AE500261D96 /* Model */,
+				EDFA0AB81B720AE600261D96 /* Services */,
+				EDFA0AC61B720AE600261D96 /* Util */,
 			);
 			path = Tests;
-			sourceTree = "<group>";
-		};
-		26B09625197564EA0014D93A /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				26AC087B1977F11F000384EF /* DataHandlers */,
-				26B09626197564EA0014D93A /* MBFileManagerTest.m */,
-				ED33D47C1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		26B09639197687680014D93A /* Helpers */ = {
@@ -2217,63 +2187,6 @@
 			path = Parser;
 			sourceTree = "<group>";
 		};
-		ED0807701B5657D300BA8518 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				ED0807711B56581400BA8518 /* MBDefinitionTest.m */,
-				ED0807731B5661EA00BA8518 /* MBConditionalDefinitionTest.m */,
-				ED0807751B56890200BA8518 /* MBConfigurationParserTest.m */,
-			);
-			name = Configuration;
-			sourceTree = "<group>";
-		};
-		ED26D5801B552FA50041D28A /* Parser */ = {
-			isa = PBXGroup;
-			children = (
-				ED26D5811B552FBC0041D28A /* MBJsonDocumentParserTest.m */,
-			);
-			name = Parser;
-			sourceTree = "<group>";
-		};
-		ED33D4841B5CF2AF00AF17B6 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				ED33D4851B5CF2CD00AF17B6 /* MBCacheManagerTest.m */,
-				ED33D4871B5D1DBC00AF17B6 /* MBCacheWriterTest.m */,
-				ED33D4891B5D227E00AF17B6 /* StringUtilitiesTest.m */,
-			);
-			name = Util;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		ED424D651B555B620073BD2D /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				ED424D661B555B7F0073BD2D /* MBApplicationControllerTest.m */,
-				ED0807771B56966500BA8518 /* MBOutcomeTest.m */,
-			);
-			name = Controller;
-			sourceTree = "<group>";
-		};
-		EDC8AA3A1B53E9C000572DAF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				ED26D5801B552FA50041D28A /* Parser */,
-				EDC8AA3B1B53E9F300572DAF /* MBDocumentAbstractTest.m */,
-				EDC8AA4A1B5403BF00572DAF /* MBDocumentTest.m */,
-				EDC8AA4D1B5407F000572DAF /* MBDocumentAbstractTest.h */,
-				EDC8AA4E1B54172D00572DAF /* MockDataManagerService.h */,
-				EDC8AA4F1B54172D00572DAF /* MockDataManagerService.m */,
-				ED45C1DC1B55180100C8D7E3 /* MBElementTest.m */,
-				ED26D5791B5525420041D28A /* MBDocumentFactoryTest.m */,
-				ED26D57B1B55272D0041D28A /* MBExpressionTest.m */,
-				ED26D57D1B552A140041D28A /* TestElementContainer.h */,
-				ED26D57E1B552A140041D28A /* TestElementContainer.m */,
-				ED10ACF01B57AD5000F18190 /* MBDocumentDiffTest.m */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
 		EDC8AA3D1B53F16F00572DAF /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -2286,14 +2199,122 @@
 		EDC8AA401B53F21600572DAF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ED7D24611B720B4100F4CCAE /* endpoints.xml */,
 				ED45C1DA1B55138C00C8D7E3 /* Books.xml */,
 				EDC8AA411B53F26900572DAF /* config_unittests.xml */,
 				EDC8AA421B53F26900572DAF /* testdocument.txt */,
 				EDC8AA431B53F26900572DAF /* testdocument.xml */,
 				EDC8AA441B53F26900572DAF /* testresources.xml */,
-				ED45C1D61B54F9B600C8D7E3 /* endpoints.xml */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		EDFA0A9F1B720AE500261D96 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AA01B720AE500261D96 /* MBConditionalDefinitionTest.m */,
+				EDFA0AA11B720AE500261D96 /* MBConfigurationParserTest.m */,
+				EDFA0AA21B720AE500261D96 /* MBDefinitionTest.m */,
+				EDFA0AA31B720AE500261D96 /* mvc */,
+				EDFA0AA51B720AE500261D96 /* resources */,
+			);
+			path = Configuration;
+			sourceTree = "<group>";
+		};
+		EDFA0AA31B720AE500261D96 /* mvc */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AA41B720AE500261D96 /* MBMvcConfigurationParserTest.m */,
+			);
+			path = mvc;
+			sourceTree = "<group>";
+		};
+		EDFA0AA51B720AE500261D96 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AA61B720AE500261D96 /* REMBResourceConfigurationParserTest.m */,
+			);
+			path = resources;
+			sourceTree = "<group>";
+		};
+		EDFA0AA71B720AE500261D96 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AA81B720AE500261D96 /* MBApplicationControllerTest.m */,
+				EDFA0AA91B720AE500261D96 /* MBOutcomeTest.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EDFA0AAA1B720AE500261D96 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AAB1B720AE500261D96 /* MBDocumentAbstractTest.h */,
+				EDFA0AAC1B720AE500261D96 /* MBDocumentAbstractTest.m */,
+				EDFA0AAD1B720AE500261D96 /* MBDocumentDiffTest.m */,
+				EDFA0AAE1B720AE500261D96 /* MBDocumentFactoryTest.m */,
+				EDFA0AAF1B720AE500261D96 /* MBDocumentTest.m */,
+				EDFA0AB01B720AE500261D96 /* MBElementTest.m */,
+				EDFA0AB11B720AE500261D96 /* MBExpressionTest.m */,
+				EDFA0AB21B720AE500261D96 /* MockDataManagerService.h */,
+				EDFA0AB31B720AE600261D96 /* MockDataManagerService.m */,
+				EDFA0AB41B720AE600261D96 /* Parser */,
+				EDFA0AB61B720AE600261D96 /* TestElementContainer.h */,
+				EDFA0AB71B720AE600261D96 /* TestElementContainer.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		EDFA0AB41B720AE600261D96 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AB51B720AE600261D96 /* MBJsonDocumentParserTest.m */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
+		EDFA0AB81B720AE600261D96 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AB91B720AE600261D96 /* DataHandlers */,
+				EDFA0AC21B720AE600261D96 /* MBFileDataHandlerTest.m */,
+				EDFA0AC31B720AE600261D96 /* MBFileManagerTest.m */,
+				EDFA0AC41B720AE600261D96 /* MBLocalizationServiceTest.m */,
+				EDFA0AC51B720AE600261D96 /* MBMemoryDataHandlerTest.m */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		EDFA0AB91B720AE600261D96 /* DataHandlers */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0ABA1B720AE600261D96 /* MBWebServiceDataHandlerTest.m */,
+				EDFA0ABB1B720AE600261D96 /* Mocks */,
+			);
+			path = DataHandlers;
+			sourceTree = "<group>";
+		};
+		EDFA0ABB1B720AE600261D96 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0ABC1B720AE600261D96 /* MBMockDocumentCacheManager.h */,
+				EDFA0ABD1B720AE600261D96 /* MBMockDocumentCacheManager.m */,
+				EDFA0ABE1B720AE600261D96 /* MBMockHTTPConnection.h */,
+				EDFA0ABF1B720AE600261D96 /* MBMockHTTPConnection.m */,
+				EDFA0AC01B720AE600261D96 /* MBMockWebServiceDataHandler.h */,
+				EDFA0AC11B720AE600261D96 /* MBMockWebServiceDataHandler.m */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		EDFA0AC61B720AE600261D96 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				EDFA0AC71B720AE600261D96 /* MBCacheManagerTest.m */,
+				EDFA0AC81B720AE600261D96 /* MBCacheWriterTest.m */,
+				EDFA0AC91B720AE600261D96 /* StringUtilitiesTest.m */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2647,13 +2668,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED45C1D71B54F9B600C8D7E3 /* endpoints.xml in Resources */,
 				EDC8AA471B53F26900572DAF /* testdocument.xml in Resources */,
 				266075681959B05E008131A6 /* InfoPlist.strings in Resources */,
 				ED33D4821B5CE9BF00AF17B6 /* config.xml in Resources */,
 				2611176C197E6BFB00C08108 /* resources.xml in Resources */,
 				26AC089C197D76C7000384EF /* MBWebServiceDataHandlerTest_endpoints.xml in Resources */,
 				ED33D4831B5CE9BF00AF17B6 /* texts-nl.xml in Resources */,
+				ED7D24621B720B4100F4CCAE /* endpoints.xml in Resources */,
 				ED45C1DB1B55138C00C8D7E3 /* Books.xml in Resources */,
 				EDC8AA481B53F26900572DAF /* testresources.xml in Resources */,
 				26AC0890197953EE000384EF /* MBFileManagerTest_read.xml in Resources */,
@@ -2921,21 +2942,19 @@
 				266482501973D446003B1CD2 /* MBConfigurationDefinition.m in Sources */,
 				266482511973D446003B1CD2 /* MBDialogDefinition.m in Sources */,
 				266482521973D446003B1CD2 /* MBDocumentDefinition.m in Sources */,
-				ED0807761B56890200BA8518 /* MBConfigurationParserTest.m in Sources */,
 				266482531973D446003B1CD2 /* MBDomainDefinition.m in Sources */,
 				266482541973D446003B1CD2 /* MBDomainValidatorDefinition.m in Sources */,
+				EDFA0AD91B720AE600261D96 /* TestElementContainer.m in Sources */,
 				266482551973D446003B1CD2 /* MBElementDefinition.m in Sources */,
 				266482561973D446003B1CD2 /* MBFieldDefinition.m in Sources */,
 				266482571973D446003B1CD2 /* MBForEachDefinition.m in Sources */,
 				266482581973D446003B1CD2 /* MBMvcConfigurationParser.m in Sources */,
-				ED33D4861B5CF2CD00AF17B6 /* MBCacheManagerTest.m in Sources */,
 				266482591973D446003B1CD2 /* MBOutcomeDefinition.m in Sources */,
 				2664825A1973D446003B1CD2 /* MBPageDefinition.m in Sources */,
 				2664825B1973D446003B1CD2 /* MBPageStackDefinition.m in Sources */,
 				2664825C1973D446003B1CD2 /* MBPanelDefinition.m in Sources */,
 				2664825D1973D446003B1CD2 /* MBVariableDefinition.m in Sources */,
 				266481A81973D42E003B1CD2 /* MBFireInitialOutcomes.m in Sources */,
-				ED33D47D1B5CE0AF00AF17B6 /* MBLocalizationServiceTest.m in Sources */,
 				266481A91973D42E003B1CD2 /* MBConditionalDefinition.m in Sources */,
 				266481AA1973D42E003B1CD2 /* MBConfigurationParser.m in Sources */,
 				266481AB1973D42E003B1CD2 /* MBDefinition.m in Sources */,
@@ -2948,44 +2967,39 @@
 				266481B21973D42E003B1CD2 /* MBWebservicesConfiguration.m in Sources */,
 				266481B31973D42E003B1CD2 /* MBWebservicesConfigurationParser.m in Sources */,
 				266481B41973D42E003B1CD2 /* MBEmptyContentViewWrapper.m in Sources */,
-				ED424D671B555B7F0073BD2D /* MBApplicationControllerTest.m in Sources */,
 				266481B51973D42E003B1CD2 /* MBSlidingMenuContentViewWrapper.m in Sources */,
 				266481B61973D42E003B1CD2 /* MBAlertController.m in Sources */,
 				1724FC391A7289B3000ACDA2 /* MBSwitchBinder.m in Sources */,
 				266481B71973D42E003B1CD2 /* MBApplicationController.m in Sources */,
 				266481B81973D42E003B1CD2 /* MBApplicationFactory.m in Sources */,
-				ED0807741B5661EA00BA8518 /* MBConditionalDefinitionTest.m in Sources */,
 				266481B91973D42E003B1CD2 /* MBDialogController.m in Sources */,
-				EDC8AA501B54172D00572DAF /* MockDataManagerService.m in Sources */,
 				266481BA1973D42E003B1CD2 /* MBDialogManager.m in Sources */,
 				266481BB1973D42E003B1CD2 /* MBOutcome.m in Sources */,
 				266481BC1973D42E003B1CD2 /* MBOutcomeManager.m in Sources */,
 				266481BD1973D42E003B1CD2 /* MBPageStackController.m in Sources */,
+				EDFA0AD01B720AE600261D96 /* MBOutcomeTest.m in Sources */,
 				266481BE1973D42E003B1CD2 /* MBViewManager.m in Sources */,
 				266481BF1973D42E003B1CD2 /* MBActivityIndicator.m in Sources */,
 				266481C01973D42E003B1CD2 /* MBBasicViewController.m in Sources */,
 				266481C11973D42E003B1CD2 /* MBFormSubmission.m in Sources */,
-				26AC08821979231C000384EF /* MBMockWebServiceDataHandler.m in Sources */,
 				266481C21973D42E003B1CD2 /* MBSplitViewController.m in Sources */,
 				266481C31973D42E003B1CD2 /* UINavigationController+MBRebuilder.m in Sources */,
 				266481C41973D42E003B1CD2 /* UINavigationController+Rotation.m in Sources */,
 				266481C51973D42E003B1CD2 /* UITabBarController+Rotation.m in Sources */,
 				266481C61973D42E003B1CD2 /* UIViewController+Layout.m in Sources */,
-				ED10ACF11B57AD5000F18190 /* MBDocumentDiffTest.m in Sources */,
+				EDFA0ACB1B720AE600261D96 /* MBConfigurationParserTest.m in Sources */,
+				EDFA0ADC1B720AE600261D96 /* MBMockHTTPConnection.m in Sources */,
+				EDFA0ADA1B720AE600261D96 /* MBWebServiceDataHandlerTest.m in Sources */,
 				266481C71973D42E003B1CD2 /* UIViewController+Rotation.m in Sources */,
 				266481C81973D42E003B1CD2 /* FMDatabase+InMemoryOnDiskIO.m in Sources */,
-				26E908AB19804DCE00317D3A /* MBMockDocumentCacheManager.m in Sources */,
+				EDFA0ADD1B720AE600261D96 /* MBMockWebServiceDataHandler.m in Sources */,
 				266481C91973D42E003B1CD2 /* FMDatabase.m in Sources */,
 				266481CA1973D42E003B1CD2 /* FMDatabaseAdditions.m in Sources */,
 				266481CB1973D42E003B1CD2 /* FMDatabasePool.m in Sources */,
 				266481CC1973D42E003B1CD2 /* FMDatabaseQueue.m in Sources */,
 				266481CD1973D42E003B1CD2 /* FMResultSet.m in Sources */,
-				ED33D48A1B5D227E00AF17B6 /* StringUtilitiesTest.m in Sources */,
 				266481CE1973D42E003B1CD2 /* GTMObjC2Runtime.m in Sources */,
-				ED0807781B56966500BA8518 /* MBOutcomeTest.m in Sources */,
-				ED26D57C1B55272D0041D28A /* MBExpressionTest.m in Sources */,
 				266481CF1973D42E003B1CD2 /* MGSplitCornersView.m in Sources */,
-				26AC089A197D3419000384EF /* MBMockHTTPConnection.m in Sources */,
 				266481D01973D42E003B1CD2 /* MGSplitDividerView.m in Sources */,
 				266481D11973D42E003B1CD2 /* MGSplitViewController.m in Sources */,
 				266481D21973D42E003B1CD2 /* MBJsonDocumentParser.m in Sources */,
@@ -2999,7 +3013,7 @@
 				266481D91973D42E003B1CD2 /* MBElementContainer.m in Sources */,
 				266481DA1973D42E003B1CD2 /* MBSession.m in Sources */,
 				1724FC331A7289B3000ACDA2 /* MBSimpleWebViewBinder.m in Sources */,
-				ED0807721B56581400BA8518 /* MBDefinitionTest.m in Sources */,
+				EDFA0AD61B720AE600261D96 /* MBExpressionTest.m in Sources */,
 				266481DB1973D42E003B1CD2 /* MBDocumentOperation.m in Sources */,
 				266481DC1973D42E003B1CD2 /* MBFileDataHandler.m in Sources */,
 				266481DD1973D42E003B1CD2 /* MBMemoryDataHandler.m in Sources */,
@@ -3007,16 +3021,19 @@
 				266481DF1973D42E003B1CD2 /* MBSQLDataHandler.m in Sources */,
 				266481E01973D42E003B1CD2 /* MBSystemDataHandler.m in Sources */,
 				266481E11973D42E003B1CD2 /* MBWebserviceDataHandler.m in Sources */,
+				EDFA0AD31B720AE600261D96 /* MBDocumentFactoryTest.m in Sources */,
 				266481E21973D42E003B1CD2 /* MBDataHandlerBase.m in Sources */,
 				266481E31973D42E003B1CD2 /* MBDataManagerService.m in Sources */,
+				EDFA0AE31B720AE600261D96 /* MBCacheWriterTest.m in Sources */,
 				266481E41973D42E003B1CD2 /* MBLocalizationService.m in Sources */,
-				26AC087D1977F17F000384EF /* MBWebServiceDataHandlerTest.m in Sources */,
-				EDC8AA4C1B54076600572DAF /* MBDocumentAbstractTest.m in Sources */,
 				266481E51973D42E003B1CD2 /* MBMetadataService.m in Sources */,
+				EDFA0ACE1B720AE600261D96 /* REMBResourceConfigurationParserTest.m in Sources */,
 				266481E61973D42E003B1CD2 /* MBResourceService.m in Sources */,
 				266481E71973D42E003B1CD2 /* MBScriptService.m in Sources */,
 				266481E81973D42E003B1CD2 /* MBFileManager.m in Sources */,
+				EDFA0AD71B720AE600261D96 /* MockDataManagerService.m in Sources */,
 				266481E91973D42E003B1CD2 /* ColorUtilities.m in Sources */,
+				EDFA0AE11B720AE600261D96 /* MBMemoryDataHandlerTest.m in Sources */,
 				266481EA1973D42E003B1CD2 /* DataUtilites.m in Sources */,
 				1724FC271A7289B3000ACDA2 /* MBDefaultStyleTableViewBinder.m in Sources */,
 				266481EB1973D42E003B1CD2 /* GTMStackTrace.m in Sources */,
@@ -3026,25 +3043,23 @@
 				266481EF1973D42E003B1CD2 /* SBJsonParser.m in Sources */,
 				266481F01973D42E003B1CD2 /* SBJsonWriter.m in Sources */,
 				266481F11973D42E003B1CD2 /* LocaleUtilities.m in Sources */,
-				ED10ACF51B57E76300F18190 /* MBMemoryDataHandlerTest.m in Sources */,
 				266481F21973D42E003B1CD2 /* MBCacheManager.m in Sources */,
+				EDFA0ADB1B720AE600261D96 /* MBMockDocumentCacheManager.m in Sources */,
 				266481F31973D42E003B1CD2 /* MBCacheWriter.m in Sources */,
 				266481F41973D42E003B1CD2 /* MBConstants.m in Sources */,
 				266481F51973D42E003B1CD2 /* MBDevice.m in Sources */,
 				266481F61973D42E003B1CD2 /* MBDeviceType.m in Sources */,
+				EDFA0ADF1B720AE600261D96 /* MBFileManagerTest.m in Sources */,
 				266481F71973D42E003B1CD2 /* MBOrderedMutableDictionary.m in Sources */,
 				266481F81973D42E003B1CD2 /* MBOrientationManager.m in Sources */,
 				266481F91973D42E003B1CD2 /* MBProperties.m in Sources */,
-				ED45C1DD1B55180100C8D7E3 /* MBElementTest.m in Sources */,
 				1724FC361A7289B3000ACDA2 /* MBStandardStyleTableViewBinder.m in Sources */,
 				266481FA1973D42E003B1CD2 /* MBServerException.m in Sources */,
 				266481FB1973D42E003B1CD2 /* MBWebView.m in Sources */,
 				266481FC1973D42E003B1CD2 /* NSData+Base64.m in Sources */,
 				266481FD1973D42E003B1CD2 /* Reachability.m in Sources */,
 				266481FE1973D42E003B1CD2 /* StringUtilities.m in Sources */,
-				26B09627197564EA0014D93A /* MBFileManagerTest.m in Sources */,
 				266481FF1973D42E003B1CD2 /* StringUtilitiesHelper.m in Sources */,
-				ED33D4881B5D1DBC00AF17B6 /* MBCacheWriterTest.m in Sources */,
 				266482001973D42E003B1CD2 /* UIButton+ResizableBackgroundImage.m in Sources */,
 				1724FC201A7289B3000ACDA2 /* MBComponentContainer+ViewBinding.m in Sources */,
 				266482011973D42E003B1CD2 /* UITextField+ResizableBackgroundImage.m in Sources */,
@@ -3052,18 +3067,22 @@
 				266482031973D42E003B1CD2 /* UncaughtExceptionHandler.m in Sources */,
 				266482041973D42E003B1CD2 /* ViewUtilities.m in Sources */,
 				266482051973D42E003B1CD2 /* MBArrowIconBackButtonBuilder.m in Sources */,
+				EDFA0AE21B720AE600261D96 /* MBCacheManagerTest.m in Sources */,
 				266482061973D42E003B1CD2 /* MBBackButtonBuilderFactory.m in Sources */,
 				266482071973D42E003B1CD2 /* MBCheveronBackButtonBuilder.m in Sources */,
 				26B09642197687680014D93A /* MBHTTPConnectionImpl.m in Sources */,
 				266482081973D42E003B1CD2 /* MBDefaultBackButtonBuilder.m in Sources */,
 				266482091973D42E003B1CD2 /* MBWhiteArrowBackButtonBuilder.m in Sources */,
+				EDFA0AD41B720AE600261D96 /* MBDocumentTest.m in Sources */,
 				2664820A1973D42E003B1CD2 /* MBDefaultDialogDecorator.m in Sources */,
+				EDFA0ACD1B720AE600261D96 /* MBMvcConfigurationParserTest.m in Sources */,
 				2664820B1973D42E003B1CD2 /* MBModalCurrentContextDialogDecorator.m in Sources */,
+				EDFA0AD11B720AE600261D96 /* MBDocumentAbstractTest.m in Sources */,
 				2664820C1973D42E003B1CD2 /* MBModalDialogDecorator.m in Sources */,
 				2664820D1973D42E003B1CD2 /* MBModalFormSheetDialogDecorator.m in Sources */,
 				2664820E1973D42E003B1CD2 /* MBModalFullScreenDialogDecorator.m in Sources */,
 				2664820F1973D42E003B1CD2 /* MBModalPageSheetDialogDecorator.m in Sources */,
-				ED26D57A1B5525420041D28A /* MBDocumentFactoryTest.m in Sources */,
+				EDFA0AE01B720AE600261D96 /* MBLocalizationServiceTest.m in Sources */,
 				266482101973D42E003B1CD2 /* MBSingleDialogContentBuilder.m in Sources */,
 				266482111973D42E003B1CD2 /* MBSplitDialogContentBuilder.m in Sources */,
 				266482121973D42E003B1CD2 /* MBButtonBuilder.m in Sources */,
@@ -3080,30 +3099,33 @@
 				2664821C1973D42E003B1CD2 /* MBDialogContentViewBuilderFactory.m in Sources */,
 				2664821D1973D42E003B1CD2 /* MBFieldViewBuilderFactory.m in Sources */,
 				2664821E1973D42E003B1CD2 /* MBForEachViewBuilder.m in Sources */,
+				EDFA0ACC1B720AE600261D96 /* MBDefinitionTest.m in Sources */,
 				2664821F1973D42E003B1CD2 /* MBPanelViewBuilderFactory.m in Sources */,
 				266482201973D42E003B1CD2 /* MBRowViewBuilderFactory.m in Sources */,
 				266482211973D42E003B1CD2 /* MBStyleHandler.m in Sources */,
 				266482221973D42E003B1CD2 /* MBViewBuilder.m in Sources */,
-				ED26D5821B552FBC0041D28A /* MBJsonDocumentParserTest.m in Sources */,
 				1724FC3C1A7289B3000ACDA2 /* MBTextFieldBinder.m in Sources */,
 				266482231973D42E003B1CD2 /* MBViewBuilderFactory.m in Sources */,
 				266482241973D42E003B1CD2 /* MBPageViewBuilder.m in Sources */,
 				266482251973D42E003B1CD2 /* MBBasicPanelBuilder.m in Sources */,
 				266482261973D42E003B1CD2 /* MBListBuilder.m in Sources */,
+				EDFA0ACA1B720AE600261D96 /* MBConditionalDefinitionTest.m in Sources */,
 				266482271973D42E003B1CD2 /* MBMatrixBuilder.m in Sources */,
 				266482281973D42E003B1CD2 /* MBMatrixViewBuilder.m in Sources */,
+				EDFA0ACF1B720AE600261D96 /* MBApplicationControllerTest.m in Sources */,
 				266482291973D42E003B1CD2 /* MBPlainPanelBuilder.m in Sources */,
 				2664822A1973D42E003B1CD2 /* MBSectionPanelViewBuilder.m in Sources */,
 				2664822B1973D42E003B1CD2 /* MBViewBuilder+PanelHelper.m in Sources */,
+				EDFA0AD51B720AE600261D96 /* MBElementTest.m in Sources */,
 				2664822C1973D42E003B1CD2 /* MBNewRowViewBuilder.m in Sources */,
 				2664822D1973D42E003B1CD2 /* MBTransition.m in Sources */,
 				2664822E1973D42E003B1CD2 /* MBTransitionStyleFactory.m in Sources */,
 				1724FC1C1A7289B3000ACDA2 /* MBBuildState.m in Sources */,
 				2664822F1973D42E003B1CD2 /* MBCurlTransitionStyle.m in Sources */,
-				EDC8AA4B1B5403BF00572DAF /* MBDocumentTest.m in Sources */,
 				266482301973D42E003B1CD2 /* MBDefaultTransitionStyle.m in Sources */,
 				266482311973D42E003B1CD2 /* MBFadeTransitionStyle.m in Sources */,
 				266482321973D42E003B1CD2 /* MBFlipTransitionStyle.m in Sources */,
+				EDFA0AE41B720AE600261D96 /* StringUtilitiesTest.m in Sources */,
 				266482331973D42E003B1CD2 /* MBNoTransitionStyle.m in Sources */,
 				266482341973D42E003B1CD2 /* MBAlertView.m in Sources */,
 				266482351973D42E003B1CD2 /* MBDatePickerController.m in Sources */,
@@ -3114,19 +3136,20 @@
 				266482391973D42E003B1CD2 /* MBPickerPopoverController.m in Sources */,
 				2664823A1973D42E003B1CD2 /* MBSpinner.m in Sources */,
 				2664823B1973D42E003B1CD2 /* MBMatrixCell.m in Sources */,
+				EDFA0AD21B720AE600261D96 /* MBDocumentDiffTest.m in Sources */,
 				2664823C1973D42E003B1CD2 /* MBMatrixHeaderView.m in Sources */,
 				2664823D1973D42E003B1CD2 /* MBMatrixRowView.m in Sources */,
 				2664823E1973D42E003B1CD2 /* MBMatrixViewController.m in Sources */,
 				2664823F1973D42E003B1CD2 /* MBAlert.m in Sources */,
+				EDFA0ADE1B720AE600261D96 /* MBFileDataHandlerTest.m in Sources */,
 				266482401973D42E003B1CD2 /* MBComponent.m in Sources */,
-				ED10ACF31B57DCC400F18190 /* MBFileDataHandlerTest.m in Sources */,
+				EDFA0AD81B720AE600261D96 /* MBJsonDocumentParserTest.m in Sources */,
 				266482411973D42E003B1CD2 /* MBComponentContainer.m in Sources */,
 				266482421973D42E003B1CD2 /* MBComponentFactory.m in Sources */,
 				266482431973D42E003B1CD2 /* MBConditionalPage.m in Sources */,
 				266482441973D42E003B1CD2 /* MBDialogDecoratorFactory.m in Sources */,
 				266482451973D42E003B1CD2 /* MBField.m in Sources */,
 				266482461973D42E003B1CD2 /* MBForEach.m in Sources */,
-				ED26D57F1B552A140041D28A /* TestElementContainer.m in Sources */,
 				266482471973D42E003B1CD2 /* MBForEachItem.m in Sources */,
 				266482481973D42E003B1CD2 /* MBPage.m in Sources */,
 				1724FC191A7289B3000ACDA2 /* MBBaseViewBinder.m in Sources */,

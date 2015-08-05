@@ -33,9 +33,8 @@ static MockDataManagerService *_instance = nil;
 - (MBDocument *) createDocument: (NSString *) documentName {
     MBDocumentDefinition *def = [[MBDocumentDefinition alloc] init];
     [def setName:documentName];
-    MBDocument *doc = [[MBDocument alloc] initWithDocumentDefinition:def];
+    MBDocument *doc = [[MBDocument alloc] initWithDocumentDefinition:def withDataManagerService:self];
     return doc;
-    
 }
 
 - (MBDocument *) loadDocument: (NSString*) documentName {
